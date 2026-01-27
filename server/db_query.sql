@@ -1,0 +1,56 @@
+CREATE DATABASE marketplace;
+
+USE marketplace;
+
+CREATE TABLE role (
+	id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	name VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE user (
+	id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	username VARCHAR(40) NOT NULL UNIQUE,
+	password VARCHAR(40) NOT NULL,
+	first_name VARCHAR(40) NOT NULL,
+	last_name VARCHAR(40) NOT NULL,
+	gender VARCHAR(1),
+	birth_date DATE,
+	phone_number INTEGER(15),
+	email VARCHAR(50) NOT NULL,
+	profile_url VARCHAR(256),
+	role_id INTEGER NOT NULL,
+	FOREIGN KEY (role_id) REFERENCES role(id)
+);
+
+CREATE TABLE category (
+	id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	name VARCHAR(30) NOT NULL,
+	parent_id INTEGER NOT NULL,
+	FOREIGN KEY (parent_id) REFERENCES category(id)
+);
+
+CREATE TABLE product (
+	id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(70) NOT NULL,
+    category_id INT NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES category(id)
+);
+
+CREATE TABLE post (
+	id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    title VARCHAR(60) NOT NULL,
+    description VARCHAR(250),
+    price INTEGER NOT NULL,
+    currency VARCHAR(3) NOT NULL,
+    user_id BIGINT NOT NULL,
+    product_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (product_id) REFERENCES product(id)
+);
+
+CREATE TABLE post_images (
+	id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    url VARCHAR(256) NOT NULL,
+    post_id BIGINT NOT NULL,
+    FOREIGN KEY (post_id) REFERENCES post(id)
+);
