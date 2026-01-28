@@ -8,6 +8,7 @@ public class MarketplaceApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MarketplaceApiApplication.class, args);
+
 	}
 
 }
