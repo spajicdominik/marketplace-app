@@ -2,11 +2,9 @@ package com.dspajic.marketplace.dao;
 
 import com.dspajic.marketplace.entities.User;
 import com.dspajic.marketplace.mappers.UserRowMapper;
-import dto.UserDto;
-import dto.UserFilters;
+import com.dspajic.marketplace.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -25,19 +23,19 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAllUsers() {
-        String selectAllQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id FROM user";
+        String selectAllQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id FROM users";
         return jdbcTemplate.query(selectAllQuery, userRowMapper);
     }
 
     @Override
     public User getUserById(int id) {
-        String selectByIdQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id FROM user WHERE id = ? ";
+        String selectByIdQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id FROM users WHERE id = ? ";
         return jdbcTemplate.queryForObject(selectByIdQuery, userRowMapper, id);
     }
 
     @Override
     public int addUser(User user) {
-        String addUserQuery = "INSERT INTO user (username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String addUserQuery = "INSERT INTO users (username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
         return jdbcTemplate.update(addUserQuery,
                 user.getUsername(),
                 user.getPassword(),
@@ -54,7 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public int updateUser(User user) {
         String updateUserQuery = """
-                UPDATE user
+                UPDATE users
                 SET
                 id = ?,
                 password = ?,
@@ -89,7 +87,7 @@ public class UserRepositoryImpl implements UserRepository {
     public int deleteUser(int id) {
         String deleteUserQuery = """
                 DELETE FROM
-                user
+                users
                 WHERE
                 id = ?
                 """;

@@ -2,8 +2,6 @@ package com.dspajic.marketplace.controllers;
 
 import com.dspajic.marketplace.dao.UserRepository;
 import com.dspajic.marketplace.entities.User;
-import dto.UserDto;
-import dto.UserFilters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package dto;
+package com.dspajic.marketplace.dto;
 
 import lombok.*;
 

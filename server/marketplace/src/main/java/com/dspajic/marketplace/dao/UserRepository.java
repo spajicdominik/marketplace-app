@@ -1,8 +1,7 @@
 package com.dspajic.marketplace.dao;
 
 import com.dspajic.marketplace.entities.User;
-import dto.UserDto;
-import dto.UserFilters;
+import com.dspajic.marketplace.dto.UserDto;
 
 import java.util.List;
 

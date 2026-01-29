@@ -32,7 +32,7 @@ public class User {
     private LocalDate birthDate;
 
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "email")
     private String email;
@@ -46,7 +46,7 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, String gender, LocalDate birthDate, int phoneNumber, String email, String profileUrl, int roleID) {
+    public User(String username, String password, String firstName, String lastName, String gender, LocalDate birthDate, String phoneNumber, String email, String profileUrl, int roleID) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -132,11 +132,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
