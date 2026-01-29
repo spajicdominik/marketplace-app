@@ -9,5 +9,5 @@ public interface PostRepository {
     Post getPostById(int id);
     int addPost (Post post);
     int updatePost (Post post);
-    int deletePost (Post post);
+    int deletePost (int id);
 }

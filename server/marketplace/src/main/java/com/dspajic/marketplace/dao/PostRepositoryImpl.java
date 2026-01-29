@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.dao;
 
 import com.dspajic.marketplace.entities.Post;
+import com.dspajic.marketplace.mappers.PostRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -113,7 +114,17 @@ public class PostRepositoryImpl implements PostRepository{
     }
 
     @Override
-    public int deletePost(Post post) {
-        return 0;
+    public int deletePost(int id) {
+        String deletePostQuery = """
+                DELETE FROM
+                post
+                WHERE
+                id = ?
+                """;
+        return jdbcTemplate
+                .update(
+                        deletePostQuery,
+                        id
+                );
     }
 }
