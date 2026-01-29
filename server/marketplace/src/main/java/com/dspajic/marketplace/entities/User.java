@@ -1,12 +1,17 @@
 package com.dspajic.marketplace.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "users")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // MySQL handles the auto-increment
@@ -32,7 +37,7 @@ public class User {
     private LocalDate birthDate;
 
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
 
     @Column(name = "email")
     private String email;
@@ -46,7 +51,7 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, String gender, LocalDate birthDate, int phoneNumber, String email, String profileUrl, int roleID) {
+    public User(String username, String password, String firstName, String lastName, String gender, LocalDate birthDate, String phoneNumber, String email, String profileUrl, int roleID) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -132,11 +137,11 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -162,5 +167,35 @@ public class User {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
+    }
+
+    //----------------------------------------------------------------
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
