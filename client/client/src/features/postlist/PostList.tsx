@@ -1,4 +1,4 @@
-import PostListItem from "../components/post/PostListItem";
+import PostListItem from "../../components/post/PostListItem";
 import { useEffect, useState } from "react";
 
 
