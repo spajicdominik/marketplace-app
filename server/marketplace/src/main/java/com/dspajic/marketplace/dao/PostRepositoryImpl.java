@@ -69,7 +69,7 @@ public class PostRepositoryImpl implements PostRepository{
                 post
                 (
                 title,
-                description
+                description,
                 price,
                 currency,
                 user_id,
@@ -101,6 +101,8 @@ public class PostRepositoryImpl implements PostRepository{
                 currency = ?,
                 user_id = ?,
                 product_id = ?
+                WHERE
+                id = ?
                 """;
         return jdbcTemplate.update(
                 updatePostQuery,
@@ -109,7 +111,8 @@ public class PostRepositoryImpl implements PostRepository{
                 post.getPrice(),
                 post.getCurrency(),
                 post.getUserID(),
-                post.getProductID()
+                post.getProductID(),
+                post.getId()
         );
     }
 

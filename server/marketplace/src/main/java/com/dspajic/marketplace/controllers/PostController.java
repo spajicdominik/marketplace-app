@@ -30,7 +30,7 @@ public class PostController {
     @PutMapping("/posts")
     public int updatePost (@RequestBody Post post) {return postRepository.updatePost(post);}
 
-    @DeleteMapping
+    @DeleteMapping("/posts/{id}")
     public int deletePost (@PathVariable("id") int id) {
         return postRepository.deletePost(id);
     }

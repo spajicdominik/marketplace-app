@@ -43,10 +43,13 @@ public class User {
     @Column(name = "role_id")
     private int roleID;
 
+    @Column(name = "status")
+    private Integer status;
+
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, String gender, LocalDate birthDate, String phoneNumber, String email, String profileUrl, int roleID) {
+    public User(String username, String password, String firstName, String lastName, String gender, LocalDate birthDate, String phoneNumber, String email, String profileUrl, int roleID, Integer status) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -57,6 +60,7 @@ public class User {
         this.email = email;
         this.profileUrl = profileUrl;
         this.roleID = roleID;
+        this.status = status;
     }
 
     @Override
@@ -73,6 +77,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", profileUrl='" + profileUrl + '\'' +
                 ", roleID=" + roleID +
+                ", status=" + status +
                 '}';
     }
 
@@ -162,5 +167,13 @@ public class User {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

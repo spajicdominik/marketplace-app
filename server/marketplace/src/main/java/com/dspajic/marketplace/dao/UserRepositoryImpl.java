@@ -86,8 +86,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public int deleteUser(int id) {
         String deleteUserQuery = """
-                DELETE FROM
+                UPDATE
                 users
+                SET
+                status = 0
                 WHERE
                 id = ?
                 """;
@@ -98,7 +100,7 @@ public class UserRepositoryImpl implements UserRepository {
     public UserDto getUserByIdd(int id) {
         User user = getUserById(id);
         return UserDto.builder()
-                .username(user.getUsername())
+                .fullName(user.getFirstName() + " " + user.getLastName())
                 .id(user.getId())
                 .build();
     }
