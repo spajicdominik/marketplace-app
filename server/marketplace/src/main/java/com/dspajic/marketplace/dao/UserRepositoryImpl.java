@@ -23,13 +23,13 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAllUsers() {
-        String selectAllQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id FROM users";
+        String selectAllQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id, status FROM users";
         return jdbcTemplate.query(selectAllQuery, userRowMapper);
     }
 
     @Override
     public User getUserById(int id) {
-        String selectByIdQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id FROM users WHERE id = ? ";
+        String selectByIdQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id, status FROM users WHERE id = ? ";
         return jdbcTemplate.queryForObject(selectByIdQuery, userRowMapper, id);
     }
 
@@ -46,7 +46,8 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getPhoneNumber(),
                 user.getEmail(),
                 user.getProfileUrl(),
-                user.getRoleID());
+                user.getRoleID(),
+                user.getStatus());
     }
 
     @Override
@@ -63,7 +64,8 @@ public class UserRepositoryImpl implements UserRepository {
                 phone_number = ?,
                 email = ?,
                 profile_url = ?,
-                role_id = ?
+                role_id = ?,
+                status = ?
                 WHERE
                 id = ?
                 """;
@@ -79,7 +81,8 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getEmail(),
                 user.getProfileUrl(),
                 user.getRoleID(),
-                user.getId()
+                user.getId(),
+                user.getStatus()
                 );
     }
 
