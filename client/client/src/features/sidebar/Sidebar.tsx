@@ -15,7 +15,7 @@ export default function Sidebar() {
     }, []);
 
     return (
-        <div className="sidebar">
+        <div className="sidebar m-4">
            {category.map((item, index) => <SidebarItem key={index} item={item}/>)}
         </div>
     );
