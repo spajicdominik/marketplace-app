@@ -7,8 +7,10 @@ function App() {
   return (
     <>
      <Navbar></Navbar>
-     <Sidebar></Sidebar>
-     <PostList></PostList>
+     <div className='flex'>
+        <Sidebar></Sidebar>
+        <PostList></PostList>
+     </div>
     </>
   )
 }

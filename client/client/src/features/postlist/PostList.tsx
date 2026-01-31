@@ -17,7 +17,7 @@ function PostList() {
     }, []);
 
     return (
-        <div className="flex flex-wrap justify-center">
+        <div className="flex-col justify-center">
             {posts.map((post: any) => (
                 <PostListItem 
                     key={post.id}

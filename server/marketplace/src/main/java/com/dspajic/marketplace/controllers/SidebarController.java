@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.controllers;
 
+import com.dspajic.marketplace.dto.SidebarDto;
 import com.dspajic.marketplace.entities.SidebarItem;
 import com.dspajic.marketplace.service.SidebarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,10 @@ public class SidebarController {
     @GetMapping("/get-all-sidebar-items")
     public List<SidebarItem> getAllSidebarItems() {
         return sidebarService.getAllSidebarItems();
+    }
+
+    @GetMapping("/get-sidebar-list")
+    public List<SidebarDto> getSidebarItems() {
+        return sidebarService.getSidebarDto();
     }
 }

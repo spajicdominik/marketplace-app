@@ -2,29 +2,36 @@ import { IoIosSettings } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
 
-
-
 export default function SidebarItem({item}: any) {
     const [open, setOpen] = useState(false)
 
-    if(item.childrens){
+    if(item.children.length > 0){
     return (
         <div className={open ? "sidebar-item open text-black" : "sidebar-item text-black"}>
             <div className="sidebar-title">
                 <span>
-                    <IoIosSettings/>
-                    {item.title}
+                    {item.name}
                 </span>
                 <FaChevronDown className="toggle-btn" onClick={() => setOpen(!open)}/>
             </div>
             <div className="sidebar-content">
-                { item.childrens.map((child : any, index : number) => <SidebarItem key={index} item={child} />) }
+                { item.children.map((child : any, index : number) => <SidebarItem key={index} item={child} />) }
             </div>
         </div>
     );
 }else {
-    <a href={item.path || "#"} className="sidebar-item plain">
-                {item.title}
-            </a>
+    return(
+        <div className={open ? "sidebar-item open text-black" : "sidebar-item text-black"}>
+            <div className="sidebar-title">
+                <span>
+                    {item.name}
+                </span>
+                <FaChevronDown className="toggle-btn" onClick={() => setOpen(!open)}/>
+            </div>
+            <div className="sidebar-content flex-col">
+                {item.products.map((product : any, index: number) => <div className="cursor-pointer">{product.name}</div>)}
+            </div>
+        </div>
+    );
 }
 }
