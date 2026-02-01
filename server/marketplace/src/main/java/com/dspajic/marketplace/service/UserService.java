@@ -21,4 +21,6 @@ public interface UserService {
     UserDto getUserByIdd(int id);
 
     List<User> getAllFemaleUsers();
+
+
 }

@@ -41,4 +41,7 @@ public class PostController {
     public List<PostDto> getAllPostsWImg() {
         return postService.getAllPostsWImages();
     }
+
+    @GetMapping("/posts/product/{id}")
+    public List<PostDto> getPostsByProduct(@PathVariable("id") Integer id) {return postService.filterPostByProduct(id);}
 }

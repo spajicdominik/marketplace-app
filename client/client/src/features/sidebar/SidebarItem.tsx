@@ -2,7 +2,7 @@ import { IoIosSettings } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
 
-export default function SidebarItem({item}: any) {
+export default function SidebarItem({item, onSelectProduct}: any) {
     const [open, setOpen] = useState(false)
 
     
@@ -16,7 +16,7 @@ export default function SidebarItem({item}: any) {
                 <FaChevronDown className="toggle-btn" onClick={() => setOpen(!open)}/>
             </div>
             <div className="sidebar-content">
-                { item.children.map((child : any, index : number) => <SidebarItem key={index} item={child} />) }
+                { item.children.map((child : any, index : number) => <SidebarItem key={index} item={child} onSelectProduct={onSelectProduct}/>) }
             </div>
         </div>
     );
@@ -31,7 +31,7 @@ export default function SidebarItem({item}: any) {
             </div>
             <div className="sidebar-content flex-col">
                 {
-                item.products.map((product : any, index: number) => <div className="cursor-pointer" onClick={() => null}>{product.name}</div>)}
+                item.products.map((product : any, index: number) => <div className="cursor-pointer" onClick={() => {onSelectProduct(product.id)}}>{product.name}</div>)}
             </div>
         </div>
     );

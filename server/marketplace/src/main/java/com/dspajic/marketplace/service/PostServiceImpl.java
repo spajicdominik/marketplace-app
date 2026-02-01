@@ -1,10 +1,13 @@
 package com.dspajic.marketplace.service;
 
+import com.dspajic.marketplace.dao.CategoryRepository;
 import com.dspajic.marketplace.dao.PostImageRepository;
 import com.dspajic.marketplace.dao.PostRepository;
 import com.dspajic.marketplace.dto.PostDto;
+import com.dspajic.marketplace.entities.Category;
 import com.dspajic.marketplace.entities.Post;
 import com.dspajic.marketplace.entities.PostImage;
+import com.dspajic.marketplace.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     PostImageRepository postImageRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public List<Post> getAllPosts() {
@@ -72,4 +78,27 @@ public class PostServiceImpl implements PostService {
         }
         return allPostsWImages;
     }
+
+    @Override
+    public List<PostDto> filterPostByCategory(Category category) {
+        List<PostDto> allPosts = getAllPostsWImages();
+        List<PostDto> filteredPosts = new ArrayList<>();
+
+        return null;
+    }
+
+    @Override
+    public List<PostDto> filterPostByProduct(Integer product_id) {
+        List<PostDto> allPosts = getAllPostsWImages();
+        List<PostDto> filteredPosts = new ArrayList<>();
+
+        for (PostDto post : allPosts) {
+            if (post.getProductID() == product_id) {
+                filteredPosts.add(post);
+            }
+        }
+        return filteredPosts;
+    }
+
+
 }
