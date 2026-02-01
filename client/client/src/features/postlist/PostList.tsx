@@ -7,7 +7,7 @@ function PostList() {
 
     useEffect(() => {
         async function fetchPosts() {
-            const response = await fetch('http://localhost:8080/api/posts');
+            const response = await fetch('http://localhost:8080/api/posts-with-images');
             const data = await response.json();
             console.log(data);
             setPosts(data);

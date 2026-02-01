@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.service;
 
+import com.dspajic.marketplace.dto.PostDto;
 import com.dspajic.marketplace.entities.Post;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface PostService {
     int addPost (Post post);
     int updatePost (Post post);
     int deletePost (int id);
+    List<PostDto> getAllPostsWImages();
 }

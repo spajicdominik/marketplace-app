@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.controllers;
 
 import com.dspajic.marketplace.dao.PostRepository;
+import com.dspajic.marketplace.dto.PostDto;
 import com.dspajic.marketplace.entities.Post;
 import com.dspajic.marketplace.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,10 @@ public class PostController {
     @DeleteMapping("/posts/{id}")
     public int deletePost (@PathVariable("id") int id) {
         return postService.deletePost(id);
+    }
+
+    @GetMapping("/posts-with-images")
+    public List<PostDto> getAllPostsWImg() {
+        return postService.getAllPostsWImages();
     }
 }

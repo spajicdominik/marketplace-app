@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function SidebarItem({item}: any) {
     const [open, setOpen] = useState(false)
 
+    
     if(item.children.length > 0){
     return (
         <div className={open ? "sidebar-item open text-black" : "sidebar-item text-black"}>
@@ -29,7 +30,8 @@ export default function SidebarItem({item}: any) {
                 <FaChevronDown className="toggle-btn" onClick={() => setOpen(!open)}/>
             </div>
             <div className="sidebar-content flex-col">
-                {item.products.map((product : any, index: number) => <div className="cursor-pointer">{product.name}</div>)}
+                {
+                item.products.map((product : any, index: number) => <div className="cursor-pointer" onClick={() => null}>{product.name}</div>)}
             </div>
         </div>
     );
