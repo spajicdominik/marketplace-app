@@ -1,4 +1,3 @@
-import { IoIosSettings } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
 
