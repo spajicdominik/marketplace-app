@@ -42,9 +42,11 @@ public class PostController {
         return postService.getAllPostsWImages();
     }
 
-    @GetMapping("/posts/product/{id}")
-    public List<PostDto> getPostsByProduct(@PathVariable("id") Integer id) {return postService.filterPostByProduct(id);}
-
-    @GetMapping("/posts/category/{id}")
-    public List<PostDto> getPostsByCategory (@PathVariable("id") Integer id) {return postService.filterPostByCategory(id);}
+    @GetMapping("/posts-filter")
+    public List<PostDto> getPostsByParams(
+            @RequestParam(value = "productId", required = true) Integer productId,
+            @RequestParam(value = "categoryId", required = true) Integer categoryId
+    ){
+        return postService.filterPostByParams(productId, categoryId);
+    }
 }

@@ -1,17 +1,8 @@
-import { useEffect, useState } from "react";
-import SidebarItem from "./SidebarItem";
+import SidebarItem from "./components/SidebarItem";
+import useFetchSidebarItems from "../../hooks/sidebar/useFetchSidebarItems";
 
 export default function Sidebar({ onSelectProduct, onSelectCategory } : { onSelectProduct : (id: number) => void, onSelectCategory : (id:number) => void }) {
-    const [category, setCategory] = useState([]);
-
-    useEffect(() => {
-        async function fetchCategories() {
-            const response = await fetch('http://localhost:8080/api/get-sidebar-list');
-            const data = await response.json();
-            setCategory(data);
-        }
-        fetchCategories();
-    }, []);
+    const category = useFetchSidebarItems();
 
     return (
         <div className="sidebar m-4">

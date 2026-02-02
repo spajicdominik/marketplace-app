@@ -5,8 +5,8 @@ import PostList from './features/postlist/PostList'
 import Sidebar from './features/sidebar/Sidebar'
 
 function App() { 
-  const [selectProductId, setSelectedProductId] = useState<number | null>(null);
-  const [selectCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  const [selectProductId, setSelectedProductId] = useState<number | 0>(0);
+  const [selectCategoryId, setSelectedCategoryId] = useState<number | 0>(0);
 
   return (
     <>

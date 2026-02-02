@@ -123,5 +123,17 @@ public class PostServiceImpl implements PostService {
         return filteredPosts;
     }
 
+    @Override
+    public List<PostDto> filterPostByParams(Integer product_id, Integer category_id) {
+        if ((product_id == 0) && category_id != 0){
+            return filterPostByCategory(category_id);
+        } else if (product_id !=0 && category_id ==0) {
+            return filterPostByProduct(product_id);
+        }
+        else {
+            return getAllPostsWImages();
+        }
+    }
+
 
 }

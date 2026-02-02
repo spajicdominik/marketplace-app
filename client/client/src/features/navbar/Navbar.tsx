@@ -1,5 +1,5 @@
-import NavItems from "../../components/navbar/NavItems";
-import Logo from "../../components/navbar/Logo";
+import NavItems from "./components/NavItems";
+import Logo from "./components/Logo"
 
 function Navbar(){
     return (

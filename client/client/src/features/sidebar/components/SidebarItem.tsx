@@ -9,7 +9,7 @@ export default function SidebarItem({item, onSelectProduct, onSelectCategory}: a
     return (
         <div className={open ? "sidebar-item open text-black" : "sidebar-item text-black"}>
             <div className="sidebar-title">
-                <span className="cursor-pointer" onClick={() => {onSelectCategory(item.id)}}>
+                <span className="cursor-pointer" onClick={() => {onSelectCategory(item.id); onSelectProduct(0);}}>
                     {item.name}
                 </span>
                 <FaChevronDown className="toggle-btn" onClick={() => setOpen(!open)}/>
@@ -23,14 +23,14 @@ export default function SidebarItem({item, onSelectProduct, onSelectCategory}: a
     return(
         <div className={open ? "sidebar-item open text-black" : "sidebar-item text-black"}>
             <div className="sidebar-title">
-                <span className="cursor-pointer" onClick={() => {onSelectCategory(item.id)}}>
+                <span className="cursor-pointer" onClick={() => {onSelectCategory(item.id); onSelectProduct(0);}}>
                     {item.name}
                 </span>
                 <FaChevronDown className="toggle-btn" onClick={() => setOpen(!open)}/>
             </div>
             <div className="sidebar-content flex-col">
                 {
-                item.products.map((product : any, index: number) => <div className="cursor-pointer" onClick={() => {onSelectProduct(product.id)}}>{product.name}</div>)}
+                item.products.map((product : any, index: number) => <div className="cursor-pointer" onClick={() => {onSelectProduct(product.id); onSelectCategory(0);}}>{product.name}</div>)}
             </div>
         </div>
     );
