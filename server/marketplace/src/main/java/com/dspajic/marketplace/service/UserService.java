@@ -22,5 +22,7 @@ public interface UserService {
 
     List<User> getAllFemaleUsers();
 
+    User getUserByUsername(String username);
+
 
 }

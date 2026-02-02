@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -54,5 +55,16 @@ public class UserServiceImpl implements UserService {
             }
         }
         return deactivatedUsers;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        List<User> allUsers = userRepo.getAllUsers();
+        for (User u : allUsers) {
+            if (Objects.equals(u.getUsername(), username)){
+                return u;
+            }
+        }
+        return null;
     }
 }
