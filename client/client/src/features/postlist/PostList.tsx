@@ -1,5 +1,7 @@
 import PostListItem from "./components/PostListItem";
 import useFetchPosts from "../../hooks/postlist/useFetchPosts";
+import { Input } from "antd";
+const {Search} = Input;
 
 
 function PostList({ productId, categoryId } : { productId : number | 0, categoryId : number | 0}) {

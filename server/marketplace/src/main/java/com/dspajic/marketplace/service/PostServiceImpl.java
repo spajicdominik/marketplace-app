@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Filter;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -123,15 +124,29 @@ public class PostServiceImpl implements PostService {
         return filteredPosts;
     }
 
+    public List<PostDto> filterPostByPrice(List<PostDto> filteredList,Integer minPrice, Integer maxPrice) {
+        List<PostDto> filteredByPrice = new ArrayList<>();
+
+        for (PostDto post : filteredList) {
+            if (post.getPrice() >= minPrice && post.getPrice() <= maxPrice) {
+                filteredByPrice.add(post);
+            }
+        }
+        return filteredByPrice;
+    }
+
+
     @Override
-    public List<PostDto> filterPostByParams(Integer product_id, Integer category_id) {
+    public List<PostDto> filterPostByParams(Integer product_id, Integer category_id, Integer minPrice, Integer maxPrice) {
         if ((product_id == 0) && category_id != 0){
-            return filterPostByCategory(category_id);
+            List<PostDto> filteredListCategory = filterPostByCategory(category_id);
+            return filterPostByPrice(filteredListCategory, minPrice, maxPrice);
         } else if (product_id !=0 && category_id ==0) {
-            return filterPostByProduct(product_id);
+            List<PostDto> filteredListProduct = filterPostByProduct(product_id);
+            return filterPostByPrice(filteredListProduct, minPrice, maxPrice);
         }
         else {
-            return getAllPostsWImages();
+            return filterPostByPrice(getAllPostsWImages(), minPrice, maxPrice);
         }
     }
 

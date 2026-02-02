@@ -45,8 +45,10 @@ public class PostController {
     @GetMapping("/posts-filter")
     public List<PostDto> getPostsByParams(
             @RequestParam(value = "productId", required = true) Integer productId,
-            @RequestParam(value = "categoryId", required = true) Integer categoryId
+            @RequestParam(value = "categoryId", required = true) Integer categoryId,
+            @RequestParam(value = "minPrice") Integer minPrice,
+            @RequestParam(value = "maxPrice") Integer maxPrice
     ){
-        return postService.filterPostByParams(productId, categoryId);
+        return postService.filterPostByParams(productId, categoryId, minPrice, maxPrice);
     }
 }

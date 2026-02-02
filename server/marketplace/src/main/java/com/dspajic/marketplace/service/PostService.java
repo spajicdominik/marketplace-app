@@ -17,5 +17,6 @@ public interface PostService {
     List<PostDto> getAllPostsWImages();
     List<PostDto> filterPostByCategory(Integer category_id);
     List<PostDto> filterPostByProduct(Integer product_id);
-    List<PostDto> filterPostByParams(Integer product_id, Integer category_id);
+    List<PostDto> filterPostByParams(Integer product_id, Integer category_id, Integer minPrice, Integer maxPrice);
+    List<PostDto> filterPostByPrice(List<PostDto> filteredList,Integer minPrice, Integer maxPrice );
 }
