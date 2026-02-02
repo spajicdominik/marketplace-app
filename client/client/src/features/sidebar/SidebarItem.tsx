@@ -2,7 +2,7 @@ import { IoIosSettings } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import { useState } from "react";
 
-export default function SidebarItem({item, onSelectProduct}: any) {
+export default function SidebarItem({item, onSelectProduct, onSelectCategory}: any) {
     const [open, setOpen] = useState(false)
 
     
@@ -10,13 +10,13 @@ export default function SidebarItem({item, onSelectProduct}: any) {
     return (
         <div className={open ? "sidebar-item open text-black" : "sidebar-item text-black"}>
             <div className="sidebar-title">
-                <span>
+                <span className="cursor-pointer" onClick={() => {onSelectCategory(item.id)}}>
                     {item.name}
                 </span>
                 <FaChevronDown className="toggle-btn" onClick={() => setOpen(!open)}/>
             </div>
             <div className="sidebar-content">
-                { item.children.map((child : any, index : number) => <SidebarItem key={index} item={child} onSelectProduct={onSelectProduct}/>) }
+                { item.children.map((child : any, index : number) => <SidebarItem key={index} item={child} onSelectProduct={onSelectProduct} onSelectCategory={onSelectCategory}/>) }
             </div>
         </div>
     );
@@ -24,7 +24,7 @@ export default function SidebarItem({item, onSelectProduct}: any) {
     return(
         <div className={open ? "sidebar-item open text-black" : "sidebar-item text-black"}>
             <div className="sidebar-title">
-                <span>
+                <span className="cursor-pointer" onClick={() => {onSelectCategory(item.id)}}>
                     {item.name}
                 </span>
                 <FaChevronDown className="toggle-btn" onClick={() => setOpen(!open)}/>

@@ -44,4 +44,7 @@ public class PostController {
 
     @GetMapping("/posts/product/{id}")
     public List<PostDto> getPostsByProduct(@PathVariable("id") Integer id) {return postService.filterPostByProduct(id);}
+
+    @GetMapping("/posts/category/{id}")
+    public List<PostDto> getPostsByCategory (@PathVariable("id") Integer id) {return postService.filterPostByCategory(id);}
 }

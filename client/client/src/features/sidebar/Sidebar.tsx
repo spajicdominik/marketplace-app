@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import SidebarItem from "./SidebarItem";
 import items from "./sidebar.json"
 
-export default function Sidebar({ onSelectProduct } : { onSelectProduct : (id: number) => void }) {
+export default function Sidebar({ onSelectProduct, onSelectCategory } : { onSelectProduct : (id: number) => void, onSelectCategory : (id:number) => void }) {
     const [category, setCategory] = useState([]);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export default function Sidebar({ onSelectProduct } : { onSelectProduct : (id: n
 
     return (
         <div className="sidebar m-4">
-           {category.map((item, index) => <SidebarItem key={index} item={item} onSelectProduct={onSelectProduct}/>)}
+           {category.map((item, index) => <SidebarItem key={index} item={item} onSelectProduct={onSelectProduct} onSelectCategory={onSelectCategory}/>)}
            <div className="text-black">
             Filter menu
            </div>

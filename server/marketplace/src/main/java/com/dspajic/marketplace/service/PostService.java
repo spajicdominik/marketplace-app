@@ -15,6 +15,6 @@ public interface PostService {
     int updatePost (Post post);
     int deletePost (int id);
     List<PostDto> getAllPostsWImages();
-    List<PostDto> filterPostByCategory(Category c);
+    List<PostDto> filterPostByCategory(Integer category_id);
     List<PostDto> filterPostByProduct(Integer product_id);
 }

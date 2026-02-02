@@ -6,13 +6,14 @@ import Sidebar from './features/sidebar/Sidebar'
 
 function App() { 
   const [selectProductId, setSelectedProductId] = useState<number | null>(null);
+  const [selectCategoryId, setSelectedCategoryId] = useState<number | null>(null);
 
   return (
     <>
      <Navbar></Navbar>
      <div className='flex'>
-        <Sidebar onSelectProduct={setSelectedProductId}></Sidebar>
-        <PostList productId={selectProductId}></PostList>
+        <Sidebar onSelectProduct={setSelectedProductId} onSelectCategory={setSelectedCategoryId}></Sidebar>
+        <PostList productId={selectProductId} categoryId={selectCategoryId}></PostList>
      </div>
     </>
   )

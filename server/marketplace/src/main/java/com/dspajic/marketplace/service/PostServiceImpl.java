@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -24,7 +25,10 @@ public class PostServiceImpl implements PostService {
     PostImageRepository postImageRepository;
 
     @Autowired
-    CategoryRepository categoryRepository;
+    CategoryService categoryService;
+
+    @Autowired
+    ProductService productService;
 
     @Override
     public List<Post> getAllPosts() {
@@ -80,11 +84,30 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> filterPostByCategory(Category category) {
+    public List<PostDto> filterPostByCategory(Integer category_id) {
         List<PostDto> allPosts = getAllPostsWImages();
         List<PostDto> filteredPosts = new ArrayList<>();
 
-        return null;
+        for (PostDto post : allPosts) {
+            Product postProduct = productService.getProductById(post.getProductID());
+            Integer postProductCategoryId = postProduct.getCategory_id();
+            if (Objects.equals(postProductCategoryId, category_id)){
+                filteredPosts.add(post);
+            }
+            else {
+                while (!Objects.equals(postProductCategoryId, category_id)){
+                    if(postProductCategoryId == 0){
+                        break;
+                    }
+                    Category childCategory = categoryService.getCategoryById(postProductCategoryId);
+                    postProductCategoryId = childCategory.getParent_id();
+                }
+                if (Objects.equals(postProductCategoryId, category_id)){
+                    filteredPosts.add(post);
+                }
+            }
+        }
+        return filteredPosts;
     }
 
     @Override

@@ -2,13 +2,23 @@ import PostListItem from "../../components/post/PostListItem";
 import { useEffect, useState } from "react";
 
 
-function PostList({ productId } : { productId : number | null}) {
+function PostList({ productId, categoryId } : { productId : number | null, categoryId : number | null}) {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         const defaultUrl = 'http://localhost:8080/api/posts-with-images';
         const productUrl = 'http://localhost:8080/api/posts/product/';
-        const url = productId == null ? defaultUrl : `${productUrl}${productId}`;
+        const categoryUrl = 'http://localhost:8080/api/posts/category/'
+
+        let url = defaultUrl;
+
+        if (productId != null) {
+            url = `${productUrl}${productId}`;
+        }
+
+        if (categoryId != null) {
+            url = `${categoryUrl}${categoryId}`
+        }
 
         async function fetchPosts() {
             const response = await fetch(url);
@@ -17,7 +27,7 @@ function PostList({ productId } : { productId : number | null}) {
         }
         
         fetchPosts();
-    }, [productId]);
+    }, [productId, categoryId]);
 
     return (
         <div className="flex-col justify-center">
