@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
 
-function useFetchPosts(productId: number, categoryId: number) {
+function useFetchPosts(productId: number, categoryId: number, minPrice: number, maxPrice: number) {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const url = `http://localhost:8080/api/posts-filter?productId=${productId}&categoryId=${categoryId}`;
+        if (isNaN(maxPrice)){
+            maxPrice = 20000;
+        }
+
+        if (isNaN(minPrice)){
+            minPrice = 0;
+        }
+    
+        const url = `http://localhost:8080/api/posts-filter?productId=${productId}&categoryId=${categoryId}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
 
         async function fetchPosts() {
             setIsLoading(true);
@@ -30,7 +38,7 @@ function useFetchPosts(productId: number, categoryId: number) {
         }
 
         fetchPosts();
-    }, [productId, categoryId]);
+    }, [productId, categoryId, minPrice, maxPrice]);
 
     return {posts, isLoading, error};
 }

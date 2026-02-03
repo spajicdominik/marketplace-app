@@ -4,8 +4,8 @@ import { Input } from "antd";
 const {Search} = Input;
 
 
-function PostList({ productId, categoryId } : { productId : number | 0, categoryId : number | 0}) {
-    const {posts, isLoading, error} = useFetchPosts(productId, categoryId);
+function PostList({ productId, categoryId, minPrice, maxPrice } : { productId : number | 0, categoryId : number | 0, minPrice : number | 0, maxPrice : number | 20000}) {
+    const {posts, isLoading, error} = useFetchPosts(productId, categoryId, minPrice, maxPrice);
 
     if (isLoading) {
         return <div>Loading posts...</div>
