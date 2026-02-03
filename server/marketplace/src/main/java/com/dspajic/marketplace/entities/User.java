@@ -43,13 +43,13 @@ public class User {
     @Column(name = "role_id")
     private int roleID;
 
-    @Column(name = "status")
-    private Integer status;
+    @Column(name = "enabled")
+    private Boolean enabled;
 
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, String gender, LocalDate birthDate, String phoneNumber, String email, String profileUrl, int roleID, Integer status) {
+    public User(String username, String password, String firstName, String lastName, String gender, LocalDate birthDate, String phoneNumber, String email, String profileUrl, int roleID, Boolean enabled) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -60,7 +60,7 @@ public class User {
         this.email = email;
         this.profileUrl = profileUrl;
         this.roleID = roleID;
-        this.status = status;
+        this.enabled = enabled;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", profileUrl='" + profileUrl + '\'' +
                 ", roleID=" + roleID +
-                ", status=" + status +
+                ", enabled=" + enabled +
                 '}';
     }
 
@@ -169,11 +169,11 @@ public class User {
         this.roleID = roleID;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -17,4 +17,7 @@ public interface UserRepository {
     int deleteUser(int id);
 
     UserDto getUserByIdd(int id);
+
+    User findByUsername(String username);
+    List<String> findAuthoritiesByUsername(String username);
 }

@@ -6,6 +6,7 @@ import com.dspajic.marketplace.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 
@@ -23,22 +24,24 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAllUsers() {
-        String selectAllQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id, status FROM users";
+        String selectAllQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id, enabled FROM users";
         return jdbcTemplate.query(selectAllQuery, userRowMapper);
     }
 
     @Override
     public User getUserById(int id) {
-        String selectByIdQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id, status FROM users WHERE id = ? ";
+        String selectByIdQuery = "SELECT id, username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id, enabled FROM users WHERE id = ? ";
         return jdbcTemplate.queryForObject(selectByIdQuery, userRowMapper, id);
     }
 
     @Override
     public int addUser(User user) {
-        String addUserQuery = "INSERT INTO users (username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String addUserQuery = "INSERT INTO users (username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id, enabled) VALUES (?,?,?,?,?,?,?,?,?,?, ?)";
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
         return jdbcTemplate.update(addUserQuery,
                 user.getUsername(),
-                user.getPassword(),
+                encodedPassword,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getGender(),
@@ -47,7 +50,7 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getEmail(),
                 user.getProfileUrl(),
                 user.getRoleID(),
-                user.getStatus());
+                user.getEnabled());
     }
 
     @Override
@@ -65,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
                 email = ?,
                 profile_url = ?,
                 role_id = ?,
-                status = ?
+                enabled = ?
                 WHERE
                 id = ?
                 """;
@@ -82,7 +85,7 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getProfileUrl(),
                 user.getRoleID(),
                 user.getId(),
-                user.getStatus()
+                user.getEnabled()
                 );
     }
 
@@ -92,7 +95,7 @@ public class UserRepositoryImpl implements UserRepository {
                 UPDATE
                 users
                 SET
-                status = 0
+                enabled = 0
                 WHERE
                 id = ?
                 """;
@@ -106,5 +109,42 @@ public class UserRepositoryImpl implements UserRepository {
                 .fullName(user.getFirstName() + " " + user.getLastName())
                 .id(user.getId())
                 .build();
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        String sql = """
+                SELECT
+                id, 
+                username, 
+                password, 
+                first_name, 
+                last_name, 
+                gender, 
+                birth_date, 
+                phone_number, 
+                email, 
+                profile_url, 
+                role_id, 
+                enabled 
+                FROM 
+                users 
+                WHERE 
+                username = ?
+                """;
+        return jdbcTemplate.queryForObject(sql, userRowMapper, username);
+    }
+
+    @Override
+    public List<String> findAuthoritiesByUsername(String username) {
+        String sql = """
+                SELECT
+                authority
+                FROM
+                authorities
+                WHERE
+                username = ?
+                """;
+        return jdbcTemplate.queryForList(sql, String.class, username);
     }
 }
