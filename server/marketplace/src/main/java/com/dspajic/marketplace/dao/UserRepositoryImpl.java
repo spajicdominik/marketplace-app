@@ -15,12 +15,16 @@ import java.util.List;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
+
     @Autowired
     JdbcTemplate jdbcTemplate;
     @Autowired
     NamedParameterJdbcTemplate namedJdbc;
 
     UserRowMapper userRowMapper = new UserRowMapper();
+
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     @Override
     public List<User> getAllUsers() {
@@ -37,7 +41,6 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public int addUser(User user) {
         String addUserQuery = "INSERT INTO users (username, password, first_name, last_name, gender, birth_date, phone_number, email, profile_url, role_id, enabled) VALUES (?,?,?,?,?,?,?,?,?,?, ?)";
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         return jdbcTemplate.update(addUserQuery,
                 user.getUsername(),
@@ -75,7 +78,7 @@ public class UserRepositoryImpl implements UserRepository {
         return jdbcTemplate.update(
                 updateUserQuery,
                 user.getId(),
-                user.getPassword(),
+                passwordEncoder.encode(user.getPassword()),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getGender(),
