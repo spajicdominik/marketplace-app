@@ -3,7 +3,7 @@ import Item from './Item';
 function NavItems() {
     return (
         <div>
-            <Item title="+SELL"></Item>
+            <Item title="Sell"></Item>
             <Item title="Featured"></Item>
             <Item title="Shop"></Item>
             <Item title="Profile"></Item>

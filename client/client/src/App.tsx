@@ -1,22 +1,36 @@
-import { useState } from 'react'
 import './App.css'
-import Navbar from './features/navbar/Navbar'
-import PostList from './features/postlist/PostList'
-import Sidebar from './features/sidebar/Sidebar'
+import Shop from './routes/Shop';
+import Settings from './routes/Settings';
+import Sell from './routes/Sell';
+import Profile from './routes/Profile';
+import Featured from './routes/Featured';
+
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import RootLayout from './routes/Root';
+import ErrorPage from './routes/Error';
+import Post from './routes/Post';
 
 function App() { 
-  const [selectProductId, setSelectedProductId] = useState<number | 0>(0);
-  const [selectCategoryId, setSelectedCategoryId] = useState<number | 0>(0);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(20000);
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <RootLayout/>,
+      errorElement: <ErrorPage/>,
+      children: [
+        { path: '/featured', element: <Featured/>},
+        { path: '/shop', element: <Shop/>},
+        { path: '/shop/:postId', element: <Post></Post>},
+        { path: '/settings', element: <Settings/>},
+        { path: '/sell', element: <Sell/>},
+        { path: '/profile', element: <Profile/>}
+      ]
+    }
+  ]);
 
   return (
     <>
-     <Navbar></Navbar>
-     <div className='flex'>
-        <Sidebar onSelectProduct={setSelectedProductId} onSelectCategory={setSelectedCategoryId} onSelectMinPrice={setMinPrice} onSelectMaxPrice={setMaxPrice}></Sidebar>
-        <PostList productId={selectProductId} categoryId={selectCategoryId} minPrice={minPrice} maxPrice={maxPrice}></PostList>
-     </div>
+     <RouterProvider router={router}/>
     </>
   )
 }
