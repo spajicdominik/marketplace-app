@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getAuthToken } from "../../utils/Auth";
 
 function useFetchPosts(productId: number, categoryId: number, minPrice: number, maxPrice: number) {
     const [posts, setPosts] = useState([]);
@@ -21,7 +22,12 @@ function useFetchPosts(productId: number, categoryId: number, minPrice: number, 
             setError(null);
 
             try {
-                const response = await fetch(url);
+                const token = getAuthToken();
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization' : 'Bearer ' + token
+                    }
+                });
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status : ${response.status}`);
                 }

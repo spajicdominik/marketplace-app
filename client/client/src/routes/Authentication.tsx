@@ -1,6 +1,6 @@
 import { useState } from "react"
 import AuthForm from "../features/auth_form/AuthForm";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useActionData } from "react-router-dom";
 import ErrorPage from "./Error";
 import { redirect } from "react-router-dom";
 
@@ -12,11 +12,13 @@ export default function AuthenticationPage() {
     const register_fields = ["Email", "Username", "Password", "First Name", "Last Name", "Gender", "Birth Date", "Phone Number"];
     const login_fields = ["Username", "Password"];
 
+    const data = useActionData();
+
     return (
         <>
         {isQueryValid ? 
         <div className="flex justify-center items-center">
-            <AuthForm fields={isLogin ? login_fields : register_fields} isLogin={isLogin}></AuthForm>
+            <AuthForm fields={isLogin ? login_fields : register_fields} isLogin={isLogin} data={data}></AuthForm>
         </div>
         :
         <div>
@@ -30,14 +32,12 @@ export default function AuthenticationPage() {
 
 export async function action({request} : {request : any}) {
 
-    const data = request.formData();
+    const data = await request.formData();
 
     const authData = {
         username: data.get('Username'),
         password: data.get('Password')
     }
-
-    console.log(authData);
 
     const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
@@ -50,6 +50,11 @@ export async function action({request} : {request : any}) {
     if (response.status != 200) {
         return response;
     }
+
+    const resData = await response.json();
+    const token = resData.token;
+    
+    localStorage.setItem('token', token);
 
     return redirect('/shop');
     
