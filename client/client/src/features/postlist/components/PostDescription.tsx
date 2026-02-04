@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 function PostDescription({title, description, price, currency}: {title: string, description: string, price: string, currency: string}) {
     return (
@@ -7,7 +8,7 @@ function PostDescription({title, description, price, currency}: {title: string, 
             <p>{description}</p>
             <div className='flex'>
                 <h2>{price}{currency}</h2>
-                <Button>Info</Button>
+                <Button><NavLink to={"/"}>INFO</NavLink></Button>
             </div>
         </div>
     );

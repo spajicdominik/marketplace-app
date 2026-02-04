@@ -4,6 +4,7 @@ import Settings from './routes/Settings';
 import Sell from './routes/Sell';
 import Profile from './routes/Profile';
 import Featured from './routes/Featured';
+import AuthenticationPage from './routes/Authentication';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import RootLayout from './routes/Root';
@@ -23,7 +24,8 @@ function App() {
         { path: '/shop/:postId', element: <Post></Post>},
         { path: '/settings', element: <Settings/>},
         { path: '/sell', element: <Sell/>},
-        { path: '/profile', element: <Profile/>}
+        { path: '/profile', element: <Profile/>},
+        { path: '/auth', element: <AuthenticationPage/>}
       ]
     }
   ]);
