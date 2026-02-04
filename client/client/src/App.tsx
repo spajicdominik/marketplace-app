@@ -11,6 +11,8 @@ import RootLayout from './routes/Root';
 import ErrorPage from './routes/Error';
 import Post from './routes/Post';
 
+import { action as authAction } from './routes/Authentication';
+
 function App() { 
 
   const router = createBrowserRouter([
@@ -25,7 +27,7 @@ function App() {
         { path: '/settings', element: <Settings/>},
         { path: '/sell', element: <Sell/>},
         { path: '/profile', element: <Profile/>},
-        { path: '/auth', element: <AuthenticationPage/>}
+        { path: '/auth', element: <AuthenticationPage/>, action: authAction}
       ]
     }
   ]);
