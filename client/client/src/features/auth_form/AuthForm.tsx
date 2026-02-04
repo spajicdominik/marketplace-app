@@ -1,13 +1,12 @@
-import { Form } from "react-router-dom";
+import { Form, NavLink } from "react-router-dom";
 import { Button } from "antd";
 import InputField from "./components/InputField";
 
 export default function AuthForm(
-    { fields, isLogin, switchAuthHandler }
+    { fields, isLogin}
         : {
             fields: string[],
-            isLogin: boolean,
-            switchAuthHandler: (isLoginBool: boolean) => void
+            isLogin: boolean
         }) {
 
     return (
@@ -23,12 +22,12 @@ export default function AuthForm(
             {isLogin ?
                 <div className="info w-1/2 flex flex-col justify-center items-center bg-amber-100">
                     <h1>Welcome back!</h1>
-                    <Button onClick={() => {switchAuthHandler(false)}}>No account yet? Sign up!</Button>
+                    <Button><NavLink to={"?mode=register"}>No account yet? Sign up!</NavLink></Button>
                 </div>
                 :
                 <div className="info w-1/2 flex flex-col justify-center items-center bg-amber-100">
                     <h1>Become a TechMarket user!</h1>
-                    <Button onClick={() => {switchAuthHandler(true)}}>Already an user? Sign in!</Button>
+                    <Button><NavLink to={"?mode=login"}>Already an user? Sign in!</NavLink></Button>
                 </div>}
         </div>
     )
