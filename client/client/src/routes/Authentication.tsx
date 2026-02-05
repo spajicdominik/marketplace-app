@@ -1,4 +1,3 @@
-import { useState } from "react"
 import AuthForm from "../features/auth_form/AuthForm";
 import { Link, useSearchParams } from "react-router-dom";
 import ErrorPage from "./Error";
@@ -11,6 +10,8 @@ export default function AuthenticationPage() {
 
     const register_fields = ["Email", "Username", "Password", "First Name", "Last Name", "Gender", "Birth Date", "Phone Number"];
     const login_fields = ["Username", "Password"];
+
+
 
     return (
         <>
@@ -30,14 +31,12 @@ export default function AuthenticationPage() {
 
 export async function action({request} : {request : any}) {
 
-    const data = request.formData();
+    const data = await request.formData();
 
     const authData = {
         username: data.get('Username'),
         password: data.get('Password')
     }
-
-    console.log(authData);
 
     const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
@@ -51,6 +50,11 @@ export async function action({request} : {request : any}) {
         return response;
     }
 
+    const resData = await response.json();
+
+    const token = resData.token;
+
+    localStorage.setItem('token', token);
+
     return redirect('/shop');
-    
 }

@@ -1,4 +1,4 @@
-import { Form, NavLink } from "react-router-dom";
+import { Form, NavLink, useActionData } from "react-router-dom";
 import { Button } from "antd";
 import InputField from "./components/InputField";
 
@@ -15,7 +15,7 @@ export default function AuthForm(
                 <h1 className="p-5 text-5xl">{isLogin ? "Log in" : "Register"}</h1>
                 <Form method="post" className="p-5">
                     {fields.map((item) => <InputField typeOfInput={item} />)}
-                    <Button>{isLogin ? "Log in" : "Register"}</Button>
+                    <Button htmlType="submit">{isLogin ? "Log in" : "Register"}</Button>
                 </Form>
             </div>
 
