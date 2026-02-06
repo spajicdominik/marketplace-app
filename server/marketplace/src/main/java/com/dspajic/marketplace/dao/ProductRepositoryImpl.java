@@ -1,0 +1,95 @@
+package com.dspajic.marketplace.dao;
+
+import com.dspajic.marketplace.entities.Product;
+import com.dspajic.marketplace.mappers.ProductRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public class ProductRepositoryImpl implements ProductRepository{
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    ProductRowMapper rowMapper = new ProductRowMapper();
+
+    @Override
+    public List<Product> getAllProducts() {
+        String sql = """
+                SELECT
+                product_id,
+                name,
+                subcategory_item_id
+                FROM
+                product
+                """;
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+
+    @Override
+    public Product getProductById(Integer id) {
+        String sql = """
+                SELECT
+                product_id,
+                name,
+                subcategory_item_id
+                FROM
+                product
+                WHERE
+                product_id = ?
+                """;
+        return jdbcTemplate.queryForObject(sql, rowMapper, id);
+    }
+
+    @Override
+    public Integer addProduct(Product entity) {
+        String sql = """
+                INSERT INTO
+                product
+                (
+                name,
+                subcategory_item_id
+                )
+                VALUES
+                (?, ?)
+                """;
+        return jdbcTemplate.update(
+                sql,
+                entity.getName(),
+                        entity.getSubcategoryItemId()
+        );
+    }
+
+    @Override
+    public Integer updateProduct(Product entity) {
+        String sql = """
+                UPDATE
+                product
+                SET
+                name = ?,
+                subcategory_item_id = ?
+                WHERE
+                product_id = ?
+                """;
+        return jdbcTemplate.update(
+                sql,
+                entity.getName(),
+                        entity.getSubcategoryItemId(),
+                        entity.getId()
+        );
+    }
+
+    @Override
+    public void deleteProduct(Integer id) {
+        String sql = """
+                DELETE FROM
+                product
+                WHERE
+                product_id = ?
+                """;
+        jdbcTemplate.update(sql, id);
+    }
+}

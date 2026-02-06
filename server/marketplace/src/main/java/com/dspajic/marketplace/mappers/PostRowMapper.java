@@ -1,0 +1,23 @@
+package com.dspajic.marketplace.mappers;
+
+import com.dspajic.marketplace.entities.Post;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class PostRowMapper implements RowMapper<Post> {
+    @Override
+    public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Post e = new Post();
+        e.setId(rs.getInt("post_id"));
+        e.setTitle(rs.getString("title"));
+        e.setDescription(rs.getString("description"));
+        e.setPrice(rs.getBigDecimal("price"));
+        e.setCurrency(rs.getString("currency"));
+        e.setUserId(rs.getInt("user_id"));
+        e.setProductId(rs.getInt("product_id"));
+        e.setLocationId(rs.getInt("location_id"));
+        return e;
+    }
+}
