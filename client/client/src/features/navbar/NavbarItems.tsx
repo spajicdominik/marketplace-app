@@ -16,6 +16,10 @@ const items: MenuItem[] = [
   {
     label: 'Shop',
     key: 'shop'
+  },
+  {
+    label: 'Login',
+    key: 'login'
   }
 ];
 
@@ -27,7 +31,7 @@ const NavbarItems: React.FC = () => {
     setCurrent(e.key);
   };
 
-  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
+  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} disabledOverflow={true}/>;
 };
 
 export default NavbarItems;
