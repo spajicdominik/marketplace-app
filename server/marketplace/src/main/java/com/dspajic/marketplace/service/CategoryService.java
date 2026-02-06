@@ -1,11 +1,10 @@
-package com.dspajic.marketplace.dao;
+package com.dspajic.marketplace.service;
 
-import com.dspajic.marketplace.entities.Brand;
 import com.dspajic.marketplace.entities.Category;
 
 import java.util.List;
 
-public interface CategoryRepository {
+public interface CategoryService {
     List<Category> getAllCategories();
     Category getCategoryById(Integer id);
     Integer addCategory (Category category);

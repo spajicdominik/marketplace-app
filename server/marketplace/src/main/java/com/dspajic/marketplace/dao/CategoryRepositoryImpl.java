@@ -18,26 +18,72 @@ public class CategoryRepositoryImpl implements CategoryRepository{
 
     @Override
     public List<Category> getAllCategories() {
-        return List.of();
+        String sql = """
+                SELECT
+                category_id,
+                name
+                FROM
+                category
+                """;
+        return jdbcTemplate.query(sql, categoryRowMapper);
     }
 
     @Override
     public Category getCategoryById(Integer id) {
-        return null;
+        String sql = """
+                SELECT
+                category_id
+                name
+                FROM
+                category
+                WHERE
+                category_id = ?
+                """;
+        return jdbcTemplate.queryForObject(sql, categoryRowMapper, id);
     }
 
     @Override
-    public Integer addCategory(Category brand) {
-        return 0;
+    public Integer addCategory(Category category) {
+        String sql = """
+                INSERT INTO
+                category
+                (
+                name
+                )
+                VALUES
+                (?)
+                """;
+        return jdbcTemplate.update(
+                sql,
+                category.getName()
+        );
     }
 
     @Override
-    public Integer updateCategory(Category brand) {
-        return 0;
+    public Integer updateCategory(Category category) {
+        String sql = """
+                UPDATE
+                category
+                SET
+                name = ?
+                WHERE
+                category_id = ?
+                """;
+        return jdbcTemplate.update(
+                sql,
+                category.getName(),
+                category.getId()
+        );
     }
 
     @Override
     public void deleteCategory(Integer id) {
-
+        String sql = """
+                DELETE FROM
+                category
+                WHERE
+                category_id = ?
+                """;
+        jdbcTemplate.update(sql, id);
     }
 }
