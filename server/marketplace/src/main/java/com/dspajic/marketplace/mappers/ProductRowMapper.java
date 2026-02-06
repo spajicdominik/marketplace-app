@@ -12,6 +12,7 @@ public class ProductRowMapper implements RowMapper<Product> {
         Product e = new Product();
         e.setId(rs.getInt("product_id"));
         e.setName(rs.getString("name"));
+        e.setBrandId(rs.getInt("brand_id"));
         e.setSubcategoryItemId(rs.getInt("subcategory_item_id"));
         return e;
     }

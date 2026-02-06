@@ -21,6 +21,9 @@ public class LocationRepositoryImpl implements LocationRepository{
         String sql = """
                 SELECT
                 location_id,
+                address_line1,
+                address_line2,
+                postal_code,
                 city_id
                 FROM
                 location
@@ -33,6 +36,9 @@ public class LocationRepositoryImpl implements LocationRepository{
         String sql = """
                 SELECT
                 location_id,
+                address_line1,
+                address_line2,
+                postal_code,
                 city_id
                 FROM
                 location
@@ -48,13 +54,19 @@ public class LocationRepositoryImpl implements LocationRepository{
                 INSERT INTO
                 location
                 (
+                address_line1,
+                address_line2,
+                postal_code,
                 city_id
                 )
                 VALUES
-                (?)
+                (?, ? ,? ,?)
                 """;
         return jdbcTemplate.update(
                 sql,
+                entity.getAddressLine1(),
+                entity.getAddressLine2(),
+                entity.getPostalCode(),
                 entity.getCityId()
         );
     }
@@ -65,13 +77,19 @@ public class LocationRepositoryImpl implements LocationRepository{
                 UPDATE
                 location
                 SET
+                address_line1 = ?,
+                address_line2 = ?,
+                postal_code = ?,
                 city_id = ?
                 WHERE
                 location_id = ?
                 """;
         return jdbcTemplate.update(
                 sql,
-                entity.getCityId(),
+                entity.getAddressLine1(),
+                        entity.getAddressLine2(),
+                        entity.getPostalCode(),
+                        entity.getCityId(),
                         entity.getId()
         );
     }

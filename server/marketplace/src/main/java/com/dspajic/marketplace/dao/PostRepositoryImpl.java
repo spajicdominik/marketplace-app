@@ -27,7 +27,9 @@ public class PostRepositoryImpl implements PostRepository{
                 currency,
                 user_id,
                 product_id,
-                location_id
+                location_id,
+                created_at,
+                updated_at
                 FROM
                 post
                 """;
@@ -45,7 +47,9 @@ public class PostRepositoryImpl implements PostRepository{
                 currency,
                 user_id,
                 product_id,
-                location_id
+                location_id,
+                created_at,
+                updated_at
                 FROM
                 post
                 WHERE
@@ -66,10 +70,12 @@ public class PostRepositoryImpl implements PostRepository{
                 currency,
                 user_id,
                 product_id,
-                location_id
+                location_id,
+                created_at,
+                updated_at
                 )
                 VALUES
-                (?, ?, ?, ?, ?, ?, ?)
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
         return jdbcTemplate.update(
                 sql,
@@ -79,7 +85,9 @@ public class PostRepositoryImpl implements PostRepository{
                         entity.getCurrency(),
                         entity.getUserId(),
                         entity.getProductId(),
-                        entity.getLocationId()
+                        entity.getLocationId(),
+                entity.getCreatedAt(),
+                entity.getUpdatedAt()
         );
     }
 
@@ -95,7 +103,9 @@ public class PostRepositoryImpl implements PostRepository{
                 currency = ?,
                 user_id = ?,
                 product_id = ?,
-                location_id = ?
+                location_id = ?,
+                created_at = ?,
+                updated_at = ?
                 WHERE
                 post_id = ?
                 """;
@@ -108,6 +118,8 @@ public class PostRepositoryImpl implements PostRepository{
                         entity.getUserId(),
                         entity.getProductId(),
                         entity.getLocationId(),
+                        entity.getCreatedAt(),
+                        entity.getUpdatedAt(),
                         entity.getId()
         );
     }

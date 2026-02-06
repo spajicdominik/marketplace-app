@@ -3,6 +3,9 @@ package com.dspajic.marketplace.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -27,15 +30,20 @@ public class Users {
     @Column(name = "user_details_id")
     private Integer userDetailsId;
 
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
     public Users() {
     }
 
-    public Users(Integer id, String username, String password, Boolean enabled, Integer userDetailsId) {
+    public Users(Integer id, String username, String password, Boolean enabled, Integer userDetailsId, LocalDateTime createdAt) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
         this.userDetailsId = userDetailsId;
+        this.createdAt = createdAt;
     }
 
     @Override
@@ -46,6 +54,7 @@ public class Users {
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", userDetailsId=" + userDetailsId +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }

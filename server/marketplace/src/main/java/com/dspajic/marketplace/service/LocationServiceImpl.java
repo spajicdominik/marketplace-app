@@ -24,13 +24,13 @@ public class LocationServiceImpl implements LocationService{
     }
 
     @Override
-    public Integer addLocation(Location entity) {
-        return repository.addLocation(entity);
+    public Integer addLocation(Location location) {
+        return repository.addLocation(location);
     }
 
     @Override
-    public Integer updateLocation(Location entity) {
-        return repository.updateLocation(entity);
+    public Integer updateLocation(Location location) {
+        return repository.updateLocation(location);
     }
 
     @Override

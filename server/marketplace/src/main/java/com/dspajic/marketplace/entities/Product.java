@@ -18,15 +18,19 @@ public class Product {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "brand_id")
+    private Integer brandId;
+
     @Column(name = "subcategory_item_id")
     private Integer subcategoryItemId;
 
     public Product() {
     }
 
-    public Product(Integer id, String name, Integer subcategoryItemId) {
+    public Product(Integer id, String name, Integer brandId, Integer subcategoryItemId) {
         this.id = id;
         this.name = name;
+        this.brandId = brandId;
         this.subcategoryItemId = subcategoryItemId;
     }
 
@@ -35,6 +39,7 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", brandId=" + brandId +
                 ", subcategoryItemId=" + subcategoryItemId +
                 '}';
     }

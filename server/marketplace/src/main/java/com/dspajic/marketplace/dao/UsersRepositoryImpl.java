@@ -4,6 +4,7 @@ import com.dspajic.marketplace.entities.Users;
 import com.dspajic.marketplace.mappers.UsersRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public class UsersRepositoryImpl implements UsersRepository{
 
     UsersRowMapper rowMapper = new UsersRowMapper();
 
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public List<Users> getAllUserss() {
         String sql = """
@@ -24,7 +27,8 @@ public class UsersRepositoryImpl implements UsersRepository{
                 username,
                 password,
                 enabled,
-                user_details_id
+                user_details_id,
+                created_at
                 FROM
                 users
                 """;
@@ -39,7 +43,8 @@ public class UsersRepositoryImpl implements UsersRepository{
                 username,
                 password,
                 enabled,
-                user_details_id
+                user_details_id,
+                created_at
                 FROM
                 users
                 WHERE
@@ -57,17 +62,20 @@ public class UsersRepositoryImpl implements UsersRepository{
                 username,
                 password,
                 enabled,
-                user_details_id
+                user_details_id,
+                created_at
                 )
                 VALUES
-                (?, ?, ?, ?)
+                (?, ?, ?, ?, ?)
                 """;
+        String encodedPassword = passwordEncoder.encode(entity.getPassword());
         return jdbcTemplate.update(
                 sql,
                 entity.getUsername(),
-                        entity.getPassword(),
+                        encodedPassword,
                         entity.getEnabled(),
-                        entity.getUserDetailsId()
+                        entity.getUserDetailsId(),
+                        entity.getCreatedAt()
         );
     }
 
@@ -80,16 +88,19 @@ public class UsersRepositoryImpl implements UsersRepository{
                 username = ?,
                 password = ?,
                 enabled = ?,
-                user_details_id = ?
+                user_details_id = ?,
+                created_at = ?
                 WHERE
                 user_id = ?
                 """;
+        String encodedPassword = passwordEncoder.encode(entity.getPassword());
         return jdbcTemplate.update(
                 sql,
                 entity.getUsername(),
-                        entity.getPassword(),
+                        encodedPassword,
                         entity.getEnabled(),
                         entity.getUserDetailsId(),
+                        entity.getCreatedAt(),
                         entity.getId()
         );
     }
@@ -113,7 +124,8 @@ public class UsersRepositoryImpl implements UsersRepository{
                 username,
                 password,
                 enabled,
-                user_details_id
+                user_details_id,
+                created_at
                 FROM
                 users
                 WHERE

@@ -22,6 +22,7 @@ public class ProductRepositoryImpl implements ProductRepository{
                 SELECT
                 product_id,
                 name,
+                brand_id,
                 subcategory_item_id
                 FROM
                 product
@@ -35,6 +36,7 @@ public class ProductRepositoryImpl implements ProductRepository{
                 SELECT
                 product_id,
                 name,
+                brand_id,
                 subcategory_item_id
                 FROM
                 product
@@ -51,14 +53,16 @@ public class ProductRepositoryImpl implements ProductRepository{
                 product
                 (
                 name,
+                brand_id,
                 subcategory_item_id
                 )
                 VALUES
-                (?, ?)
+                (?, ?, ?)
                 """;
         return jdbcTemplate.update(
                 sql,
                 entity.getName(),
+                        entity.getBrandId(),
                         entity.getSubcategoryItemId()
         );
     }
@@ -70,6 +74,7 @@ public class ProductRepositoryImpl implements ProductRepository{
                 product
                 SET
                 name = ?,
+                brand_id = ?
                 subcategory_item_id = ?
                 WHERE
                 product_id = ?
@@ -77,6 +82,7 @@ public class ProductRepositoryImpl implements ProductRepository{
         return jdbcTemplate.update(
                 sql,
                 entity.getName(),
+                entity.getBrandId(),
                         entity.getSubcategoryItemId(),
                         entity.getId()
         );

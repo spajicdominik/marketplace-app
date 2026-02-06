@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class UsersRowMapper implements RowMapper<Users> {
     @Override
@@ -15,6 +16,7 @@ public class UsersRowMapper implements RowMapper<Users> {
         e.setPassword(rs.getString("password"));
         e.setEnabled(rs.getBoolean("enabled"));
         e.setUserDetailsId(rs.getInt("user_details_id"));
+        e.setCreatedAt(rs.getObject("created_at", LocalDateTime.class));
         return e;
     }
 }

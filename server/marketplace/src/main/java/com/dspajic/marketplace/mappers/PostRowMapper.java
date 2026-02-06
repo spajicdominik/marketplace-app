@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class PostRowMapper implements RowMapper<Post> {
     @Override
@@ -18,6 +19,8 @@ public class PostRowMapper implements RowMapper<Post> {
         e.setUserId(rs.getInt("user_id"));
         e.setProductId(rs.getInt("product_id"));
         e.setLocationId(rs.getInt("location_id"));
+        e.setCreatedAt(rs.getObject("created_at", LocalDateTime.class));
+        e.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
         return e;
     }
 }

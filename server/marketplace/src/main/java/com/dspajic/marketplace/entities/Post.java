@@ -1,8 +1,11 @@
 package com.dspajic.marketplace.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "post")
@@ -34,10 +37,19 @@ public class Post {
     @Column(name = "location_id")
     private Integer locationId;
 
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+
     public Post() {
     }
 
-    public Post(Integer id, String title, String description, BigDecimal price, String currency, Integer userId, Integer productId, Integer locationId) {
+    public Post(Integer id, String title, String description, BigDecimal price, String currency, Integer userId, Integer productId, Integer locationId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -46,6 +58,8 @@ public class Post {
         this.userId = userId;
         this.productId = productId;
         this.locationId = locationId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Integer getId() {
@@ -112,6 +126,22 @@ public class Post {
         this.locationId = locationId;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -123,6 +153,8 @@ public class Post {
                 ", userId=" + userId +
                 ", productId=" + productId +
                 ", locationId=" + locationId +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 }
