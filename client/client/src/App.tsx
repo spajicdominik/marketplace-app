@@ -1,51 +1,18 @@
-import React from 'react';
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import NavbarItems from './features/navbar/NavbarItems';
-import Sidebar from './features/sidebar/Sidebar';
+import Header from "./features/header/Header";
+import { useState } from "react";
+import Featured from "./features/featured/Featured";
+import Footer from "./features/footer/Footer";
 
-const { Header, Content, Sider } = Layout;
-
-const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-
-
-const App: React.FC = () => {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+function App () {
+  const [isLogedIn, setLogedIn] = useState(true);
 
   return (
-    <Layout>
-      <Header style={{ display: 'flex', justifyContent: "space-between" }}>
-        <div className='flex justify-between w-[100%]'>
-          <h1 className='text-white'>MARKET</h1>
-          <NavbarItems></NavbarItems>
-        </div>
-      </Header>
-      <Layout>
-        <Sider width={250} style={{ background: colorBgContainer }}>
-          <Sidebar></Sidebar>
-        </Sider>
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            Content
-          </Content>
-        </Layout>
-      </Layout>
-    </Layout>
+    <>
+    <Header isLogedIn = {isLogedIn}></Header>
+    <Featured></Featured>
+    <Footer></Footer>
+    </>
   );
-};
+}
 
 export default App;
