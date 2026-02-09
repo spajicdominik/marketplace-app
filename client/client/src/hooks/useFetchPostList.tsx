@@ -26,7 +26,7 @@ function useFetchPostList(category_id : number) {
         };
 
         fetchPosts();
-    }, []);
+    }, [category_id]);
 
     return posts;
 }

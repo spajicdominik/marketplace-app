@@ -2,6 +2,8 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { categoryActions } from "../../../store/category";
 
 export type CategoryMenuItem = {
   id: number;
@@ -105,6 +107,7 @@ export default function TopNavMegaMenu({
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<number | null>(null);
+  const dispatch = useDispatch();
   const closeTimer = useRef<number | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -176,7 +179,12 @@ export default function TopNavMegaMenu({
                   active === category.id ? "text-black font-semibold" : ""
                 }`}
               >
-                <NavLink to='/products'>{category.name}</NavLink>
+                <NavLink
+                  to="/products"
+                  onClick={() => dispatch(categoryActions.setCategory(category.id))}
+                >
+                  {category.name}
+                </NavLink>
               </div>
             ))}
           </div>

@@ -7,8 +7,6 @@ import Products from "./routes/Products";
 
 function App () {
   const [isLogedIn, setLogedIn] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState(1);
-
   const router = createBrowserRouter([
     {
       path: '/',
@@ -16,7 +14,7 @@ function App () {
       children: [
         { path: '/', element: <Featured/>},
         { path: '/auth', element: <AuthenticationPage />},
-        { path: '/products', element: <Products currentCategory={currentCategory}/>}
+        { path: '/products', element: <Products/>}
       ]
     }
   ])
