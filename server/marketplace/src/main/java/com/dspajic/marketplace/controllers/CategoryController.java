@@ -1,9 +1,8 @@
 package com.dspajic.marketplace.controllers;
 
-import com.dspajic.marketplace.entities.Brand;
+import com.dspajic.marketplace.dto.CategoryMenuDto;
 import com.dspajic.marketplace.entities.Category;
 import com.dspajic.marketplace.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,14 +10,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class CategoryController {
-    @Autowired
+    final
     CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/category")
     public List<Category> getAllCategories() {return categoryService.getAllCategories();}
 
     @GetMapping("/category/{id}")
-    public Category getCategoryById(@PathVariable("id") Integer id) {
+    public Category getCategoryById(@PathVariable Integer id) {
         return categoryService.getCategoryById(id);
     }
 
@@ -33,7 +36,12 @@ public class CategoryController {
     }
 
     @DeleteMapping("/category/{id}")
-    public void deleteCategory (@PathVariable("id") Integer id) {
+    public void deleteCategory (@PathVariable Integer id) {
         categoryService.deleteCategory(id);
+    }
+
+    @GetMapping("/category/menu-items")
+    public List<CategoryMenuDto> getCategoryMenu() {
+        return categoryService.getCategoryMenu();
     }
 }

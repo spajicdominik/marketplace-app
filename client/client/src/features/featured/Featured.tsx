@@ -19,6 +19,7 @@ export default function Featured() {
         <Slide></Slide>
         <Slide></Slide>
       </Carousel>
+      <div className="h-150 flex justify-center items-center ">Another feature to be added.</div>
     </div>
   );
 }

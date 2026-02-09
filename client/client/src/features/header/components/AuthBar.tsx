@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Dropdown, Flex, Space, Avatar } from "antd";
 import type { DropdownProps, MenuProps } from "antd";
+import { NavLink } from "react-router-dom";
 
 const items: MenuProps["items"] = [
   {
@@ -36,11 +37,11 @@ export default function AuthBar({ isLogedIn }: { isLogedIn: boolean }) {
       {!isLogedIn ? (
         <>
           <motion.p className="cursor-pointer hover:text-gray-300 mx-2">
-            Login
+            <NavLink to={"/auth?mode=login"}>Login</NavLink>
           </motion.p>
           <Divider orientation="vertical" style={{ borderColor: "white" }} />
           <motion.p className="cursor-pointer hover:text-gray-300 mx-2">
-            Register
+            <NavLink to={"/auth?mode=register"}>Register</NavLink>
           </motion.p>
         </>
       ) : (

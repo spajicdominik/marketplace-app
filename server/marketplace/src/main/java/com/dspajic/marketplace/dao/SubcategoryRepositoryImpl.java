@@ -92,4 +92,21 @@ public class SubcategoryRepositoryImpl implements SubcategoryRepository{
                 """;
         jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public List<Subcategory> getSubcategoryByCategory(Integer categoryId) {
+        String sql = """
+            SELECT
+            s.subcategory_id,
+            s.name,
+            s.category_id
+            FROM
+            subcategory s
+            WHERE
+            s.category_id = ?
+            """;
+        return jdbcTemplate.query(sql, new SubcategoryRowMapper(), categoryId);
+    }
+
+
 }

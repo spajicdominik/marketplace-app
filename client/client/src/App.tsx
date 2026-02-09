@@ -1,16 +1,26 @@
-import Header from "./features/header/Header";
 import { useState } from "react";
 import Featured from "./features/featured/Featured";
-import Footer from "./features/footer/Footer";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import RootLayout from "./routes/Root";
+import AuthenticationPage from "./routes/Authentication";
 
 function App () {
-  const [isLogedIn, setLogedIn] = useState(true);
+  const [isLogedIn, setLogedIn] = useState(false);
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <RootLayout isLogedIn={isLogedIn}/>,
+      children: [
+        { path: '/', element: <Featured/>},
+        { path: '/auth', element: <AuthenticationPage />}
+      ]
+    }
+  ])
 
   return (
     <>
-    <Header isLogedIn = {isLogedIn}></Header>
-    <Featured></Featured>
-    <Footer></Footer>
+    <RouterProvider router={router}></RouterProvider>
     </>
   );
 }

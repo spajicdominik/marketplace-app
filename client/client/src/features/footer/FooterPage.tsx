@@ -1,7 +1,7 @@
 export default function FooterPage(){
     return (
         <>
-        <div className="grid grid-cols-9 gap-10 text-black bg-white">
+        <div className="grid grid-cols-9 gap-10 text-black bg-white border-t">
             <div className="col-span-3 flex flex-col p-4">
                 <h1 className="text-2xl mb-2">Contact & Support</h1>
                 <a href="" className="mb-2">About us</a>

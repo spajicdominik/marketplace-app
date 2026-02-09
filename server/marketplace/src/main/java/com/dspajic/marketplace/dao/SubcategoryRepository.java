@@ -10,4 +10,5 @@ public interface SubcategoryRepository {
     Integer addSubcategory(Subcategory entity);
     Integer updateSubcategory(Subcategory entity);
     void deleteSubcategory(Integer id);
+    List<Subcategory> getSubcategoryByCategory(Integer categoryId);
 }
