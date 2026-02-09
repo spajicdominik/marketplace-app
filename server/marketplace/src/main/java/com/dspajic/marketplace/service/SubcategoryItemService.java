@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.service;
 
+import com.dspajic.marketplace.dto.SubcategoryItemsMenuDto;
 import com.dspajic.marketplace.entities.SubcategoryItem;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface SubcategoryItemService {
     Integer addSubcategoryItem(SubcategoryItem entity);
     Integer updateSubcategoryItem(SubcategoryItem entity);
     void deleteSubcategoryItem(Integer id);
+    List<SubcategoryItemsMenuDto> getSubcategoryItemsBySubcategoryId(Integer id);
 }

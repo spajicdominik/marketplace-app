@@ -38,4 +38,9 @@ public class PostController {
     public void deletePost(@PathVariable("id") Integer id) {
         service.deletePost(id);
     }
+
+    @GetMapping("/posts/category/{id}")
+    public List<Post> getPostsByCategory(@PathVariable("id") Integer id) {
+        return service.getPostsByCategory(id);
+    }
 }

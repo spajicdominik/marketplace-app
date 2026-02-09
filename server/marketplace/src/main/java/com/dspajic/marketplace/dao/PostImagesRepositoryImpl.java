@@ -21,10 +21,11 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
         String sql = """
                 SELECT
                 post_image_id,
-                url,
-                post_id
+                post_id,
+                image_url,
+                is_main
                 FROM
-                post_images
+                post_image
                 """;
         return jdbcTemplate.query(sql, rowMapper);
     }
@@ -34,10 +35,11 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
         String sql = """
                 SELECT
                 post_image_id,
-                url,
-                post_id
+                post_id,
+                image_url,
+                is_main
                 FROM
-                post_images
+                post_image
                 WHERE
                 post_image_id = ?
                 """;
@@ -48,18 +50,20 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
     public Integer addPostImages(PostImages entity) {
         String sql = """
                 INSERT INTO
-                post_images
+                post_image
                 (
-                url,
-                post_id
+                post_id,
+                image_url,
+                is_main
                 )
                 VALUES
-                (?, ?)
+                (?, ?, ?)
                 """;
         return jdbcTemplate.update(
                 sql,
+                entity.getPostId(),
                 entity.getUrl(),
-                        entity.getPostId()
+                entity.getIsMain()
         );
     }
 
@@ -67,18 +71,19 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
     public Integer updatePostImages(PostImages entity) {
         String sql = """
                 UPDATE
-                post_images
+                post_image
                 SET
-                url = ?,
-                post_id = ?
+                post_id = ?,
+                image_url = ?,
+                is_main = ?
                 WHERE
                 post_image_id = ?
                 """;
         return jdbcTemplate.update(
                 sql,
+                entity.getPostId(),
                 entity.getUrl(),
-                        entity.getPostId(),
-                        entity.getId()
+                entity.getIsMain()
         );
     }
 
@@ -86,7 +91,7 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
     public void deletePostImages(Integer id) {
         String sql = """
                 DELETE FROM
-                post_images
+                post_image
                 WHERE
                 post_image_id = ?
                 """;

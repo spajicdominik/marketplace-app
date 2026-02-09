@@ -14,7 +14,7 @@ public class PostImagesServiceImpl implements PostImagesService{
     PostImagesRepository repository;
 
     @Override
-    public List<PostImages> getAllPostImagess() {
+    public List<PostImages> getAllPostImages() {
         return repository.getAllPostImagess();
     }
 

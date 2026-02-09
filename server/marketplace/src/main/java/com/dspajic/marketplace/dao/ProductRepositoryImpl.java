@@ -1,6 +1,8 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.ProductMenuDto;
 import com.dspajic.marketplace.entities.Product;
+import com.dspajic.marketplace.mappers.ProductMenuDtoMapper;
 import com.dspajic.marketplace.mappers.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +17,8 @@ public class ProductRepositoryImpl implements ProductRepository{
     JdbcTemplate jdbcTemplate;
 
     ProductRowMapper rowMapper = new ProductRowMapper();
+
+    ProductMenuDtoMapper rowDtoMapper = new ProductMenuDtoMapper();
 
     @Override
     public List<Product> getAllProducts() {
@@ -97,5 +101,18 @@ public class ProductRepositoryImpl implements ProductRepository{
                 product_id = ?
                 """;
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public List<ProductMenuDto> getProductsBySubcategoryId(Integer id) {
+        String sql = """
+                SELECT
+                name
+                FROM
+                product
+                WHERE
+                subcategory_item_id = ?
+                """;
+        return jdbcTemplate.query(sql, rowDtoMapper, id);
     }
 }

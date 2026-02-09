@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.SubcategoryItemsMenuDto;
 import com.dspajic.marketplace.entities.SubcategoryItem;
 import com.dspajic.marketplace.mappers.SubcategoryItemRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,5 @@ public class SubcategoryItemRepositoryImpl implements SubcategoryItemRepository{
                 """;
         jdbcTemplate.update(sql, id);
     }
+
 }

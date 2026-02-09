@@ -10,4 +10,6 @@ public interface PostRepository {
     Integer addPost(Post entity);
     Integer updatePost(Post entity);
     void deletePost(Integer id);
+
+    List<Post> getPostsByCategory(Integer id);
 }

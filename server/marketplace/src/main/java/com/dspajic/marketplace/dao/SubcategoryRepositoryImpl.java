@@ -105,7 +105,7 @@ public class SubcategoryRepositoryImpl implements SubcategoryRepository{
             WHERE
             s.category_id = ?
             """;
-        return jdbcTemplate.query(sql, new SubcategoryRowMapper(), categoryId);
+        return jdbcTemplate.query(sql, rowMapper, categoryId);
     }
 
 

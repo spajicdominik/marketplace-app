@@ -10,4 +10,6 @@ public interface PostService {
     Integer addPost(Post entity);
     Integer updatePost(Post entity);
     void deletePost(Integer id);
+
+    List<Post> getPostsByCategory(Integer id);
 }

@@ -134,4 +134,22 @@ public class PostRepositoryImpl implements PostRepository{
                 """;
         jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public List<Post> getPostsByCategory(Integer id) {
+        String sql = """
+                SELECT p.*
+                FROM post p
+                JOIN product pr
+                  ON p.product_id = pr.product_id
+                JOIN subcategory_item sci
+                  ON pr.subcategory_item_id = sci.subcategory_item_id
+                JOIN subcategory sc
+                  ON sci.subcategory_id = sc.subcategory_id
+                JOIN category c
+                  ON sc.category_id = c.category_id
+                WHERE c.category_id = ?;
+                """;
+        return jdbcTemplate.query(sql, rowMapper, id);
+    }
 }

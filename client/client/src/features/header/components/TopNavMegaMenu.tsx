@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
+import { NavLink } from "react-router-dom";
 
 export type CategoryMenuItem = {
   id: number;
@@ -175,7 +176,7 @@ export default function TopNavMegaMenu({
                   active === category.id ? "text-black font-semibold" : ""
                 }`}
               >
-                {category.name}
+                <NavLink to='/products'>{category.name}</NavLink>
               </div>
             ))}
           </div>

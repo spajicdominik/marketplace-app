@@ -16,7 +16,7 @@ public class PostImagesController {
 
     @GetMapping("/postImages")
     public List<PostImages> getAllPostImagess() {
-        return service.getAllPostImagess();
+        return service.getAllPostImages();
     }
 
     @GetMapping("/postImages/{id}")

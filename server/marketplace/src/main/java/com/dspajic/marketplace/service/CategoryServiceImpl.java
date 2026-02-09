@@ -3,7 +3,9 @@ package com.dspajic.marketplace.service;
 import com.dspajic.marketplace.dao.CategoryRepository;
 import com.dspajic.marketplace.dao.SubcategoryRepository;
 import com.dspajic.marketplace.dto.CategoryMenuDto;
+import com.dspajic.marketplace.dto.SidebarMenuDto;
 import com.dspajic.marketplace.entities.Category;
+import com.dspajic.marketplace.entities.Subcategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class CategoryServiceImpl implements CategoryService{
 
      @Autowired
     SubcategoryRepository subcategoryRepository;
+
+     @Autowired
+     SubcategoryItemService subcategoryItemService;
 
 
     @Override
@@ -56,5 +61,22 @@ public class CategoryServiceImpl implements CategoryService{
             categoryMenuDtoList.add(categoryMenuDto);
         }
         return categoryMenuDtoList;
+    }
+
+    @Override
+    public List<SidebarMenuDto> getSidebarMenuByCategory(Integer id) {
+        List<SidebarMenuDto> sidebarMenuDtos = new ArrayList<>();
+        List<Subcategory> allSubcategories = subcategoryRepository.getAllSubcategorys();
+
+        for (Subcategory sc : allSubcategories){
+            if (sc.getCategoryId().equals(id)){
+                SidebarMenuDto sidebarMenuDto = new SidebarMenuDto();
+                sidebarMenuDto.setSubcategory_id(sc.getId());
+                sidebarMenuDto.setName(sc.getName());
+                sidebarMenuDto.setSubcategory_items(subcategoryItemService.getSubcategoryItemsBySubcategoryId(sc.getId()));
+                sidebarMenuDtos.add(sidebarMenuDto);
+            }
+        }
+        return sidebarMenuDtos;
     }
 }

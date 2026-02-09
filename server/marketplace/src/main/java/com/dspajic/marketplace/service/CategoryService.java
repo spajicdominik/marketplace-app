@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dto.CategoryMenuDto;
+import com.dspajic.marketplace.dto.SidebarMenuDto;
 import com.dspajic.marketplace.entities.Category;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface CategoryService {
     void deleteCategory (Integer id);
 
     List<CategoryMenuDto> getCategoryMenu();
+
+    List<SidebarMenuDto> getSidebarMenuByCategory(Integer id);
 }

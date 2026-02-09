@@ -37,4 +37,9 @@ public class PostServiceImpl implements PostService{
     public void deletePost(Integer id) {
         repository.deletePost(id);
     }
+
+    @Override
+    public List<Post> getPostsByCategory(Integer id) {
+        return repository.getPostsByCategory(id);
+    }
 }

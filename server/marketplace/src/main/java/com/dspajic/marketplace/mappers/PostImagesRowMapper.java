@@ -11,8 +11,9 @@ public class PostImagesRowMapper implements RowMapper<PostImages> {
     public PostImages mapRow(ResultSet rs, int rowNum) throws SQLException {
         PostImages e = new PostImages();
         e.setId(rs.getInt("post_image_id"));
-        e.setUrl(rs.getString("url"));
+        e.setUrl(rs.getString("image_url"));
         e.setPostId(rs.getInt("post_id"));
+        e.setIsMain(rs.getBoolean("is_main"));
         return e;
     }
 }
