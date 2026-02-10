@@ -1,10 +1,12 @@
 package com.dspajic.marketplace.config;
 
+import com.dspajic.marketplace.service.UsersService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,9 @@ import java.util.function.Function;
 
 @Component
 public class JwtService {
+
+    @Autowired
+    UsersService usersService;
 
     public static final String SECRET_KEY = "4a74b16375743fa004983607669de5abd9d680590aee7ba913df6afd0a3ab6cf";
 
@@ -31,6 +36,7 @@ public class JwtService {
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000*60*30))
+                .claim("roles", usersService.getAuthoritiesByUsername(username))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

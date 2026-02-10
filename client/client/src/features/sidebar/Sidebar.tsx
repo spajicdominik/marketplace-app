@@ -5,7 +5,7 @@ import { mapCategoriesToMenuItems } from "./components/mapCategoriesToMenuItems"
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store";
 
-const Sidebar = () => {
+const Sidebar = ({token} : {token : string | null}) => {
     const [items, setItems] = useState<MenuProps["items"]>([]);
     const categoryId = useSelector((state : RootState)=> state.category.categoryId);
 

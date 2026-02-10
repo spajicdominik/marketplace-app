@@ -14,4 +14,5 @@ public interface UsersRepository {
     Users findByUsername(String username);
 
     List<String> findAuthoritiesByUsername(String username);
+
 }

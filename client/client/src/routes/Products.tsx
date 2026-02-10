@@ -6,11 +6,12 @@ import type { RootState } from "../store";
 
 export default function Products() {
     const categoryId = useSelector((state : RootState)=> state.category.categoryId);
+    const token = useSelector((state : RootState ) => state.auth.accessToken);
 
-    const posts = useFetchPostList(categoryId);
+    const posts = useFetchPostList(categoryId, token);
     return (
         <div className="flex">
-            <Sidebar></Sidebar>
+            <Sidebar token={token}></Sidebar>
             <PostList posts={posts}></PostList>
         </div>
     )

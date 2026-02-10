@@ -1,8 +1,11 @@
 package com.dspajic.marketplace.dao;
 
-import com.dspajic.marketplace.dto.SubcategoryItemsMenuDto;
+import com.dspajic.marketplace.dto.SubcategoryDto;
+import com.dspajic.marketplace.dto.SubcategoryItemDto;
 import com.dspajic.marketplace.entities.SubcategoryItem;
+import com.dspajic.marketplace.mappers.dto.SubcategoryDtoMapper;
 import com.dspajic.marketplace.mappers.SubcategoryItemRowMapper;
+import com.dspajic.marketplace.mappers.dto.SubcategoryItemDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,6 +19,8 @@ public class SubcategoryItemRepositoryImpl implements SubcategoryItemRepository{
     JdbcTemplate jdbcTemplate;
 
     SubcategoryItemRowMapper rowMapper = new SubcategoryItemRowMapper();
+
+    SubcategoryItemDtoMapper dtoMapper = new SubcategoryItemDtoMapper();
 
     @Override
     public List<SubcategoryItem> getAllSubcategoryItems() {
@@ -94,4 +99,17 @@ public class SubcategoryItemRepositoryImpl implements SubcategoryItemRepository{
         jdbcTemplate.update(sql, id);
     }
 
+    @Override
+    public List<SubcategoryItemDto> getDtoItemsBySubcategoryId(Integer id) {
+        String sql = """
+                SELECT
+                subcategory_item_id,
+                name
+                FROM
+                subcategory_item
+                WHERE
+                subcategory_id = ?
+                """;
+        return jdbcTemplate.query(sql, dtoMapper, id);
+    }
 }

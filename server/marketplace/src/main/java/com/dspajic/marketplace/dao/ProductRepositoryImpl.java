@@ -2,7 +2,7 @@ package com.dspajic.marketplace.dao;
 
 import com.dspajic.marketplace.dto.ProductMenuDto;
 import com.dspajic.marketplace.entities.Product;
-import com.dspajic.marketplace.mappers.ProductMenuDtoMapper;
+import com.dspajic.marketplace.mappers.dto.ProductMenuDtoMapper;
 import com.dspajic.marketplace.mappers.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

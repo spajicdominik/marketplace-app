@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.SubcategoryDto;
 import com.dspajic.marketplace.entities.Subcategory;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface SubcategoryRepository {
     Integer updateSubcategory(Subcategory entity);
     void deleteSubcategory(Integer id);
     List<Subcategory> getSubcategoryByCategory(Integer categoryId);
+
+    List<SubcategoryDto> getSubcategoryByCategoryId(Integer id);
 }

@@ -2,6 +2,7 @@ package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.ProductRepository;
 import com.dspajic.marketplace.dao.SubcategoryItemRepository;
+import com.dspajic.marketplace.dto.SubcategoryItemDto;
 import com.dspajic.marketplace.dto.SubcategoryItemsMenuDto;
 import com.dspajic.marketplace.entities.SubcategoryItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,10 @@ public class SubcategoryItemServiceImpl implements SubcategoryItemService{
             }
         }
         return returnList;
+    }
+
+    @Override
+    public List<SubcategoryItemDto> getItemsBySubcategoryId(Integer id) {
+        return repository.getDtoItemsBySubcategoryId(id);
     }
 }

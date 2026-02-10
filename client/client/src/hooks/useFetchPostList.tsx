@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Post } from "../features/postlist/components/Post";
 
-function useFetchPostList(category_id : number) {
+function useFetchPostList(category_id : number, token : string | null) {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -10,7 +10,8 @@ function useFetchPostList(category_id : number) {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/posts/category/${category_id}`);
+                const response = await fetch(`http://localhost:8080/api/posts/category/${category_id}`
+                    );
 
                 if (!response.ok) {
                     throw new Error(`HTTP error: ${response.status}`);

@@ -4,17 +4,18 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import RootLayout from "./routes/Root";
 import AuthenticationPage from "./routes/Authentication";
 import Products from "./routes/Products";
+import NewPost from "./routes/NewPost";
 
 function App () {
-  const [isLogedIn, setLogedIn] = useState(false);
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <RootLayout isLogedIn={isLogedIn}/>,
+      element: <RootLayout/>,
       children: [
         { path: '/', element: <Featured/>},
         { path: '/auth', element: <AuthenticationPage />},
-        { path: '/products', element: <Products/>}
+        { path: '/products', element: <Products/>},
+        { path: '/newPost', element: <NewPost/>}
       ]
     }
   ])

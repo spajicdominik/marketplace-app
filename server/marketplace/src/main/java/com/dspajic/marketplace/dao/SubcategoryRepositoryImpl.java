@@ -1,6 +1,8 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.SubcategoryDto;
 import com.dspajic.marketplace.entities.Subcategory;
+import com.dspajic.marketplace.mappers.dto.SubcategoryDtoMapper;
 import com.dspajic.marketplace.mappers.SubcategoryRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +17,7 @@ public class SubcategoryRepositoryImpl implements SubcategoryRepository{
     JdbcTemplate jdbcTemplate;
 
     SubcategoryRowMapper rowMapper = new SubcategoryRowMapper();
+    SubcategoryDtoMapper dtoMapper = new SubcategoryDtoMapper();
 
     @Override
     public List<Subcategory> getAllSubcategorys() {
@@ -106,6 +109,20 @@ public class SubcategoryRepositoryImpl implements SubcategoryRepository{
             s.category_id = ?
             """;
         return jdbcTemplate.query(sql, rowMapper, categoryId);
+    }
+
+    @Override
+    public List<SubcategoryDto> getSubcategoryByCategoryId(Integer id) {
+        String sql = """
+                SELECT
+                subcategory_id,
+                name
+                FROM
+                subcategory
+                WHERE
+                category_id = ?
+                """;
+        return jdbcTemplate.query(sql, dtoMapper, id);
     }
 
 

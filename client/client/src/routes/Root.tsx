@@ -3,10 +3,10 @@ import FooterPage from "../features/footer/FooterPage";
 import { Outlet } from "react-router-dom";
 
 
-export default function RootLayout({isLogedIn} : {isLogedIn : boolean}) {
+export default function RootLayout() {
     return (
         <>
-        <Header isLogedIn = {isLogedIn}></Header>
+        <Header></Header>
         <Outlet></Outlet>
         <FooterPage></FooterPage>
         </>

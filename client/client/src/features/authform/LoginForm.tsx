@@ -1,6 +1,11 @@
 import type { FormProps } from 'antd';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../store/authSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import type { AppDispatch, RootState } from '../../store';
 
 type FieldType = {
     username?: string;
@@ -8,16 +13,25 @@ type FieldType = {
     remember?: string;
 };
 
-const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-};
-
 const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
 };
 
 export default function LoginForm() {
-    return (
+    const dispatch = useDispatch<AppDispatch>();
+    const { status, error } = useSelector((state : RootState) => state.auth);
+    const navigate = useNavigate();
+
+    const [form, setForm] = useState({ username: '', password: ''});
+
+    async function handleSubmit(e:any) {
+        const action = await dispatch(login(form));
+        if (login.fulfilled.match(action)) {
+            navigate("/products");
+        }
+    }
+
+        return (
         <div className='flex text-black w-1/2'>
             <div className='bg-white w-1/2 p-5'>
                 <h1 className='p-5 text-5xl'>Log in</h1>
@@ -27,7 +41,7 @@ export default function LoginForm() {
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 600 }}
                     initialValues={{ remember: true }}
-                    onFinish={onFinish}
+                    onFinish={handleSubmit}
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
                 >
@@ -36,7 +50,7 @@ export default function LoginForm() {
                         name="username"
                         rules={[{ required: true, message: 'Please input your username!' }]}
                     >
-                        <Input />
+                        <Input onChange={(e) => setForm((f) => ({ ...f, username: e.target.value }))}/>
                     </Form.Item>
 
                     <Form.Item<FieldType>
@@ -44,7 +58,7 @@ export default function LoginForm() {
                         name="password"
                         rules={[{ required: true, message: 'Please input your password!' }]}
                     >
-                        <Input.Password />
+                        <Input.Password onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}/>
                     </Form.Item>
 
                     <Form.Item<FieldType> name="remember" valuePropName="checked" label={null}>
@@ -62,6 +76,7 @@ export default function LoginForm() {
                 <h1>Welcome back!</h1>
                 <Button><NavLink to={"?mode=register"}>No account yet? Sign up!</NavLink></Button>
             </div>
+            {error && <p style={{ color: 'crimson' }}>{error}</p>}
         </div>
     )
 }

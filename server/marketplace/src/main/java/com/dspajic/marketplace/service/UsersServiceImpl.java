@@ -37,4 +37,10 @@ public class UsersServiceImpl implements UsersService{
     public void deleteUsers(Integer id) {
         repository.deleteUsers(id);
     }
+
+    @Override
+    public List<String> getAuthoritiesByUsername(String username) {
+        return repository.findAuthoritiesByUsername(username);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.controllers;
 
+import com.dspajic.marketplace.dto.SubcategoryDto;
 import com.dspajic.marketplace.entities.Subcategory;
 import com.dspajic.marketplace.service.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,10 @@ public class SubcategoryController {
     @DeleteMapping("/subcategories/{id}")
     public void deleteSubcategory(@PathVariable("id") Integer id) {
         service.deleteSubcategory(id);
+    }
+
+    @GetMapping("/subcategories/category/{id}")
+    public List<SubcategoryDto> getSubcategoryByCategoryId(@PathVariable("id") Integer id) {
+        return service.getSubcategoryByCategoryId(id);
     }
 }

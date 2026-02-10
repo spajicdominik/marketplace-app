@@ -1,4 +1,4 @@
-package com.dspajic.marketplace.mappers;
+package com.dspajic.marketplace.mappers.dto;
 
 import com.dspajic.marketplace.dto.ProductMenuDto;
 import org.springframework.jdbc.core.RowMapper;

@@ -152,4 +152,5 @@ public class UsersRepositoryImpl implements UsersRepository{
         return jdbcTemplate
                 .queryForList(sql, String.class, username);
     }
+
 }

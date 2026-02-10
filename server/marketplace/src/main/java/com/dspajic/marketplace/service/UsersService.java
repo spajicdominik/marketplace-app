@@ -10,4 +10,5 @@ public interface UsersService {
     Integer addUsers(Users entity);
     Integer updateUsers(Users entity);
     void deleteUsers(Integer id);
+    List<String> getAuthoritiesByUsername (String username);
 }

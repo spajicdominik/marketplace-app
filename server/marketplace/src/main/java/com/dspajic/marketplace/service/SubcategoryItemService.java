@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.service;
 
+import com.dspajic.marketplace.dto.SubcategoryItemDto;
 import com.dspajic.marketplace.dto.SubcategoryItemsMenuDto;
 import com.dspajic.marketplace.entities.SubcategoryItem;
 
@@ -12,4 +13,6 @@ public interface SubcategoryItemService {
     Integer updateSubcategoryItem(SubcategoryItem entity);
     void deleteSubcategoryItem(Integer id);
     List<SubcategoryItemsMenuDto> getSubcategoryItemsBySubcategoryId(Integer id);
+
+    List<SubcategoryItemDto> getItemsBySubcategoryId(Integer id);
 }
