@@ -2,12 +2,13 @@ import { Form, Input, Button, Select, DatePicker } from "antd";
 import { NavLink } from 'react-router-dom';
 import sendRegisterForm from "../../hooks/sendRegisterForm";
 import type { RegisterUserDto } from "../../types/RegisterUserDto";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
 export default function RegisterForm() {
     const [form_var] = Form.useForm();
-
+    const navigate = useNavigate();
 
     const onFinish = (values: any) => {
         const payload: RegisterUserDto = {
@@ -22,6 +23,7 @@ export default function RegisterForm() {
         };
         console.log(payload);
         sendRegisterForm(payload);
+        navigate("/register-done");
     };
 
     return (
@@ -122,8 +124,8 @@ export default function RegisterForm() {
             </div>
 
             <div className="info w-1/2 flex flex-col justify-center items-center bg-white">
-                <h1>Welcome back!</h1>
-                <Button><NavLink to={"?mode=login"}>No account yet? Sign up!</NavLink></Button>
+                <h1>Join us and start selling!</h1>
+                <Button><NavLink to={"?mode=login"}>Already have an account? Sign in!</NavLink></Button>
             </div>
         </div>
     )

@@ -5,6 +5,7 @@ import AuthenticationPage from "./routes/Authentication";
 import Products from "./routes/Products";
 import NewPost from "./routes/NewPost";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import RegisterDone from "./routes/RegisterDone";
 
 function App() {
  const router = createBrowserRouter([
@@ -19,10 +20,11 @@ function App() {
           path: '/newPost', element: <ProtectedRoute />, children: [
             { path: '', element: <NewPost /> }
           ]
-        }
+        },
+        { path: '/register-done', element: <RegisterDone/>}
       ]
     }
-  ])
+])
 
   return (
     <>
