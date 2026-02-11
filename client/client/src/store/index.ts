@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import categorySlice from "./category";
 import authSlice from "./authSlice";
+import newPostSlice from "./newPostSlice";
 
 const store = configureStore({
     reducer : { 
         category: categorySlice.reducer,
-        auth: authSlice.reducer
-
+        auth: authSlice.reducer,
+        newpost: newPostSlice.reducer
     }
 });
 
