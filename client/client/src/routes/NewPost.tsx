@@ -34,14 +34,36 @@ export default function NewPost() {
   const currentSubcategoryId = useSelector(
     (state: RootState) => state.newpost.subcategoryId,
   );
+  const currentProductTypeId = useSelector(
+    (state : RootState) => state.newpost.subcategoryId,
+  )
 
   const categories = useFetchCategories();
   const subcategories = useFetchSubcategories(currentCategoryId);
+  const productTypes = useFetchProductTypes(currentSubcategoryId);
+
+  console.log(mapProductTypesToOptions(productTypes));
+
 
   const handleCategoryChange = (value: string) => {
     const id = Number(value);
     dispatch(newPostSlice.actions.setCategoryId(id));
   };
+
+  const handleSubcategoryChange = (value : string) => {
+    const id = Number(value);
+    dispatch(newPostSlice.actions.setSubcategoryId(id))
+  }
+
+  const handleProductTypeChange = (value : string) => {
+    const id = Number(value);
+    dispatch(newPostSlice.actions.setProductTypeId(id));
+  }
+
+  const handeProductChange = (value : string) => {
+    const id = Number(value);
+    dispatch(newPostSlice.actions.setProductId(id));
+  }
 
   return (
     <div className="text-black bg-white p-4">
@@ -60,7 +82,6 @@ export default function NewPost() {
         />
       </div>
 
-      {/* CATEGORY PICKER */}
       <div className="flex">
         <div>
           <h1>Category</h1>
@@ -90,14 +111,34 @@ export default function NewPost() {
                   ? String(currentSubcategoryId)
                   : undefined
               }
-              onChange={()=>{}}
+              onChange={handleSubcategoryChange}
               placeholder="Select subcategory"
+            />
+          )}
+        </div>
+
+        <div>
+            <h1>Product Type</h1>
+            {currentSubcategoryId == undefined ? (
+            <Select disabled style={{ width: 120 }} />
+          ) : (
+            <Select
+              style={{ width: 120 }}
+              options={mapProductTypesToOptions(productTypes)}
+              value={
+                currentProductTypeId !== undefined
+                  ? String(currentProductTypeId)
+                  : undefined
+              }
+              onChange={handleProductTypeChange}
+              placeholder="Select product type"
             />
           )}
         </div>
       </div>
       <div>currentCategoryId : {currentCategoryId}</div>
       <div>currentSubcategoryId : {currentSubcategoryId}</div>
+      <div>currentProductTypeId : {currentProductTypeId}</div>
     </div>
   );
 }
