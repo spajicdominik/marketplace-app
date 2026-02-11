@@ -153,4 +153,26 @@ public class UsersRepositoryImpl implements UsersRepository{
                 .queryForList(sql, String.class, username);
     }
 
+    @Override
+    public Users getUserByEmail(String email) {
+        String sql = """
+                SELECT u.*, ud.*
+                FROM users u
+                JOIN user_details ud ON u.user_details_id = ud.user_details_id
+                WHERE ud.email = ?;
+                """;
+        return jdbcTemplate.query(sql, rowMapper, email).getFirst();
+    }
+
+    @Override
+    public Integer enableUser(String email) {
+        String sql = """
+                UPDATE users u
+                JOIN user_details ud ON u.user_details_id = ud.user_details_id
+                SET u.enabled = 1
+                WHERE ud.email = ?;
+                """;
+        return jdbcTemplate.update(sql, email);
+    }
+
 }

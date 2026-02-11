@@ -10,9 +10,8 @@ public interface UsersRepository {
     Integer addUsers(Users entity);
     Integer updateUsers(Users entity);
     void deleteUsers(Integer id);
-
     Users findByUsername(String username);
-
     List<String> findAuthoritiesByUsername(String username);
-
+    Users getUserByEmail(String email);
+    Integer enableUser(String email);
 }

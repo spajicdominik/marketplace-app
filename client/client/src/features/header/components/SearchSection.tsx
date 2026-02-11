@@ -42,7 +42,7 @@ export default function SearchSection() {
         </div>
       </AutoComplete>
       <div>
-        <Button type="primary" style={{height: 52}} className="w-52">SELL</Button>
+        <Button type="primary" style={{height: 52}} className="w-52"><NavLink to="/newPost">SELL</NavLink></Button>
       </div>
     </div>
   );

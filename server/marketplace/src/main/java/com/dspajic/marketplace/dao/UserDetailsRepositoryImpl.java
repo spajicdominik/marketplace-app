@@ -116,4 +116,23 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                 """;
         jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public UserDetails getUserDetailsByEmail(String email) {
+        String sql = """
+                SELECT
+                user_details_id,
+                first_name,
+                last_name,
+                gender,
+                birth_date,
+                phone_number,
+                email
+                FROM
+                user_details
+                WHERE
+                email = ?
+                """;
+        return jdbcTemplate.queryForObject(sql, rowMapper, email);
+    }
 }

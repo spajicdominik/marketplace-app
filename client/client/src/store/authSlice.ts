@@ -70,6 +70,7 @@ export const login = createAsyncThunk<LoginResponse, { username: string; passwor
             if (!accessToken) {
                 return rejectWithValue('No access token returned from server');
             }
+            localStorage.setItem("token", accessToken);
             return { accessToken };
         }
         catch {
@@ -84,6 +85,7 @@ export const logout = createAsyncThunk('auth/logout', async () => {
         method: 'POST',
         credentials: 'include',
     }).catch(() => { });
+    localStorage.removeItem("token");
     return true;
 });
 

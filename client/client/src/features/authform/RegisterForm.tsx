@@ -1,23 +1,28 @@
 import { Form, Input, Button, Select, DatePicker } from "antd";
 import { NavLink } from 'react-router-dom';
+import sendRegisterForm from "../../hooks/sendRegisterForm";
+import type { RegisterUserDto } from "../../types/RegisterUserDto";
 
 const { Option } = Select;
 
 export default function RegisterForm() {
-    const [form] = Form.useForm();
-    const variant = Form.useWatch('variant', form);
+    const [form_var] = Form.useForm();
 
 
-    const onFinish = (values : any) => {
-        const payload = {
-            ...values,
-            birthDate: values.birthDate?.format("YYYY-MM-DD"),
+    const onFinish = (values: any) => {
+        const payload: RegisterUserDto = {
+            email: values.email,
+            username: values.username,
+            password: values.password,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            gender: values.gender,
+            birthDate: values.birthDate.format("YYYY-MM-DD"),
+            phoneNumber: values.phoneNumber,
         };
-
-        console.log("Form data:", payload);
-        // send payload to backend
+        console.log(payload);
+        sendRegisterForm(payload);
     };
-
 
     return (
         <div className="login-form flex text-black w-1/2">
@@ -25,7 +30,7 @@ export default function RegisterForm() {
                 <h1 className="p-5 text-5xl">Register</h1>
 
                 <Form
-                    form={form}
+                    form={form_var}
                     layout="vertical"
                     onFinish={onFinish}
                     style={{ maxWidth: 400 }}
@@ -82,9 +87,9 @@ export default function RegisterForm() {
                         rules={[{ required: true, message: "Please select your gender" }]}
                     >
                         <Select placeholder="Select gender">
-                            <Option value="MALE">Male</Option>
-                            <Option value="FEMALE">Female</Option>
-                            <Option value="OTHER">Other</Option>
+                            <Option value="M">Male</Option>
+                            <Option value="F">Female</Option>
+                            <Option value="O">Other</Option>
                         </Select>
                     </Form.Item>
 

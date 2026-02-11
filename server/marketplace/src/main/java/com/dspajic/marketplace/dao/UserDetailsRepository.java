@@ -10,4 +10,6 @@ public interface UserDetailsRepository {
     Integer addUserDetails(UserDetails entity);
     Integer updateUserDetails(UserDetails entity);
     void deleteUserDetails(Integer id);
+
+    UserDetails getUserDetailsByEmail(String email);
 }

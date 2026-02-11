@@ -3,6 +3,7 @@ package com.dspajic.marketplace.controllers;
 import com.dspajic.marketplace.config.JwtService;
 import com.dspajic.marketplace.dto.AuthDto;
 import com.dspajic.marketplace.dto.JwtResponseDto;
+import com.dspajic.marketplace.dto.UserRegisterDto;
 import com.dspajic.marketplace.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth")
@@ -41,4 +41,24 @@ public class AuthenticationController {
             throw new UsernameNotFoundException("Invalid user request!");
         }
     }
+
+    @GetMapping("/verify-email")
+    public ResponseEntity<String> verifyEmail(@RequestParam("token") String token) {
+        String result = userService.validateVerificationToken(token);
+
+        return switch (result) {
+            case "valid" -> ResponseEntity.ok("Email verified successfully!");
+            case "invalid" -> ResponseEntity.badRequest().body("Invalid verification token.");
+            case "token has expired" -> ResponseEntity.badRequest().body("Verification link has expired.");
+            case "user already enabled" -> ResponseEntity.badRequest().body("User already enabled. Please log in.");
+            default -> ResponseEntity.internalServerError().body("Unknown error.");
+        };
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody UserRegisterDto userRegisterDto) {
+        userService.registerNewUser(userRegisterDto);
+        return ResponseEntity.ok("User registered successifully! Check your email to confirm registration.");
+    }
 }
+

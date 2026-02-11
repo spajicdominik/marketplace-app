@@ -37,4 +37,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     public void deleteUserDetails(Integer id) {
         repository.deleteUserDetails(id);
     }
+
+    @Override
+    public UserDetails getUserDetailsByEmail(String email) {
+        return repository.getUserDetailsByEmail(email);
+    }
 }
