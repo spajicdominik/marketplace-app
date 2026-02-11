@@ -38,6 +38,9 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Override
+    public Users getUserByUsername(String username) { return repository.findByUsername(username);}
+
+    @Override
     public Integer addUsers(Users entity) {
         return repository.addUsers(entity);
     }

@@ -6,6 +6,7 @@ import { login } from '../../store/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import type { AppDispatch, RootState } from '../../store';
+import { Alert } from 'antd';
 
 type FieldType = {
     username?: string;
@@ -34,6 +35,7 @@ export default function LoginForm() {
         return (
         <div className='flex text-black w-1/2'>
             <div className='bg-white w-1/2 p-5'>
+            {error && <Alert title={error} type="error" />}
                 <h1 className='p-5 text-5xl'>Log in</h1>
                 <Form
                     name="basic"
@@ -76,7 +78,7 @@ export default function LoginForm() {
                 <h1>Welcome back!</h1>
                 <Button><NavLink to={"?mode=register"}>No account yet? Sign up!</NavLink></Button>
             </div>
-            {error && <p style={{ color: 'crimson' }}>{error}</p>}
+
         </div>
     )
 }

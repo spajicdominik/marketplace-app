@@ -9,6 +9,9 @@ import java.util.List;
 public interface UsersService {
     List<Users> getAllUserss();
     Users getUsersById(Integer id);
+
+    Users getUserByUsername(String username);
+
     Integer addUsers(Users entity);
     Integer updateUsers(Users entity);
     void deleteUsers(Integer id);
