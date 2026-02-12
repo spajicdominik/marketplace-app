@@ -1,4 +1,4 @@
-package com.dspajic.marketplace.dto;
+package com.dspajic.marketplace.dto.sidebar;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SidebarMenuDto {
-    private Integer subcategory_id;
+public class SubcategoryItemsMenuDto {
+    private Integer subcategory_item_id;
     private String name;
-    private List<SubcategoryItemsMenuDto> subcategory_items;
+    private List<ProductMenuDto> products;
 }

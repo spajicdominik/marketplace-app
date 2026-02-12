@@ -1,4 +1,4 @@
-package com.dspajic.marketplace.dto;
+package com.dspajic.marketplace.dto.auth;
 
 public class JwtResponseDto {
     private String token;

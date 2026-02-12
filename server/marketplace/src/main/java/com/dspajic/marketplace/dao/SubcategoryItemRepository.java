@@ -1,7 +1,6 @@
 package com.dspajic.marketplace.dao;
 
-import com.dspajic.marketplace.dto.SubcategoryDto;
-import com.dspajic.marketplace.dto.SubcategoryItemDto;
+import com.dspajic.marketplace.dto.newpost.SubcategoryItemDto;
 import com.dspajic.marketplace.entities.SubcategoryItem;
 
 

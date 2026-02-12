@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.controllers;
 
+import com.dspajic.marketplace.dto.newpost.ProductDto;
 import com.dspajic.marketplace.entities.Product;
 import com.dspajic.marketplace.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,10 @@ public class ProductController {
     @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable("id") Integer id) {
         service.deleteProduct(id);
+    }
+
+    @GetMapping("/products/brand/{id}")
+    public List<ProductDto> getProductByBrandId(@PathVariable("id") Integer id) {
+        return service.getProductsByBrandId(id);
     }
 }

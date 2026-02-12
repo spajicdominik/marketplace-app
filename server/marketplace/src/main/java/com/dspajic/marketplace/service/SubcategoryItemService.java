@@ -1,7 +1,7 @@
 package com.dspajic.marketplace.service;
 
-import com.dspajic.marketplace.dto.SubcategoryItemDto;
-import com.dspajic.marketplace.dto.SubcategoryItemsMenuDto;
+import com.dspajic.marketplace.dto.newpost.SubcategoryItemDto;
+import com.dspajic.marketplace.dto.sidebar.SubcategoryItemsMenuDto;
 import com.dspajic.marketplace.entities.SubcategoryItem;
 
 import java.util.List;

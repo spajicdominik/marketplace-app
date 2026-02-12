@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.CountyRepository;
+import com.dspajic.marketplace.dto.newpost.CountyDto;
 import com.dspajic.marketplace.entities.County;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,10 @@ public class CountyServiceImpl implements CountyService{
     @Override
     public void deleteCounty(Integer id) {
         repository.deleteCounty(id);
+    }
+
+    @Override
+    public List<CountyDto> getCountyByCountryId(Integer id) {
+        return repository.getCountyByCountryId(id);
     }
 }

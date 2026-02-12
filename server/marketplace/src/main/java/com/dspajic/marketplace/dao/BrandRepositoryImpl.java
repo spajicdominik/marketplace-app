@@ -98,4 +98,16 @@ public class BrandRepositoryImpl implements BrandRepository{
                         id
                 );
     }
+
+    @Override
+    public List<Brand> getBrandsBySubcategoryItemId(Integer id) {
+        String sql = """
+                select b.brand_id, b.name
+                from brand b
+                join product p on b.brand_id = p.brand_id
+                join subcategory_item si on p.subcategory_item_id = si.subcategory_item_id
+                where si.subcategory_item_id = ?;
+                """;
+        return jdbcTemplate.query(sql, brandRowMapper, id);
+    }
 }

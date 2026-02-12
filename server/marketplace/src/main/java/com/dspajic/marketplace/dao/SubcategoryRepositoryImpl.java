@@ -1,6 +1,6 @@
 package com.dspajic.marketplace.dao;
 
-import com.dspajic.marketplace.dto.SubcategoryDto;
+import com.dspajic.marketplace.dto.newpost.SubcategoryDto;
 import com.dspajic.marketplace.entities.Subcategory;
 import com.dspajic.marketplace.mappers.dto.SubcategoryDtoMapper;
 import com.dspajic.marketplace.mappers.SubcategoryRowMapper;

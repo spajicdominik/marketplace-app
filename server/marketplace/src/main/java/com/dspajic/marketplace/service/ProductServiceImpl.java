@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.ProductRepository;
+import com.dspajic.marketplace.dto.newpost.ProductDto;
 import com.dspajic.marketplace.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,4 +38,10 @@ public class ProductServiceImpl implements ProductService{
     public void deleteProduct(Integer id) {
         repository.deleteProduct(id);
     }
+
+    @Override
+    public List<ProductDto> getProductsByBrandId(Integer id) {
+        return repository.getProductsByBrandId(id);
+    }
+
 }

@@ -37,4 +37,9 @@ public class BrandServiceImpl implements BrandService{
     public void deleteBrand(Integer id) {
         brandRepository.deleteBrand(id);
     }
+
+    @Override
+    public List<Brand> getBrandsBySubcategoryItemId(Integer id) {
+        return brandRepository.getBrandsBySubcategoryItemId(id);
+    }
 }

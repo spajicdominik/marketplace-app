@@ -1,4 +1,4 @@
-package com.dspajic.marketplace.dto;
+package com.dspajic.marketplace.dto.sidebar;
 
 import com.dspajic.marketplace.entities.Subcategory;
 import lombok.AllArgsConstructor;

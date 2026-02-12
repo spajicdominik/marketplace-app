@@ -1,4 +1,4 @@
-package com.dspajic.marketplace.dto;
+package com.dspajic.marketplace.dto.newpost;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

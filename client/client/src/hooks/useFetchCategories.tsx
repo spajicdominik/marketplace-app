@@ -25,7 +25,7 @@ export default function useFetchCategories(){
             };
     
             fetchCategories();
-        }, [categories]);
+        }, []);
 
         return categories;
 }

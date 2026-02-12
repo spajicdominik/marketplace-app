@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.service;
 
+import com.dspajic.marketplace.dto.newpost.ProductDto;
 import com.dspajic.marketplace.entities.Product;
 
 import java.util.List;
@@ -10,4 +11,7 @@ public interface ProductService {
     Integer addProduct(Product entity);
     Integer updateProduct(Product entity);
     void deleteProduct(Integer id);
+
+    List<ProductDto> getProductsByBrandId(Integer id);
+
 }

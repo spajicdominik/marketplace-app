@@ -10,4 +10,5 @@ public interface BrandRepository {
     Integer addBrand (Brand brand);
     Integer updateBrand (Brand brand);
     void deleteBrand (Integer id);
+    List<Brand> getBrandsBySubcategoryItemId(Integer id);
 }

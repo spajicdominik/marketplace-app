@@ -1,7 +1,9 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.newpost.CityDto;
 import com.dspajic.marketplace.entities.City;
 import com.dspajic.marketplace.mappers.CityRowMapper;
+import com.dspajic.marketplace.mappers.dto.CityDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -15,6 +17,8 @@ public class CityRepositoryImpl implements CityRepository{
     JdbcTemplate jdbcTemplate;
 
     CityRowMapper rowMapper = new CityRowMapper();
+
+    CityDtoMapper dtoRowMapper = new CityDtoMapper();
 
     @Override
     public List<City> getAllCities() {
@@ -88,8 +92,22 @@ public class CityRepositoryImpl implements CityRepository{
                 DELETE FROM
                 city
                 WHERE
-                city_id = ?
+                city_id = ?;
                 """;
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public List<CityDto> getCityByCountyId(Integer id) {
+        String sql = """
+                SELECT
+                city_id,
+                name
+                FROM
+                city
+                WHERE
+                county_id = ?;
+                """;
+        return jdbcTemplate.query(sql, dtoRowMapper, id);
     }
 }

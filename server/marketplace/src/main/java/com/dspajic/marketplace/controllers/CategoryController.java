@@ -1,7 +1,7 @@
 package com.dspajic.marketplace.controllers;
 
-import com.dspajic.marketplace.dto.CategoryMenuDto;
-import com.dspajic.marketplace.dto.SidebarMenuDto;
+import com.dspajic.marketplace.dto.sidebar.CategoryMenuDto;
+import com.dspajic.marketplace.dto.sidebar.SidebarMenuDto;
 import com.dspajic.marketplace.entities.Category;
 import com.dspajic.marketplace.service.CategoryService;
 import org.springframework.web.bind.annotation.*;

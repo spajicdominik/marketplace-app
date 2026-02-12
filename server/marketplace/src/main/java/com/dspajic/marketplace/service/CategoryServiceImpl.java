@@ -2,8 +2,8 @@ package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.CategoryRepository;
 import com.dspajic.marketplace.dao.SubcategoryRepository;
-import com.dspajic.marketplace.dto.CategoryMenuDto;
-import com.dspajic.marketplace.dto.SidebarMenuDto;
+import com.dspajic.marketplace.dto.sidebar.CategoryMenuDto;
+import com.dspajic.marketplace.dto.sidebar.SidebarMenuDto;
 import com.dspajic.marketplace.entities.Category;
 import com.dspajic.marketplace.entities.Subcategory;
 import org.springframework.beans.factory.annotation.Autowired;

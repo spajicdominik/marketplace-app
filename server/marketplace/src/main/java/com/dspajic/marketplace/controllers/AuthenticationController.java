@@ -1,9 +1,9 @@
 package com.dspajic.marketplace.controllers;
 
 import com.dspajic.marketplace.config.JwtService;
-import com.dspajic.marketplace.dto.AuthDto;
-import com.dspajic.marketplace.dto.JwtResponseDto;
-import com.dspajic.marketplace.dto.UserRegisterDto;
+import com.dspajic.marketplace.dto.auth.AuthDto;
+import com.dspajic.marketplace.dto.auth.JwtResponseDto;
+import com.dspajic.marketplace.dto.auth.UserRegisterDto;
 import com.dspajic.marketplace.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/auth")

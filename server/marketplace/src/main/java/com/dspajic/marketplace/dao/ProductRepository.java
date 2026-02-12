@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.dao;
 
-import com.dspajic.marketplace.dto.ProductMenuDto;
+import com.dspajic.marketplace.dto.newpost.ProductDto;
+import com.dspajic.marketplace.dto.sidebar.ProductMenuDto;
 import com.dspajic.marketplace.entities.Product;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface ProductRepository {
     Integer updateProduct(Product entity);
     void deleteProduct(Integer id);
     List<ProductMenuDto> getProductsBySubcategoryId(Integer id);
+
+    List<ProductDto> getProductsByBrandId(Integer id);
+
 }

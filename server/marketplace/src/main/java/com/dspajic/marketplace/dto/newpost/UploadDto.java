@@ -1,4 +1,4 @@
-package com.dspajic.marketplace.dto;
+package com.dspajic.marketplace.dto.newpost;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthDto {
-
-    private String username;
-    private String password;
+public class UploadDto {
+    private String filename;
+    private String url;
 }

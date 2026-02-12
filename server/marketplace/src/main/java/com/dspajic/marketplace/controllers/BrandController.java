@@ -35,4 +35,9 @@ public class BrandController {
     public void deleteBrand (@PathVariable("id") Integer id) {
         brandService.deleteBrand(id);
     }
+
+    @GetMapping("/brands/subcategory-item/{id}")
+    public List<Brand> getBrandsBySubcategoryItemId(@PathVariable("id") Integer id) {
+        return brandService.getBrandsBySubcategoryItemId(id);
+    }
 }

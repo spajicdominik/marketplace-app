@@ -9,6 +9,9 @@ export default function useFetchProductTypes(currentSubcategoryId : number | und
     useEffect(() => {
             const fetchProductTypes = async () => {
                 try {
+                    if (currentSubcategoryId == undefined){
+                        return [];
+                    }
                     const response = await fetch(`http://localhost:8080/api/subcategoryItems/subcategory/${currentSubcategoryId}`);
     
                     if (!response.ok) {

@@ -1,8 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.SubcategoryRepository;
-import com.dspajic.marketplace.dto.SidebarMenuDto;
-import com.dspajic.marketplace.dto.SubcategoryDto;
+import com.dspajic.marketplace.dto.newpost.SubcategoryDto;
 import com.dspajic.marketplace.entities.Subcategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

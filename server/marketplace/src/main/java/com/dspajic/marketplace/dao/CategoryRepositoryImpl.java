@@ -1,8 +1,6 @@
 package com.dspajic.marketplace.dao;
 
-import com.dspajic.marketplace.dto.CategoryMenuDto;
 import com.dspajic.marketplace.entities.Category;
-import com.dspajic.marketplace.entities.Subcategory;
 import com.dspajic.marketplace.mappers.CategoryRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

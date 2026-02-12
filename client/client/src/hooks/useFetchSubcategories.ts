@@ -9,6 +9,9 @@ export default function useFetchSubcategories(currentCategoryId : Number | undef
     useEffect(() => {
             const fetchSubcategories = async () => {
                 try {
+                    if (currentCategoryId == undefined){
+                        return [];
+                    }
                     const response = await fetch(`http://localhost:8080/api/subcategories/category/${currentCategoryId}`);
     
                     if (!response.ok) {

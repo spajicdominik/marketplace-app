@@ -1,4 +1,4 @@
-package com.dspajic.marketplace.dto;
+package com.dspajic.marketplace.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductMenuDto {
-    private String name;
+public class AuthDto {
+
+    private String username;
+    private String password;
 }

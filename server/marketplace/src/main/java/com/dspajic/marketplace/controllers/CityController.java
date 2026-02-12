@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.controllers;
 
+import com.dspajic.marketplace.dto.newpost.CityDto;
 import com.dspajic.marketplace.entities.City;
 import com.dspajic.marketplace.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,10 @@ public class CityController {
     @DeleteMapping("/cities/{id}")
     public void deleteCity(@PathVariable("id") Integer id) {
         service.deleteCity(id);
+    }
+
+    @GetMapping("/cities/county/{id}")
+    public List<CityDto> getCityByCountyId(@PathVariable("id") Integer id) {
+        return service.getCityByCountyId(id);
     }
 }

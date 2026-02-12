@@ -1,7 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.UsersRepository;
-import com.dspajic.marketplace.dto.UserRegisterDto;
+import com.dspajic.marketplace.dto.auth.UserRegisterDto;
 import com.dspajic.marketplace.entities.UserDetails;
 import com.dspajic.marketplace.entities.UserVerification;
 import com.dspajic.marketplace.entities.Users;

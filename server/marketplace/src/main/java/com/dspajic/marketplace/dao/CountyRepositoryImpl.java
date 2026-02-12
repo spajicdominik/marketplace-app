@@ -1,6 +1,8 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.newpost.CountyDto;
 import com.dspajic.marketplace.entities.County;
+import com.dspajic.marketplace.mappers.dto.CountyDtoMapper;
 import com.dspajic.marketplace.mappers.CountyRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +17,8 @@ public class CountyRepositoryImpl implements CountyRepository{
     JdbcTemplate jdbcTemplate;
 
     CountyRowMapper rowMapper = new CountyRowMapper();
+
+    CountyDtoMapper rowDtoMapper = new CountyDtoMapper();
 
     @Override
     public List<County> getAllCountys() {
@@ -91,5 +95,19 @@ public class CountyRepositoryImpl implements CountyRepository{
                 county_id = ?
                 """;
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public List<CountyDto> getCountyByCountryId(Integer id) {
+        String sql = """
+                SELECT
+                county_id,
+                name
+                FROM
+                county
+                WHERE
+                country_id = ?
+                """;
+        return jdbcTemplate.query(sql, rowDtoMapper, id);
     }
 }

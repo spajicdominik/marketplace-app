@@ -1,6 +1,6 @@
 package com.dspajic.marketplace.controllers;
 
-import com.dspajic.marketplace.dto.SubcategoryDto;
+import com.dspajic.marketplace.dto.newpost.SubcategoryDto;
 import com.dspajic.marketplace.entities.Subcategory;
 import com.dspajic.marketplace.service.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

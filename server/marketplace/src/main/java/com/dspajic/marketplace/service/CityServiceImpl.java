@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.CityRepository;
+import com.dspajic.marketplace.dto.newpost.CityDto;
 import com.dspajic.marketplace.entities.City;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,10 @@ public class CityServiceImpl implements CityService{
     @Override
     public void deleteCity(Integer id) {
         repository.deleteCity(id);
+    }
+
+    @Override
+    public List<CityDto> getCityByCountyId(Integer id) {
+        return repository.getCityByCountyId(id);
     }
 }

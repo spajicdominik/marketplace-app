@@ -1,9 +1,7 @@
 package com.dspajic.marketplace.dao;
 
-import com.dspajic.marketplace.dto.SubcategoryDto;
-import com.dspajic.marketplace.dto.SubcategoryItemDto;
+import com.dspajic.marketplace.dto.newpost.SubcategoryItemDto;
 import com.dspajic.marketplace.entities.SubcategoryItem;
-import com.dspajic.marketplace.mappers.dto.SubcategoryDtoMapper;
 import com.dspajic.marketplace.mappers.SubcategoryItemRowMapper;
 import com.dspajic.marketplace.mappers.dto.SubcategoryItemDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
