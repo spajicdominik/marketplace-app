@@ -8,6 +8,5 @@ const token = useSelector((state : RootState ) => state.auth.accessToken);
 if (!token) {
     return <Navigate to="/auth?mode=login"/>;
 }
-
 return <Outlet/>
 }

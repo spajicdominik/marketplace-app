@@ -4,6 +4,10 @@ import com.dspajic.marketplace.entities.Location;
 import com.dspajic.marketplace.mappers.LocationRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +19,9 @@ public class LocationRepositoryImpl implements LocationRepository{
     JdbcTemplate jdbcTemplate;
 
     LocationRowMapper rowMapper = new LocationRowMapper();
+
+    @Autowired
+    NamedParameterJdbcTemplate namedJdbc;
 
     @Override
     public List<Location> getAllLocations() {
@@ -32,7 +39,7 @@ public class LocationRepositoryImpl implements LocationRepository{
     }
 
     @Override
-    public Location getLocationById(Integer id) {
+    public Location getLocationById(Long id) {
         String sql = """
                 SELECT
                 location_id,
@@ -49,7 +56,12 @@ public class LocationRepositoryImpl implements LocationRepository{
     }
 
     @Override
-    public Integer addLocation(Location entity) {
+    public Long addLocation(Location entity) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("addressline1", entity.getAddressLine1());
+        params.addValue("addressline2", entity.getAddressLine2());
+        params.addValue("postalcode", entity.getPostalCode());
+        params.addValue("cityid", entity.getCityId());
         String sql = """
                 INSERT INTO
                 location
@@ -60,15 +72,18 @@ public class LocationRepositoryImpl implements LocationRepository{
                 city_id
                 )
                 VALUES
-                (?, ? ,? ,?)
+                (:addressline1, :addressline2 ,:postalcode ,:cityid)
                 """;
-        return jdbcTemplate.update(
-                sql,
-                entity.getAddressLine1(),
-                entity.getAddressLine2(),
-                entity.getPostalCode(),
-                entity.getCityId()
-        );
+        try {
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            namedJdbc.update(sql,params, keyHolder, new String[]{"location_id"});
+            return keyHolder.getKey() != null ? keyHolder.getKey().longValue() : null;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
     }
 
     @Override

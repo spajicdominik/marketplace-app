@@ -35,7 +35,7 @@ public class Post {
     private Integer productId;
 
     @Column(name = "location_id")
-    private Integer locationId;
+    private Long locationId;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -49,7 +49,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(Integer id, String title, String description, BigDecimal price, String currency, Integer userId, Integer productId, Integer locationId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Post(Integer id, String title, String description, BigDecimal price, String currency, Integer userId, Integer productId, Long locationId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -118,11 +118,11 @@ public class Post {
         this.productId = productId;
     }
 
-    public Integer getLocationId() {
+    public Long getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(Integer locationId) {
+    public void setLocationId(Long locationId) {
         this.locationId = locationId;
     }
 

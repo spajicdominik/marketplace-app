@@ -78,7 +78,7 @@ const Uploader: React.FC = () => {
       fileList.forEach((file) => {
         const raw = file.originFileObj as RcFile | undefined;
         if (raw) {
-          formData.append("file", raw); // <-- if your controller expects @RequestParam("file") List<MultipartFile>
+          formData.append("files[]", raw); // <-- if your controller expects @RequestParam("file") List<MultipartFile>
           // If your backend expects "files[]", use: formData.append("files[]", raw);
         }
       });
@@ -127,7 +127,8 @@ const Uploader: React.FC = () => {
 
   return (
     <>
-      <Dragger
+    <div className="w-1/4">
+        <Dragger
         multiple
         listType="picture-card"
         fileList={fileList}
@@ -144,6 +145,7 @@ const Uploader: React.FC = () => {
         <p className="ant-upload-text">Click or drag images here</p>
         <p className="ant-upload-hint">You can add multiple images and upload them later.</p>
       </Dragger>
+    </div>
 
       <Button
         type="primary"

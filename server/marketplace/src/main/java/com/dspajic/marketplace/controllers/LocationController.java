@@ -20,12 +20,12 @@ public class LocationController {
     }
 
     @GetMapping("/locations/{id}")
-    public Location getLocationById(@PathVariable("id") Integer id) {
+    public Location getLocationById(@PathVariable("id") Long id) {
         return service.getLocationById(id);
     }
 
     @PostMapping("/locations")
-    public Integer addLocation(@RequestBody Location entity) {
+    public Long addLocation(@RequestBody Location entity) {
         return service.addLocation(entity);
     }
 

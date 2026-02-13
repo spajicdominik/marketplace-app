@@ -1,6 +1,9 @@
 package com.dspajic.marketplace.controllers;
 
+import com.dspajic.marketplace.dto.newpost.NewPostDto;
 import com.dspajic.marketplace.entities.Post;
+import com.dspajic.marketplace.entities.PostDetails;
+import com.dspajic.marketplace.service.PostDetailsService;
 import com.dspajic.marketplace.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,9 @@ public class PostController {
 
     @Autowired
     PostService service;
+
+    @Autowired
+    PostDetailsService postDetailsService;
 
     @GetMapping("/posts")
     public List<Post> getAllPosts() {
@@ -42,5 +48,13 @@ public class PostController {
     @GetMapping("/posts/category/{id}")
     public List<Post> getPostsByCategory(@PathVariable("id") Integer id) {
         return service.getPostsByCategory(id);
+    }
+
+    @PostMapping("/newPost")
+    public Integer addNewPost(@RequestBody NewPostDto newPostDto) { return postDetailsService.addNewPost(newPostDto);}
+
+    @GetMapping("/postDetails/{id}")
+    public PostDetails getPostDetailsById(@PathVariable("id") Integer id) {
+        return postDetailsService.get(id);
     }
 }

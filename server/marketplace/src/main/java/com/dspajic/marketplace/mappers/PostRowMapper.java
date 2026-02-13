@@ -18,7 +18,7 @@ public class PostRowMapper implements RowMapper<Post> {
         e.setCurrency(rs.getString("currency"));
         e.setUserId(rs.getInt("user_id"));
         e.setProductId(rs.getInt("product_id"));
-        e.setLocationId(rs.getInt("location_id"));
+        e.setLocationId(rs.getLong("location_id"));
         e.setCreatedAt(rs.getObject("created_at", LocalDateTime.class));
         e.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
         return e;

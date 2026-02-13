@@ -1,6 +1,12 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { NewPostType } from "../types/NewPost";
 
 type NewPostState = {
+    title?: string,
+    description?: string,
+    price?: string,
+    currency?: string,
+    user_id?: number,
     categoryId?: number;
     subcategoryId?: number;
     productTypeId?: number;
@@ -11,10 +17,16 @@ type NewPostState = {
     cityId?: number;
     addressLine1?: string;
     addressLine2?: string;
-    postalCode?: number
+    postalCode?: string;
+    sendNewPost?: NewPostType;
 }
 
 const initialState: NewPostState = {
+    title: undefined,
+    description: undefined,
+    price: undefined,
+    currency: undefined,
+    user_id: 1,
     categoryId: undefined,
     subcategoryId: undefined,
     productTypeId: undefined,
@@ -25,13 +37,32 @@ const initialState: NewPostState = {
     cityId: undefined,
     addressLine1: undefined,
     addressLine2: undefined,
-    postalCode: undefined
+    postalCode: undefined,
+    sendNewPost: undefined
 };
 
 const newPostSlice = createSlice({
     name: "newPost",
     initialState: initialState,
     reducers: {
+        setNewPost(state, action: PayloadAction<NewPostType | undefined>) {
+            state.sendNewPost = action.payload
+        },
+        setTitle(state, action: PayloadAction<string | undefined>) {
+            state.title = action.payload
+        },
+        setDescription(state, action: PayloadAction<string | undefined>) {
+            state.description = action.payload
+        },
+        setPrice(state, action: PayloadAction<string | undefined>) {
+            state.price = action.payload
+        },
+        setCurrency(state, action: PayloadAction<string | undefined>) {
+            state.currency = action.payload
+        },
+        setUserId(state, action: PayloadAction<number | undefined>) {
+            state.user_id = action.payload
+        },
         setCategoryId(state, action: PayloadAction<number | undefined>) {
             state.categoryId = action.payload;
             state.subcategoryId = undefined;
@@ -82,7 +113,7 @@ const newPostSlice = createSlice({
             state.addressLine2 = action.payload;
         },
 
-        setPostalCode(state, action: PayloadAction<number | undefined>) {
+        setPostalCode(state, action: PayloadAction<string | undefined>) {
             state.postalCode = action.payload;
         },
     }

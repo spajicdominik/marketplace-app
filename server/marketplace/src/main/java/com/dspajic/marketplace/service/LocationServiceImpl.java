@@ -19,12 +19,12 @@ public class LocationServiceImpl implements LocationService{
     }
 
     @Override
-    public Location getLocationById(Integer id) {
+    public Location getLocationById(Long id) {
         return repository.getLocationById(id);
     }
 
     @Override
-    public Integer addLocation(Location location) {
+    public Long addLocation(Location location) {
         return repository.addLocation(location);
     }
 

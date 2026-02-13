@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.PostRepository;
+import com.dspajic.marketplace.dto.newpost.NewPostDto;
 import com.dspajic.marketplace.entities.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,4 +43,6 @@ public class PostServiceImpl implements PostService{
     public List<Post> getPostsByCategory(Integer id) {
         return repository.getPostsByCategory(id);
     }
+
+
 }
