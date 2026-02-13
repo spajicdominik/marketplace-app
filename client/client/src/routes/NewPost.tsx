@@ -194,6 +194,12 @@ const validate = () => {
     }
   };
 
+  const currentUser = useSelector(
+    (state: RootState) => state.auth.user
+  );
+
+  console.log(currentUser);
+
 
   return (
     <div className="text-black bg-white p-4 ">

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { jwtDecode } from 'jwt-decode';
 import type { JwtPayload } from "jwt-decode";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface DecodedToken extends JwtPayload {
     sub: string;
@@ -86,6 +87,7 @@ export const logout = createAsyncThunk('auth/logout', async () => {
         credentials: 'include',
     }).catch(() => { });
     localStorage.removeItem("token");
+    authSlice.caseReducers.setTokenNull;
     return true;
 });
 
@@ -93,7 +95,11 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        setTokenNull(state, action: PayloadAction<string | undefined>) {
+            state.accessToken = null
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(login.pending, (state) => {
