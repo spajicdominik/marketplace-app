@@ -6,8 +6,8 @@ import {
   SettingOutlined,
   UserOutlined
 } from "@ant-design/icons";
-import { Button, Dropdown, Flex, Space, Avatar } from "antd";
-import type { DropdownProps, MenuProps } from "antd";
+import { Dropdown, Space, Avatar } from "antd";
+import type { MenuProps } from "antd";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../../store";
@@ -36,8 +36,8 @@ const items: MenuProps["items"] = [
 ];
 
 export default function AuthBar() {
-  const status = useSelector((state: RootState) => state.auth.status);
   const user = useSelector((state: RootState) => state.auth.user);
+  const token = localStorage.getItem("access_token");
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ export default function AuthBar() {
 
   return (
     <div className="bg-black text-white flex justify-end items-center p-3">
-      {(status != 'succeeded') ? (
+      {(!token) ? (
         <>
           <motion.p className="cursor-pointer hover:text-gray-300 mx-2">
             <NavLink to={"/auth?mode=login"}>Login</NavLink>

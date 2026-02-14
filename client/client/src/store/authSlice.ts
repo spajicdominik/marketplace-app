@@ -42,13 +42,29 @@ function decodeUserFromToken(token: string): DecodedToken | null {
     }
 }
 
+export function isTokenExpired(token : string | null) : boolean {
+    if(!token) {
+        return true;
+    }
+    const decoded = decodeUserFromToken(token);
+    if (!decoded?.exp) {
+        return true;
+    }
+    return decoded.exp * 1000 < Date.now();
+}
+
 const persistedAccess = localStorage.getItem('access_token') || null;
-const initialUser = persistedAccess ? decodeUserFromToken(persistedAccess) : null;
+const validAccess = persistedAccess && !isTokenExpired(persistedAccess) ? persistedAccess : null;
+if (persistedAccess && !validAccess) {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem("token");
+}
+const initialUser = validAccess ? decodeUserFromToken(validAccess) : null;
 
 const initialState: AuthState = {
     status: 'idle',
     error: null,
-    accessToken: persistedAccess,
+    accessToken: validAccess,
     user: initialUser,
 }
 
@@ -71,7 +87,7 @@ export const login = createAsyncThunk<LoginResponse, { username: string; passwor
             if (!accessToken) {
                 return rejectWithValue('No access token returned from server');
             }
-            localStorage.setItem("token", accessToken);
+            localStorage.setItem("access_token", accessToken);
             return { accessToken };
         }
         catch {
@@ -86,7 +102,7 @@ export const logout = createAsyncThunk('auth/logout', async () => {
         method: 'POST',
         credentials: 'include',
     }).catch(() => { });
-    localStorage.removeItem("token");
+    localStorage.removeItem("access_token");
     authSlice.caseReducers.setTokenNull;
     return true;
 });
