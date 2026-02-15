@@ -19,14 +19,16 @@ type NewPostState = {
     addressLine2?: string;
     postalCode?: string;
     sendNewPost?: NewPostType;
+    sendPostPictures? : boolean;
+    currentPostId?: number;
 }
 
 const initialState: NewPostState = {
     title: undefined,
     description: undefined,
     price: undefined,
-    currency: undefined,
-    user_id: 1,
+    currency: "EUR",
+    user_id: undefined,
     categoryId: undefined,
     subcategoryId: undefined,
     productTypeId: undefined,
@@ -38,13 +40,24 @@ const initialState: NewPostState = {
     addressLine1: undefined,
     addressLine2: undefined,
     postalCode: undefined,
-    sendNewPost: undefined
+    sendNewPost: undefined,
+    sendPostPictures: false,
+    currentPostId: undefined
 };
 
 const newPostSlice = createSlice({
     name: "newPost",
     initialState: initialState,
     reducers: {
+        setPostId(state, action: PayloadAction<number | undefined>) {
+            state.currentPostId = action.payload
+        },
+        resetNewPost() {
+            return initialState;
+        },
+        setPostPictures(state, action: PayloadAction<boolean | undefined>) {
+            state.sendPostPictures = action.payload
+        },
         setNewPost(state, action: PayloadAction<NewPostType | undefined>) {
             state.sendNewPost = action.payload
         },

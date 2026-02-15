@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { Button, Image, Upload, message } from "antd";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import { InboxOutlined, UploadOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store";
+import type { PostImage } from "../../types/PostImage";
+import usePostImage from "../../hooks/newPost/images/useMainImage";
 
 const { Dragger } = Upload;
 
@@ -14,12 +18,20 @@ function getBase64(file: Blob): Promise<string> {
   });
 }
 
-const Uploader: React.FC = () => {
+export type UploaderHandle = {
+  upload: () => void;
+};
+
+const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState<string>("");
   const [previewTitle, setPreviewTitle] = useState<string>("");
+
+  const currentPostId = useSelector(
+    (state: RootState) => state.newpost.currentPostId,
+  );
 
   const onRemove: UploadProps["onRemove"] = (file) => {
     setFileList((prev) => prev.filter((f) => f.uid !== file.uid));
@@ -78,7 +90,7 @@ const Uploader: React.FC = () => {
       fileList.forEach((file) => {
         const raw = file.originFileObj as RcFile | undefined;
         if (raw) {
-          formData.append("files[]", raw); // <-- if your controller expects @RequestParam("file") List<MultipartFile>
+          formData.append("file", raw); // <-- if your controller expects @RequestParam("file") List<MultipartFile>
           // If your backend expects "files[]", use: formData.append("files[]", raw);
         }
       });
@@ -102,6 +114,16 @@ const Uploader: React.FC = () => {
       // If your API returns a single object when one file is uploaded, normalize to an array
       const responseArray = Array.isArray(payload) ? payload : [payload];
 
+      for (var response of responseArray) {
+        const imageUrl = response?.url;
+        const image : PostImage = {
+          url : imageUrl,
+          postId: currentPostId,
+          isMain: false
+        }
+        usePostImage(image);
+      }
+
       // Try to match by name; adjust if your backend returns an id or you need a different correlate
       const nextList = fileList.map((file, idx) => {
         const resp = responseArray[idx] || {};
@@ -122,8 +144,13 @@ const Uploader: React.FC = () => {
       message.error(err.message || "Upload failed.");
     } finally {
       setUploading(false);
+      setFileList([]);
     }
   };
+
+  useImperativeHandle(ref, () => ({
+    upload: handleUpload,
+  }))
 
   return (
     <>
@@ -147,17 +174,6 @@ const Uploader: React.FC = () => {
       </Dragger>
     </div>
 
-      <Button
-        type="primary"
-        icon={<UploadOutlined />}
-        onClick={handleUpload}
-        disabled={fileList.length === 0}
-        loading={uploading}
-        style={{ marginTop: 16 }}
-      >
-        {uploading ? "Uploading..." : "Start Upload"}
-      </Button>
-
       {/* Optional AntD preview modal via <Image.PreviewGroup> */}
       <Image
         style={{ display: "none" }}
@@ -170,6 +186,6 @@ const Uploader: React.FC = () => {
       />
     </>
   );
-};
+});
 
 export default Uploader;

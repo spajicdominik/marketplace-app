@@ -8,6 +8,7 @@ export interface DecodedToken extends JwtPayload {
     roles: string[];
     exp: number;
     iat: number;
+    user_id: number;
 }
 
 interface LoginResponse {
@@ -34,7 +35,8 @@ function decodeUserFromToken(token: string): DecodedToken | null {
             sub: claims.sub ?? null,
             roles: Array.isArray(roles) ? roles : [roles],
             exp: claims.exp,
-            iat: claims.iat
+            iat: claims.iat,
+            user_id: claims.user_id
         };
     }
     catch {
