@@ -7,7 +7,7 @@ interface PostListProps {
 
 const PostList: React.FC<PostListProps> = ({ posts }) => {
   return (
-    <div className="flex flex-col w-1/2">
+    <div className="grid grid-cols-2 gap-2 w-fit">
       {posts.map(post => (
         <PostListEntity
           key={post.id}

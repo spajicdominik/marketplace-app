@@ -37,4 +37,9 @@ public class PostImagesServiceImpl implements PostImagesService{
     public void deletePostImages(Integer id) {
         repository.deletePostImages(id);
     }
+
+    @Override
+    public List<PostImages> getImagesByPost(Integer post_id, Boolean isMain) {
+        return repository.getImagesByPost(post_id, isMain);
+    }
 }

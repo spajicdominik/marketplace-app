@@ -50,7 +50,7 @@ public class UploadServiceImpl implements UploadService{
                 Path target = root.resolve(storedName);
                 Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
 
-                String baseUrl = "http://localhost:8080/api/uploads/images/" + storedName;
+                String baseUrl = "http://localhost:8080/uploads/" + storedName;
                 out.add(new UploadDto(storedName, baseUrl));
             }
             return ResponseEntity.ok(out);

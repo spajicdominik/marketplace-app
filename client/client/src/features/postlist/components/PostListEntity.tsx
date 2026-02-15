@@ -1,3 +1,4 @@
+import useFetchMainImage from "../../../hooks/postList/useFetchMainImage";
 import type { Post } from "./Post";
 import { Button } from "antd";
 
@@ -7,6 +8,7 @@ interface PostListEntityProps {
 
 const PostListEntity: React.FC<PostListEntityProps> = ({ post }) => {
   const {
+    id,
     title,
     description,
     price,
@@ -14,11 +16,11 @@ const PostListEntity: React.FC<PostListEntityProps> = ({ post }) => {
     createdAt,
   } = post;
 
-  const formattedDate = new Date(createdAt).toLocaleDateString("hr-HR");
+  const imageUrl = useFetchMainImage(id);
 
   return (
     <div className="bg-white text-black p-3 m-3 rounded-2xl flex">
-        <img src="http://localhost:8080/uploads/example.jpg" alt="Post Image" className="h-50"/>
+        <img src={imageUrl} alt="Post Image" className="h-50 w-40"/>
         <div className="info w-1/2 p-3">
             <h1 className="text-2xl font-bold pb-3">{title}</h1>
             <p className="pb-3">{description}</p>

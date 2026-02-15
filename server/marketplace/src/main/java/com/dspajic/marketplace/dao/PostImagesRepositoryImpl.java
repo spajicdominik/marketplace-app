@@ -16,6 +16,7 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
 
     PostImagesRowMapper rowMapper = new PostImagesRowMapper();
 
+
     @Override
     public List<PostImages> getAllPostImagess() {
         String sql = """
@@ -97,4 +98,20 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
                 """;
         jdbcTemplate.update(sql, id);
     }
+
+    @Override
+    public List<PostImages> getImagesByPost(Integer post_id, Boolean isMain) {
+        String sql = """
+                SELECT *
+                FROM
+                post_image t
+                WHERE
+                t.post_id = ?
+                AND
+                t.is_main = ?;
+                """;
+        return jdbcTemplate.query(sql, rowMapper, post_id, isMain);
+    }
+
+
 }

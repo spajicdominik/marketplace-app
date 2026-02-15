@@ -10,4 +10,6 @@ public interface PostImagesRepository {
     Integer addPostImages(PostImages entity);
     Integer updatePostImages(PostImages entity);
     void deletePostImages(Integer id);
+
+    List<PostImages> getImagesByPost(Integer post_id, Boolean isMain);
 }

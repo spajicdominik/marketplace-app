@@ -7,6 +7,7 @@ import NewPost from "./routes/NewPost";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import RegisterDone from "./routes/RegisterDone";
 import UploadSuccess from "./routes/UploadSuccess";
+import Profile from "./routes/Profile";
 
 function App() {
  const router = createBrowserRouter([
@@ -23,7 +24,8 @@ function App() {
           ]
         },
         { path: '/register-done', element: <RegisterDone/>},
-        { path: '/upload-success', element: <UploadSuccess/>}
+        { path: '/upload-success', element: <UploadSuccess/>},
+        { path: '/profile', element: <Profile/>}
       ]
     }
 ])

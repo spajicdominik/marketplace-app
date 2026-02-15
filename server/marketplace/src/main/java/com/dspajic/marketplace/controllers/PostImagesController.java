@@ -38,4 +38,15 @@ public class PostImagesController {
     public void deletePostImages(@PathVariable("id") Integer id) {
         service.deletePostImages(id);
     }
+
+    @GetMapping("/postImages/post-main/{post_id}")
+    public PostImages getMainImage(@PathVariable Integer post_id) {
+        return service.getImagesByPost(post_id, true).getFirst();
+    }
+
+    @GetMapping("/postImages/post/{post_id}")
+    public List<PostImages> getPostImagesByPost(@PathVariable Integer post_id) {
+        return service.getImagesByPost(post_id, false);
+    }
+
 }

@@ -46,8 +46,9 @@ export default function AuthBar() {
       await dispatch(logout());
       navigate("/auth?mode=login");
     }
-    // handle other keys if you want
-    // if (key === '1') navigate('/profile');
+    if (key === '1') {
+      navigate('/profile');
+    }
     // if (key === '2') navigate('/settings');
   };
 
