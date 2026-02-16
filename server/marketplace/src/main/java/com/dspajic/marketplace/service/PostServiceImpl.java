@@ -44,5 +44,10 @@ public class PostServiceImpl implements PostService{
         return repository.getPostsByCategory(id);
     }
 
+    @Override
+    public List<Post> getRecentPosts() {
+        return repository.getRecentPosts();
+    }
+
 
 }

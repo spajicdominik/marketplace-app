@@ -14,4 +14,5 @@ public interface PostService {
 
     List<Post> getPostsByCategory(Integer id);
 
+    List<Post> getRecentPosts();
 }

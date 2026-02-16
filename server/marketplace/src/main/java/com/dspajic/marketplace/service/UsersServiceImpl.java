@@ -2,6 +2,7 @@ package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.UsersRepository;
 import com.dspajic.marketplace.dto.auth.UserRegisterDto;
+import com.dspajic.marketplace.dto.userdisplay.UserDisplayDto;
 import com.dspajic.marketplace.entities.UserDetails;
 import com.dspajic.marketplace.entities.UserVerification;
 import com.dspajic.marketplace.entities.Users;
@@ -126,6 +127,11 @@ public class UsersServiceImpl implements UsersService{
 
         enableUser(email);
         return "valid";
+    }
+
+    @Override
+    public UserDisplayDto getUserInfo(Integer userId) {
+        return repository.getUserInfo(userId);
     }
 
 }

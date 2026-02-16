@@ -1,7 +1,9 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.userdisplay.LocationDisplayDto;
 import com.dspajic.marketplace.entities.Location;
 import com.dspajic.marketplace.mappers.LocationRowMapper;
+import com.dspajic.marketplace.mappers.dto.LocationDisplayDtoRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,6 +24,8 @@ public class LocationRepositoryImpl implements LocationRepository{
 
     @Autowired
     NamedParameterJdbcTemplate namedJdbc;
+
+    LocationDisplayDtoRowMapper locationDisplayDtoRowMapper = new LocationDisplayDtoRowMapper();
 
     @Override
     public List<Location> getAllLocations() {
@@ -118,5 +122,21 @@ public class LocationRepositoryImpl implements LocationRepository{
                 location_id = ?
                 """;
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public LocationDisplayDto getLocationByCity(Integer cityId) {
+        String sql = """
+                SELECT
+                    c.name  AS cityName,
+                    co.name AS countyName,
+                    cn.name AS countryName
+                FROM city c
+                JOIN county co   ON c.county_id = co.county_id
+                JOIN country cn  ON co.country_id = cn.country_id
+                WHERE c.city_id = ?;
+                """;
+        List<LocationDisplayDto> location = jdbcTemplate.query(sql, locationDisplayDtoRowMapper, cityId);
+        return location.getFirst();
     }
 }

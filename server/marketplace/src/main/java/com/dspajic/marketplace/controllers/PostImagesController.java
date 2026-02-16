@@ -49,4 +49,9 @@ public class PostImagesController {
         return service.getImagesByPost(post_id, false);
     }
 
+    @GetMapping("/postImages/post-all/{post_id}")
+    public List<PostImages> getAllPostImagesByPost(@PathVariable Integer post_id) {
+        return service.getAllPostImagesByPost(post_id);
+    }
+
 }

@@ -1,0 +1,28 @@
+import { useEffect, useState } from "react";
+import type { PostDetailsImages } from "../../features/postDetails/components/ImageDisplay/Images";
+import axios from "axios";
+
+export default function useFetchPostImages( postId : number ) {
+    const [postDetailsImages, setPostDetailsImages] = useState<PostDetailsImages[]>();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchPostImages = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:8080/api/postImages/post-all/${postId}`
+                );
+                const data : PostDetailsImages[] = response.data;
+                setPostDetailsImages(data);
+            } catch (error) {
+                setError("Error fetching post images");
+                console.error("Error fetching post images", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPostImages();
+    }, []);
+    return postDetailsImages;
+}

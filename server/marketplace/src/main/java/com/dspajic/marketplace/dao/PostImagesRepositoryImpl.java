@@ -113,5 +113,17 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
         return jdbcTemplate.query(sql, rowMapper, post_id, isMain);
     }
 
+    @Override
+    public List<PostImages> getAllImagesByPost(Integer postId) {
+        String sql = """
+                SELECT *
+                FROM
+                post_image t
+                where
+                t.post_id = ?;
+                """;
+        return jdbcTemplate.query(sql, rowMapper, postId);
+    }
+
 
 }

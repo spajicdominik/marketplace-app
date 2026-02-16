@@ -11,4 +11,6 @@ public interface PostImagesService {
     Integer updatePostImages(PostImages entity);
     void deletePostImages(Integer id);
     List<PostImages> getImagesByPost(Integer post_id, Boolean isMain);
+
+    List<PostImages> getAllPostImagesByPost(Integer postId);
 }

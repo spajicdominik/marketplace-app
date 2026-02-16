@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.controllers;
 
+import com.dspajic.marketplace.dto.userdisplay.UserDisplayDto;
 import com.dspajic.marketplace.entities.Users;
 import com.dspajic.marketplace.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +39,7 @@ public class UsersController {
     public void deleteUsers(@PathVariable("id") Integer id) {
         service.deleteUsers(id);
     }
+
+    @GetMapping("/users-display/{user_id}")
+    public UserDisplayDto getUserInfo(@PathVariable Integer user_id) { return service.getUserInfo(user_id); }
 }

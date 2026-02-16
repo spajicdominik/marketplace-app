@@ -161,4 +161,18 @@ public class PostRepositoryImpl implements PostRepository{
                 """;
         return jdbcTemplate.query(sql, rowMapper, id);
     }
+
+    @Override
+    public List<Post> getRecentPosts() {
+        String sql = """
+                SELECT
+                p.*
+                FROM
+                post p
+                ORDER BY
+                p.created_at DESC, p.post_id DESC
+                LIMIT 4;
+                """;
+        return jdbcTemplate.query(sql, rowMapper);
+    }
 }

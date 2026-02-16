@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.userdisplay.UserDisplayDto;
 import com.dspajic.marketplace.entities.Users;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface UsersRepository {
     List<String> findAuthoritiesByUsername(String username);
     Users getUserByEmail(String email);
     Integer enableUser(String email);
+
+    UserDisplayDto getUserInfo(Integer userId);
 }

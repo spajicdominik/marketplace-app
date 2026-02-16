@@ -57,4 +57,9 @@ public class PostController {
     public PostDetails getPostDetailsById(@PathVariable("id") Integer id) {
         return postDetailsService.get(id);
     }
+
+    @GetMapping("/posts/recently-added")
+    public List<Post> getRecentPosts() {
+        return service.getRecentPosts();
+    }
 }

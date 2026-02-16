@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.controllers;
 
+import com.dspajic.marketplace.dto.userdisplay.LocationDisplayDto;
 import com.dspajic.marketplace.entities.Location;
 import com.dspajic.marketplace.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +39,7 @@ public class LocationController {
     public void deleteLocation(@PathVariable("id") Integer id) {
         service.deleteLocation(id);
     }
+
+    @GetMapping("/location-full/{city_id}")
+    public LocationDisplayDto getLocationByCity(@PathVariable Integer city_id) { return service.getLocationByCity(city_id); }
 }

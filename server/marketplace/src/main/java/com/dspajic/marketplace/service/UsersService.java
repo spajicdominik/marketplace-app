@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dto.auth.UserRegisterDto;
+import com.dspajic.marketplace.dto.userdisplay.UserDisplayDto;
 import com.dspajic.marketplace.entities.Users;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface UsersService {
     Users registerNewUser(UserRegisterDto userDto);
 
     String validateVerificationToken(String token);
+
+    UserDisplayDto getUserInfo(Integer userId);
 }

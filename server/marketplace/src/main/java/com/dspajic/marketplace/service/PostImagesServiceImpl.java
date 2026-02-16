@@ -42,4 +42,9 @@ public class PostImagesServiceImpl implements PostImagesService{
     public List<PostImages> getImagesByPost(Integer post_id, Boolean isMain) {
         return repository.getImagesByPost(post_id, isMain);
     }
+
+    @Override
+    public List<PostImages> getAllPostImagesByPost(Integer postId) {
+        return repository.getAllImagesByPost(postId);
+    }
 }

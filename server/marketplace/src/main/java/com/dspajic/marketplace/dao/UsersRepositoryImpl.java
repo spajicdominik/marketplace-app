@@ -1,6 +1,8 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.userdisplay.UserDisplayDto;
 import com.dspajic.marketplace.entities.Users;
+import com.dspajic.marketplace.mappers.dto.UserDisplayDtoRowMapper;
 import com.dspajic.marketplace.mappers.UsersRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,6 +18,8 @@ public class UsersRepositoryImpl implements UsersRepository{
     JdbcTemplate jdbcTemplate;
 
     UsersRowMapper rowMapper = new UsersRowMapper();
+
+    UserDisplayDtoRowMapper userDisplayDtoRowMapper = new UserDisplayDtoRowMapper();
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -173,6 +177,28 @@ public class UsersRepositoryImpl implements UsersRepository{
                 WHERE ud.email = ?;
                 """;
         return jdbcTemplate.update(sql, email);
+    }
+
+    @Override
+    public UserDisplayDto getUserInfo(Integer userId) {
+        String sql = """
+                SELECT
+                    u.user_id       AS userId,
+                    ud.email        AS email,
+                    u.username      AS username,
+                    ud.first_name   AS firstName,
+                    ud.last_name    AS lastName,
+                    ud.gender       AS gender,
+                    ud.birth_date   AS birthDate,
+                    ud.phone_number AS phoneNumber,
+                    u.created_at    AS createdAt
+                FROM users u
+                JOIN user_details ud
+                ON u.user_details_id = ud.user_details_id
+                WHERE u.user_id = ?;
+                """;
+        List<UserDisplayDto> users = jdbcTemplate.query(sql, userDisplayDtoRowMapper, userId);
+        return users.getFirst();
     }
 
 }

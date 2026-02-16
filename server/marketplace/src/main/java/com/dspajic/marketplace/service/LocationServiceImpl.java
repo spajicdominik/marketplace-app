@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.LocationRepository;
+import com.dspajic.marketplace.dto.userdisplay.LocationDisplayDto;
 import com.dspajic.marketplace.entities.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,10 @@ public class LocationServiceImpl implements LocationService{
     @Override
     public void deleteLocation(Integer id) {
         repository.deleteLocation(id);
+    }
+
+    @Override
+    public LocationDisplayDto getLocationByCity(Integer cityId) {
+        return repository.getLocationByCity(cityId);
     }
 }

@@ -28,7 +28,7 @@ export default function LoginForm() {
     async function handleSubmit(e:any) {
         const action = await dispatch(login(form));
         if (login.fulfilled.match(action)) {
-            navigate("/products");
+            navigate("/");
         }
     }
 

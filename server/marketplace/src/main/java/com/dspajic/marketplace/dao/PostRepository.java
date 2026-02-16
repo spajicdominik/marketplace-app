@@ -12,4 +12,6 @@ public interface PostRepository {
     void deletePost(Integer id);
 
     List<Post> getPostsByCategory(Integer id);
+
+    List<Post> getRecentPosts();
 }
