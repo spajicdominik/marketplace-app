@@ -175,4 +175,25 @@ public class PostRepositoryImpl implements PostRepository{
                 """;
         return jdbcTemplate.query(sql, rowMapper);
     }
+
+    @Override
+    public List<Post> getPostsByUser(Integer userId) {
+        String sql = """
+                SELECT
+                    p.post_id,
+                    p.title,
+                    p.description,
+                    p.price,
+                    p.currency,
+                    p.user_id,
+                    p.product_id,
+                    p.location_id,
+                    p.created_at,
+                    p.updated_at
+                FROM post p
+                WHERE p.user_id = ?
+                ORDER BY p.created_at DESC;
+                """;
+        return jdbcTemplate.query(sql, rowMapper, userId);
+    }
 }

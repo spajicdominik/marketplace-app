@@ -62,4 +62,7 @@ public class PostController {
     public List<Post> getRecentPosts() {
         return service.getRecentPosts();
     }
+
+    @GetMapping("/posts/user/{user_id}")
+    public List<Post> getPostsByUser(@PathVariable Integer user_id) { return service.getPostsByUser(user_id); }
 }

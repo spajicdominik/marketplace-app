@@ -2,12 +2,14 @@ import React from 'react';
 import { CommentOutlined, HeartOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
 import type { UserDetails } from '../../../types/UserDetails';
+import { NavLink } from 'react-router-dom';
 
 const { Meta } = Card;
 
 export default function UserPreview({userDetails} : {userDetails : UserDetails | undefined}) {
     const username = userDetails?.username;
     const email = userDetails?.email;
+    const userUrl = `/users/${userDetails?.userId}`
 
     return (
         <Card
@@ -22,7 +24,9 @@ export default function UserPreview({userDetails} : {userDetails : UserDetails |
             actions={[
                 <HeartOutlined key="save-user" />,
                 <CommentOutlined key="contact-user" />,
-                <UserOutlined key = "info-user"/>
+                <NavLink to={userUrl}>
+                    <UserOutlined key = "info-user"/>
+                </NavLink>
             ]}
         >
             <Meta

@@ -1,4 +1,3 @@
-import Featured from "./features/featured/Featured";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import RootLayout from "./routes/Root";
 import AuthenticationPage from "./routes/Authentication";
@@ -10,6 +9,7 @@ import UploadSuccess from "./routes/UploadSuccess";
 import Profile from "./routes/Profile";
 import Main from "./routes/Main";
 import PostDetailsPage from "./routes/PostDetailsPage";
+import UserDetailsPage from './routes/UserDetailsPage';
 
 function App() {
  const router = createBrowserRouter([
@@ -28,7 +28,8 @@ function App() {
         { path: '/register-done', element: <RegisterDone/>},
         { path: '/upload-success', element: <UploadSuccess/>},
         { path: '/profile', element: <Profile/>},
-        { path: '/post/:postId', element: <PostDetailsPage/>}
+        { path: '/post/:postId', element: <PostDetailsPage/>},
+        { path: '/users/:userId', element: <UserDetailsPage/>}
       ]
     }
 ])

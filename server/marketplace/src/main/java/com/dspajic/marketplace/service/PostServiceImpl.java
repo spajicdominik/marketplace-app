@@ -49,5 +49,10 @@ public class PostServiceImpl implements PostService{
         return repository.getRecentPosts();
     }
 
+    @Override
+    public List<Post> getPostsByUser(Integer userId) {
+        return repository.getPostsByUser(userId);
+    }
+
 
 }
