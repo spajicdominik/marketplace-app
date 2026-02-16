@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `marketplace-api` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `marketplace-api`;
--- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.44, for macos15 (arm64)
 --
 -- Host: localhost    Database: marketplace-api
 -- ------------------------------------------------------
--- Server version	8.0.44
+-- Server version	9.5.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,34 +14,40 @@ USE `marketplace-api`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
 
 --
--- Table structure for table `post_image`
+-- GTID state at the beginning of the backup 
 --
 
-DROP TABLE IF EXISTS `post_image`;
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'e0ef7cfe-f07b-11f0-9ee5-de01690d05f1:1-599';
+
+--
+-- Table structure for table `brand`
+--
+
+DROP TABLE IF EXISTS `brand`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `post_image` (
-  `post_image_id` int NOT NULL AUTO_INCREMENT,
-  `post_id` bigint NOT NULL,
-  `image_url` varchar(256) NOT NULL,
-  `is_main` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`post_image_id`),
-  KEY `fk_post` (`post_id`),
-  CONSTRAINT `fk_post` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `brand` (
+  `brand_id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(120) NOT NULL,
+  PRIMARY KEY (`brand_id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `post_image`
+-- Dumping data for table `brand`
 --
 
-LOCK TABLES `post_image` WRITE;
-/*!40000 ALTER TABLE `post_image` DISABLE KEYS */;
-INSERT INTO `post_image` VALUES (1,1,'/uploads/posts/5/example.jpg',1),(2,2,'/uploads/posts/5/example.jpg',1),(3,3,'/uploads/posts/5/example.jpg',1),(4,4,'/uploads/posts/5/example.jpg',1),(5,5,'/uploads/posts/5/example.jpg',1),(6,6,'/uploads/posts/5/example.jpg',1);
-/*!40000 ALTER TABLE `post_image` ENABLE KEYS */;
+LOCK TABLES `brand` WRITE;
+/*!40000 ALTER TABLE `brand` DISABLE KEYS */;
+INSERT INTO `brand` VALUES (4,'Apple'),(5,'Bosch'),(2,'LG'),(6,'Nintendo'),(1,'Samsung'),(3,'Sony');
+/*!40000 ALTER TABLE `brand` ENABLE KEYS */;
 UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -54,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-13 14:00:19
+-- Dump completed on 2026-02-16 23:16:13

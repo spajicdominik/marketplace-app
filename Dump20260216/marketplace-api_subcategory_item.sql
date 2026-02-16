@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `marketplace-api` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `marketplace-api`;
--- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.44, for macos15 (arm64)
 --
 -- Host: localhost    Database: marketplace-api
 -- ------------------------------------------------------
--- Server version	8.0.44
+-- Server version	9.5.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,35 +14,42 @@ USE `marketplace-api`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
 
 --
--- Table structure for table `location`
+-- GTID state at the beginning of the backup 
 --
 
-DROP TABLE IF EXISTS `location`;
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'e0ef7cfe-f07b-11f0-9ee5-de01690d05f1:1-599';
+
+--
+-- Table structure for table `subcategory_item`
+--
+
+DROP TABLE IF EXISTS `subcategory_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `location` (
-  `location_id` bigint NOT NULL AUTO_INCREMENT,
-  `address_line1` varchar(150) DEFAULT NULL,
-  `address_line2` varchar(150) DEFAULT NULL,
-  `postal_code` varchar(20) DEFAULT NULL,
-  `city_id` bigint NOT NULL,
-  PRIMARY KEY (`location_id`),
-  KEY `ix_location_city` (`city_id`),
-  CONSTRAINT `fk_location_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `subcategory_item` (
+  `subcategory_item_id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(120) NOT NULL,
+  `subcategory_id` bigint NOT NULL,
+  PRIMARY KEY (`subcategory_item_id`),
+  KEY `ix_item_subcategory` (`subcategory_id`),
+  CONSTRAINT `fk_item_subcategory` FOREIGN KEY (`subcategory_id`) REFERENCES `subcategory` (`subcategory_id`) ON DELETE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `location`
+-- Dumping data for table `subcategory_item`
 --
 
-LOCK TABLES `location` WRITE;
-/*!40000 ALTER TABLE `location` DISABLE KEYS */;
-INSERT INTO `location` VALUES (1,'Savska cesta 1',NULL,'10000',1),(2,'Leopoldstrasse 10',NULL,'80802',2),(3,'1 Market St','Suite 100','94105',3),(4,'Main Street 12','Apartment 5B','10000',1),(5,'Main Street 12','Apartment 5B','10000',1),(6,'sdf','sdf','12453',1);
-/*!40000 ALTER TABLE `location` ENABLE KEYS */;
+LOCK TABLES `subcategory_item` WRITE;
+/*!40000 ALTER TABLE `subcategory_item` DISABLE KEYS */;
+INSERT INTO `subcategory_item` VALUES (1,'4K TV',1),(2,'OLED TV',1),(3,'Android Phone',2),(4,'iOS Phone',2),(5,'Bluetooth Speakers',3),(6,'Espresso Machine',4),(7,'Game Console',5);
+/*!40000 ALTER TABLE `subcategory_item` ENABLE KEYS */;
 UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -55,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-13 14:00:21
+-- Dump completed on 2026-02-16 23:16:13

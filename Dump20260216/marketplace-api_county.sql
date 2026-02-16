@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `marketplace-api` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `marketplace-api`;
--- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.44, for macos15 (arm64)
 --
 -- Host: localhost    Database: marketplace-api
 -- ------------------------------------------------------
--- Server version	8.0.44
+-- Server version	9.5.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +14,14 @@ USE `marketplace-api`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
+
+--
+-- GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'e0ef7cfe-f07b-11f0-9ee5-de01690d05f1:1-599';
 
 --
 -- Table structure for table `county`
@@ -31,7 +37,7 @@ CREATE TABLE `county` (
   PRIMARY KEY (`county_id`),
   KEY `ix_county_country` (`country_id`),
   CONSTRAINT `fk_county_country` FOREIGN KEY (`country_id`) REFERENCES `country` (`country_id`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,9 +46,10 @@ CREATE TABLE `county` (
 
 LOCK TABLES `county` WRITE;
 /*!40000 ALTER TABLE `county` DISABLE KEYS */;
-INSERT INTO `county` VALUES (1,'Grad Zagreb',1),(2,'Bavaria',2),(3,'California',3);
+INSERT INTO `county` VALUES (1,'Grad Zagreb',1),(2,'Bavaria',2),(3,'California',3),(4,'Zagrebačka',1),(5,'Krapinsko-zagorska',1),(6,'Sisačko-moslavačka',1),(7,'Karlovačka',1),(8,'Varaždinska',1),(9,'Koprivničko-križevačka',1),(10,'Bjelovarsko-bilogorska',1),(11,'Primorsko-goranska',1),(12,'Ličko-senjska',1),(13,'Virovitičko-podravska',1),(14,'Požeško-slavonska',1),(15,'Brodsko-posavska',1),(16,'Zadarska',1),(17,'Osječko-baranjska',1),(18,'Šibensko-kninska',1),(19,'Vukovarsko-srijemska',1),(20,'Splitsko-dalmatinska',1),(21,'Istarska',1),(22,'Dubrovačko-neretvanska',1),(23,'Međimurska',1);
 /*!40000 ALTER TABLE `county` ENABLE KEYS */;
 UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -53,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-13 14:00:21
+-- Dump completed on 2026-02-16 23:16:13
