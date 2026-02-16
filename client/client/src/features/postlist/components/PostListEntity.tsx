@@ -2,38 +2,39 @@ import useFetchMainImage from "../../../hooks/postList/useFetchMainImage";
 import type { Post } from "./Post";
 import { Button } from "antd";
 import { NavLink } from "react-router-dom";
+import { Card } from "antd";
+
+const { Meta } = Card;
 
 interface PostListEntityProps {
   post: Post;
 }
 
 const PostListEntity: React.FC<PostListEntityProps> = ({ post }) => {
-  const {
-    id,
-    title,
-    description,
-    price,
-    currency,
-    createdAt,
-  } = post;
+  const { id, title, description, price, currency, createdAt } = post;
 
   const imageUrl = useFetchMainImage(id);
   const navigationLink = `/post/${id}`;
 
   return (
-    <div className="bg-white text-black p-3 m-3 rounded-2xl flex">
-        <img src={imageUrl} alt="Post Image" className="h-50 w-40"/>
-        <div className="info w-1/2 p-3">
-            <h1 className="text-2xl font-bold pb-3">{title}</h1>
-            <p className="pb-3">{description}</p>
-            <p className="pb-3">{price.toFixed(2)} {currency}</p>
-            <div className="pb-3">
-                <Button>
-                  <NavLink to={navigationLink}>Info</NavLink>
-                </Button>
-            </div>
-            
-        </div>
+    <div className="p-2">
+      <Card
+        hoverable
+        style={{ width: 300 }}
+        cover={
+          <img
+            draggable={false}
+            alt="example"
+            src={imageUrl}
+            className="h-90 object-scale-down bg-neutral-900"
+          />
+        }
+      >
+        <Meta title={title} description={price + currency} />
+        <NavLink to={navigationLink}>
+          <Button>Info</Button>
+        </NavLink>
+      </Card>
     </div>
   );
 };

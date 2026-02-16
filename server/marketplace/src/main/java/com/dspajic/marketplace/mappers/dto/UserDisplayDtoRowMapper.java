@@ -22,6 +22,7 @@ public class UserDisplayDtoRowMapper implements RowMapper<UserDisplayDto> {
         dto.setBirthDate(rs.getDate("birthDate"));
         dto.setPhoneNumber(rs.getString("phoneNumber"));
         dto.setCreatedAt(rs.getObject("createdAt", LocalDateTime.class));
+        dto.setCityId(rs.getInt("cityId"));
 
         return dto;
     }

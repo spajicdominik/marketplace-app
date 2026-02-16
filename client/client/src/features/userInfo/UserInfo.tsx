@@ -6,10 +6,13 @@ import { FaRegUser } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { MdOutlineLocalPhone } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
+import useFetchLocationDto from "../../hooks/userDetails/useFetchLocation";
 
 export default function UserInfo({ userDetails }: { userDetails: UserDetails | undefined }) {
     const username = userDetails?.username;
     const dateCreated = FormatDate(userDetails?.createdAt)
+    const location = useFetchLocationDto(userDetails?.cityId);
+    console.log(userDetails);
 
     return (
         <div className="user-info bg-white text-black p-4 my-4 shadow-xl rounded-2xl">
@@ -40,7 +43,7 @@ export default function UserInfo({ userDetails }: { userDetails: UserDetails | u
                 </div>
                 <div className="flex items-center">
                     <IoLocationOutline />
-                    <h1>City, County, Country</h1>
+                    <h1>{location?.cityName}, {location?.countyName}, {location?.countryName}</h1>
                 </div>
             </div>
             </div>

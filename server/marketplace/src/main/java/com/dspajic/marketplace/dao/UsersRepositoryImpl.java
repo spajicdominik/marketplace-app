@@ -191,7 +191,8 @@ public class UsersRepositoryImpl implements UsersRepository{
                     ud.gender       AS gender,
                     ud.birth_date   AS birthDate,
                     ud.phone_number AS phoneNumber,
-                    u.created_at    AS createdAt
+                    u.created_at    AS createdAt,
+                    ud.city_id      AS cityId
                 FROM users u
                 JOIN user_details ud
                 ON u.user_details_id = ud.user_details_id

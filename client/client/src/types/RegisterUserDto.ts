@@ -7,4 +7,5 @@ export interface RegisterUserDto {
   gender: string; 
   birthDate: string;
   phoneNumber: string;
+  cityId : number | undefined
 }

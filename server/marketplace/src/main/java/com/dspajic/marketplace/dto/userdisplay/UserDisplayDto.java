@@ -22,4 +22,5 @@ public class UserDisplayDto {
     private Date birthDate;
     private String phoneNumber;
     private LocalDateTime createdAt;
+    private Integer cityId;
 }

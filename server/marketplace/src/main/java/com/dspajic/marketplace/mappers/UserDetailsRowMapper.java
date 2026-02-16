@@ -17,6 +17,7 @@ public class UserDetailsRowMapper implements RowMapper<UserDetails> {
         e.setBirthDate(rs.getDate("birth_date"));
         e.setPhoneNumber(rs.getString("phone_number"));
         e.setEmail(rs.getString("email"));
+        e.setCityId(rs.getInt("city_id"));
         return e;
     }
 }

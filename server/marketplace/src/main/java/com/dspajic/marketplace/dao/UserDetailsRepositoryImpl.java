@@ -26,7 +26,8 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                 gender,
                 birth_date,
                 phone_number,
-                email
+                email,
+                city_id
                 FROM
                 user_details
                 """;
@@ -43,7 +44,8 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                 gender,
                 birth_date,
                 phone_number,
-                email
+                email,
+                city_id
                 FROM
                 user_details
                 WHERE
@@ -63,10 +65,11 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                 gender,
                 birth_date,
                 phone_number,
-                email
+                email,
+                city_id
                 )
                 VALUES
-                (?, ?, ?, ?, ?, ?)
+                (?, ?, ?, ?, ?, ?,?)
                 """;
         return jdbcTemplate.update(
                 sql,
@@ -75,7 +78,8 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                         entity.getGender(),
                         entity.getBirthDate(),
                         entity.getPhoneNumber(),
-                        entity.getEmail()
+                        entity.getEmail(),
+                        entity.getCityId()
         );
     }
 
@@ -90,7 +94,8 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                 gender = ?,
                 birth_date = ?,
                 phone_number = ?,
-                email = ?
+                email = ?,
+                city_id = ?
                 WHERE
                 user_details_id = ?
                 """;
@@ -102,7 +107,8 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                         entity.getBirthDate(),
                         entity.getPhoneNumber(),
                         entity.getEmail(),
-                        entity.getId()
+                        entity.getId(),
+                        entity.getCityId()
         );
     }
 
@@ -127,7 +133,8 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                 gender,
                 birth_date,
                 phone_number,
-                email
+                email,
+                city_id
                 FROM
                 user_details
                 WHERE

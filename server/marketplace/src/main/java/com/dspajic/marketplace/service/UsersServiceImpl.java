@@ -73,6 +73,7 @@ public class UsersServiceImpl implements UsersService{
         userDetails.setGender(userDto.getGender());
         userDetails.setBirthDate(userDto.getBirthDate());
         userDetails.setPhoneNumber(userDto.getPhoneNumber());
+        userDetails.setCityId(userDto.getCityId());
         userDetailsService.addUserDetails(userDetails);
 
         Users user = new Users();

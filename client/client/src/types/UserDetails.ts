@@ -7,5 +7,6 @@ export interface UserDetails {
   gender: string;
   birthDate: string;     
   phoneNumber: string;
-  createdAt: string;    
+  createdAt: string;
+  cityId : number;    
 }
