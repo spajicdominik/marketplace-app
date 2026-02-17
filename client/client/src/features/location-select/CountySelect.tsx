@@ -9,11 +9,17 @@ import useFetchCounties from "../../hooks/newPost/location/useFetchCounties";
 
 export default function CountySelect() {
     const currentCountryId = useSelector(
-        (state: RootState) => state.newpost.countryId,
+        (state: RootState) => state.category.countryId,
+    );
+
+    const currentCountyId = useSelector(
+        (state: RootState) => state.category.countyId,
     );
 
     const counties = useFetchCounties(currentCountryId);
     const dispatch = useDispatch<AppDispatch>();
+
+    console.log(currentCountryId)
 
     const handleCountyChange = (value: string) => {
         const id = Number(value);
@@ -25,8 +31,8 @@ export default function CountySelect() {
             style={{ width: 150 }}
             options={mapCountiesToOptions(counties)}
             value={
-                currentCountryId !== undefined
-                    ? String(currentCountryId)
+                currentCountyId !== undefined
+                    ? String(currentCountyId)
                     : undefined
             }
             onChange={handleCountyChange}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { County } from "../../../types/County";
 
-export default function useFetchCounties(currentCountryId : Number | undefined){
+export default function useFetchCounties(currentCountryId : Number | undefined | null){
     const [counties, setCounties] = useState<County[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -9,7 +9,7 @@ export default function useFetchCounties(currentCountryId : Number | undefined){
     useEffect(() => {
             const fetchCounties = async () => {
                 try {
-                    if (currentCountryId == undefined){
+                    if (currentCountryId == undefined || currentCountryId == null){
                         return [];
                     }
                     const response = await fetch(`http://localhost:8080/api/counties/country/${currentCountryId}`);

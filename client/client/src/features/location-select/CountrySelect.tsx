@@ -12,7 +12,7 @@ export default function CountrySelect() {
     const dispatch = useDispatch<AppDispatch>();
 
     const currentCountryId = useSelector(
-        (state: RootState) => state.newpost.countryId,
+        (state: RootState) => state.category.countryId,
     );
 
     const handleCountryChange = (value: string) => {
