@@ -6,7 +6,16 @@ export default function useFilterPosts(
     categoryId : number, 
     subcategoryId : number | null, 
     subcategoryItemId : number | null, 
-    productId : number | null
+    productId : number | null,
+    countryId : number | null,
+    countyId : number | null,
+    city_id : number | null,
+    min_price: number | null,
+    max_price : number | null,
+    sortPriceDesc : boolean | null,
+    sortPriceAsc : boolean | null,
+    sortDateDesc: boolean | null,
+    sortDateAsc: boolean | null
 ) 
 {
     const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
@@ -14,11 +23,48 @@ export default function useFilterPosts(
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        let url = `http://localhost:8080/api/posts-filter?category_id=${categoryId}`
+
+        if (subcategoryId != null) {
+            url += `&subcategory_id=${subcategoryId}`;
+        }
+        if (subcategoryItemId != null) {
+            url+= `&subcategory_item_id=${subcategoryItemId}`;
+        }
+        if (productId != null) {
+            url+=`&product_id=${productId}`;
+        }
+        if (countryId != null) {
+            url+=`&country_id=${countryId}`;
+        }
+        if (countyId != null) {
+            url+=`&county_id=${countyId}`;
+        }
+        if (city_id != null) {
+            url+=`&city_id=${city_id}`;
+        }
+        if (min_price != null) {
+            url+=`&min_price=${min_price}`;
+        }
+        if (max_price != null) {
+            url+=`&max_price=${max_price}`;
+        }
+        if (sortPriceDesc != null) {
+            url+=`&sortPriceDesc=${sortPriceDesc}`;
+        }
+        if (sortPriceAsc != null) {
+            url+=`&sortPriceAsc=${sortPriceAsc}`;
+        }
+        if (sortDateDesc != null) {
+            url+=`&sortDateDesc=${sortDateDesc}`;
+        }
+        if (sortDateAsc != null) {
+            url+=`&sortDateAsc=${sortDateAsc}`;
+        }
+        
         const fetchFilteredPosts = async () => {
             try {
-                const response = await axios.get(
-                    `http://localhost:8080/api/posts-filter?category_id=${categoryId}&subcategory_id=${subcategoryId}&subcategory_item_id=${subcategoryItemId}&product_id=${productId}`
-                );
+                const response = await axios.get(url);
                 const data : Post[] = response.data;
                 setFilteredPosts(data);
             } catch (error) {
@@ -29,6 +75,6 @@ export default function useFilterPosts(
             }
         };
         fetchFilteredPosts();
-    }, [categoryId, subcategoryId, subcategoryItemId, productId]);
+    }, [categoryId, subcategoryId, subcategoryItemId, productId, countryId, countyId, city_id, min_price, max_price, sortPriceAsc, sortDateAsc, sortDateDesc, sortPriceDesc]);
     return filteredPosts
 }

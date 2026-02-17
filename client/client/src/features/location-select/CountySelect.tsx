@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../store";
 import { Select } from "antd";
 import { useDispatch } from "react-redux";
-import newPostSlice from "../../store/newPostSlice";
+import categorySlice from "../../store/category";
 import type { AppDispatch } from "../../store";
 import useFetchCounties from "../../hooks/newPost/location/useFetchCounties";
 
@@ -17,7 +17,7 @@ export default function CountySelect() {
 
     const handleCountyChange = (value: string) => {
         const id = Number(value);
-        dispatch(newPostSlice.actions.setCountyId(id));
+        dispatch(categorySlice.actions.setCounty(id));
     };
 
     return (

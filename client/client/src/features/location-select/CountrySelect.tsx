@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../store";
 import { Select } from "antd";
 import { useDispatch } from "react-redux";
-import newPostSlice from "../../store/newPostSlice";
+import categorySlice from "../../store/category";
 import type { AppDispatch } from "../../store";
 
 export default function CountrySelect() {
@@ -17,7 +17,7 @@ export default function CountrySelect() {
 
     const handleCountryChange = (value: string) => {
         const id = Number(value);
-        dispatch(newPostSlice.actions.setCountryId(id));
+        dispatch(categorySlice.actions.setCountry(id));
     };
 
     return (

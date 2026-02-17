@@ -11,6 +11,7 @@ const Sidebar = ({token} : {token : string | null}) => {
     const dispatch = useDispatch<AppDispatch>();
     const [items, setItems] = useState<MenuProps["items"]>([]);
     const categoryId = useSelector((state : RootState)=> state.category.categoryId);
+    const productId = useSelector((state : RootState)=> state.category.productId);
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/category/sidebar-items/${categoryId}`)
