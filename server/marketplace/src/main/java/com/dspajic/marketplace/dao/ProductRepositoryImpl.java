@@ -110,6 +110,7 @@ public class ProductRepositoryImpl implements ProductRepository{
     public List<ProductMenuDto> getProductsBySubcategoryId(Integer id) {
         String sql = """
                 SELECT
+                product_id,
                 name
                 FROM
                 product

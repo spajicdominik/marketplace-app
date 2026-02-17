@@ -54,5 +54,53 @@ public class PostServiceImpl implements PostService{
         return repository.getPostsByUser(userId);
     }
 
+    @Override
+    public List<Post> getPostsByProduct(Integer productId) {
+        return repository.getPostsByProduct(productId);
+    }
+
+    @Override
+    public List<Post> getPostsBySubcategoryItem(Integer subcategoryItemId) {
+        return repository.getPostsBySubcategoryItem(subcategoryItemId);
+    }
+
+    @Override
+    public List<Post> getPostsBySubcategory(Integer subcategoryId) {
+        return repository.getPostsBySubcategory(subcategoryId);
+    }
+
+    @Override
+    public List<Post> filterPosts(
+            Integer category_id,
+            Integer subcategory_id,
+            Integer subcategory_item_id,
+            Integer product_id,
+            Integer country_id,
+            Integer county_id,
+            Integer city_id,
+            Integer min_price,
+            Integer max_price,
+            Boolean sortPriceDesc,
+            Boolean sortPriceAsc,
+            Boolean sortDateDesc,
+            Boolean sortDateAsc)
+    {
+        return repository.filterPosts(
+                category_id,
+                subcategory_id,
+                subcategory_item_id,
+                product_id,
+                country_id,
+                county_id,
+                city_id,
+                min_price,
+                max_price,
+                sortPriceDesc,
+                sortPriceAsc,
+                sortDateDesc,
+                sortDateAsc
+        );
+    }
+
 
 }

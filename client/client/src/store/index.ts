@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import categorySlice from "./category";
 import authSlice from "./authSlice";
 import newPostSlice from "./newPostSlice";
+import sidebarSlice from "./sidebarSlice";
 
 const store = configureStore({
     reducer : { 
         category: categorySlice.reducer,
         auth: authSlice.reducer,
-        newpost: newPostSlice.reducer
+        newpost: newPostSlice.reducer,
+        sidebar: sidebarSlice.reducer
     }
 });
 

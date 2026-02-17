@@ -32,7 +32,7 @@ public class CategoryRepositoryImpl implements CategoryRepository{
     public Category getCategoryById(Integer id) {
         String sql = """
                 SELECT
-                category_id
+                category_id,
                 name
                 FROM
                 category

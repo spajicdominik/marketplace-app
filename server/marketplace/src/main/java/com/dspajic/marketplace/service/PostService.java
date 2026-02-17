@@ -17,4 +17,26 @@ public interface PostService {
     List<Post> getRecentPosts();
 
     List<Post> getPostsByUser(Integer userId);
+
+    List<Post> getPostsByProduct(Integer productId);
+
+    List<Post> getPostsBySubcategoryItem(Integer subcategoryItemId);
+
+    List<Post> getPostsBySubcategory(Integer subcategoryId);
+
+    List<Post> filterPosts(
+            Integer category_id,
+            Integer subcategory_id,
+            Integer subcategory_item_id,
+            Integer product_id,
+            Integer country_id,
+            Integer county_id,
+            Integer city_id,
+            Integer min_price,
+            Integer max_price,
+            Boolean sortPriceDesc,
+            Boolean sortPriceAsc,
+            Boolean sortDateDesc,
+            Boolean sortDateAsc
+    );
 }

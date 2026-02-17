@@ -11,7 +11,26 @@ public interface PostRepository {
     Integer updatePost(Post entity);
     void deletePost(Integer id);
 
+    List<Post> filterPosts(
+            Integer category_id,
+            Integer subcategory_id,
+            Integer subcategory_item_id,
+            Integer product_id,
+            Integer country_id,
+            Integer county_id,
+            Integer city_id,
+            Integer min_price,
+            Integer max_price,
+            Boolean sortPriceDesc,
+            Boolean sortPriceAsc,
+            Boolean sortDateDesc,
+            Boolean sortDateAsc
+    );
+
     List<Post> getPostsByCategory(Integer id);
+    List<Post> getPostsBySubcategory(Integer id);
+    List<Post> getPostsBySubcategoryItem(Integer id);
+    List<Post> getPostsByProduct(Integer id);
 
     List<Post> getRecentPosts();
 

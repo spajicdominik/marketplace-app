@@ -10,6 +10,7 @@ public class ProductMenuDtoMapper implements RowMapper<ProductMenuDto> {
     @Override
     public ProductMenuDto mapRow(ResultSet rs, int rowNum) throws SQLException {
         ProductMenuDto pmd = new ProductMenuDto();
+        pmd.setProduct_id(rs.getInt("product_id"));
         pmd.setName(rs.getString("name"));
         return pmd;
     }
