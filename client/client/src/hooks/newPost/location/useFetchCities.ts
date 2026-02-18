@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { City } from "../../../types/City";
 
-export default function useFetchCities(currentCountyId : Number | undefined){
+export default function useFetchCities(currentCountyId : Number | undefined | null){
     const [cities, setCities] = useState<City[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

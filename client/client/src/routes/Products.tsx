@@ -1,11 +1,10 @@
 import PostList from "../features/postlist/PostList"
-import useFetchPostList from "../hooks/useFetchPostList"
 import { useSelector } from "react-redux";
 import type { RootState } from "../store";
-import SideMenu from "../features/side-menu/SideMenu";
 import useFilterPosts from "../hooks/sidebar/useFilterPosts";
 import FilterMenu from "../features/filterMenu/FilterMenu";
-
+import NoPosts from "../features/postlist/NoPosts";
+import RecentlyCarousel from "../features/recentlyAdded/RecentlyCarousel";
 
 export default function Products() {
     const categoryId = useSelector((state: RootState) => state.category.categoryId);
@@ -39,11 +38,25 @@ export default function Products() {
         sortDateDesc,
         sortDateAsc
     );
+
     
-    return (
+    if (posts.length > 0) {
+        return (
         <div className="mx-8 mb-10">
             <FilterMenu token={token} />
             <PostList posts={posts}></PostList>
         </div>
     )
+    }
+    else {
+        return(
+            <div className="mx-8 mb-10">
+            <FilterMenu token={token} />
+            <NoPosts></NoPosts>
+            <RecentlyCarousel/>
+        </div> 
+        )
+    
+    }
+    
 }

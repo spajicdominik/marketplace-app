@@ -1,7 +1,11 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.favourite.FavouriteDto;
+import com.dspajic.marketplace.dto.filter.PriceRangeDto;
 import com.dspajic.marketplace.entities.Post;
+import com.dspajic.marketplace.mappers.FavouriteMapper;
 import com.dspajic.marketplace.mappers.PostRowMapper;
+import com.dspajic.marketplace.mappers.PriceRangeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,6 +26,10 @@ public class PostRepositoryImpl implements PostRepository{
 
     @Autowired
     NamedParameterJdbcTemplate namedJdbc;
+
+    PriceRangeMapper priceRangeMapper = new PriceRangeMapper();
+
+    FavouriteMapper favouriteMapper = new FavouriteMapper();
 
     @Override
     public List<Post> getAllPosts() {
@@ -338,5 +346,74 @@ public class PostRepositoryImpl implements PostRepository{
                 ORDER BY p.created_at DESC;
                 """;
         return jdbcTemplate.query(sql, rowMapper, userId);
+    }
+
+    @Override
+    public PriceRangeDto getPriceRange() {
+        String sql = """
+                SELECT
+                MIN(price) AS min_price,
+                MAX(price) AS max_price
+                FROM post;
+                """;
+        return jdbcTemplate.query(sql, priceRangeMapper).getFirst();
+    }
+
+    @Override
+    public Integer addFavourite(FavouriteDto favouriteDto) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("user_id", favouriteDto.getUser_id());
+        params.addValue("post_id", favouriteDto.getPost_id());
+
+        String sql = """
+                INSERT IGNORE INTO
+                user_favorite_post
+                (user_id, post_id)
+                VALUES (:user_id, :post_id);
+                """;
+        return namedJdbc.update(sql, params);
+    }
+
+    @Override
+    public void removeFavourite(FavouriteDto favouriteDto) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("user_id", favouriteDto.getUser_id());
+        params.addValue("post_id", favouriteDto.getPost_id());
+
+        String sql = """
+                DELETE FROM user_favorite_post
+                WHERE user_id = :user_id AND post_id = :post_id;
+                """;
+        namedJdbc.update(sql, params);
+    }
+
+    @Override
+    public Boolean isFavourited(FavouriteDto favouriteDto) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("user_id", favouriteDto.getUser_id());
+        params.addValue("post_id", favouriteDto.getPost_id());
+
+        String sql = """
+                SELECT EXISTS(
+                        SELECT 1 FROM user_favorite_post
+                        WHERE user_id = :user_id AND post_id = :post_id
+                    ) AS is_fav
+                """;
+
+        Boolean result = namedJdbc.queryForObject(sql, params, Boolean.class);
+        return Boolean.TRUE.equals(result);
+
+    }
+
+    @Override
+    public List<Post> favouritePosts(Integer user_id) {
+        String sql = """
+                SELECT p.*
+                FROM user_favorite_post ufp
+                JOIN post p ON p.post_id = ufp.post_id
+                WHERE ufp.user_id = ?
+                ORDER BY ufp.created_at DESC
+                """;
+        return jdbcTemplate.query(sql, rowMapper, user_id);
     }
 }

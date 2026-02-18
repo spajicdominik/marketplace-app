@@ -1,5 +1,7 @@
 package com.dspajic.marketplace.controllers;
 
+import com.dspajic.marketplace.dto.favourite.FavouriteDto;
+import com.dspajic.marketplace.dto.filter.PriceRangeDto;
 import com.dspajic.marketplace.dto.newpost.NewPostDto;
 import com.dspajic.marketplace.entities.Post;
 import com.dspajic.marketplace.entities.PostDetails;
@@ -99,5 +101,35 @@ public class PostController {
                 sortDateDesc,
                 sortDateAsc
         );
+    }
+
+    @GetMapping("/posts-price-range")
+    public PriceRangeDto getPriceRange() {
+        return service.getPriceRange();
+    }
+
+    @PostMapping("/posts/favourites")
+    public Integer addFavourite(@RequestBody FavouriteDto favouriteDto) { return service.addFavourite(favouriteDto); }
+
+    @DeleteMapping("/posts/favourites")
+    public void deleteFavourite(@RequestBody FavouriteDto favouriteDto) { service.deleteFavourite(favouriteDto); }
+
+    @GetMapping("/posts/is-favourite")
+    public Boolean isFavourite(
+            @RequestParam(required = true) Integer post_id,
+            @RequestParam(required = true) Integer user_id
+    )
+    {
+        FavouriteDto dto = FavouriteDto
+                .builder()
+                .post_id(post_id)
+                .user_id(user_id)
+                .build();
+        return service.isFavourited(dto);
+    }
+
+    @GetMapping("/posts/favourites/{user_id}")
+    public List<Post> getAllFavourites(@PathVariable Integer user_id) {
+        return service.favouritePosts(user_id);
     }
 }

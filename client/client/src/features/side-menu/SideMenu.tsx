@@ -5,7 +5,8 @@ import useFetchCategoryById from '../../hooks/useFetchCategoryById';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../store';
 import sidebarSlice from '../../store/sidebarSlice';
-
+import LocationFilter from '../filterMenu/components/LocationFilter';
+import PriceFilter from '../priceFilter/PriceFilter';
 
 export default function SideMenu({token} : {token : string | null}) {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,6 +41,11 @@ export default function SideMenu({token} : {token : string | null}) {
         key='left'
       >
         <Sidebar token={token}></Sidebar>
+        <div className='w-full border-t my-5'></div>
+        <h1 className='text-black text-xl font-bold px-4'>FILTER BY</h1>
+        <LocationFilter/>
+        <PriceFilter/>
+        <Button>Submit filter</Button>
       </Drawer>
     </div>
   );

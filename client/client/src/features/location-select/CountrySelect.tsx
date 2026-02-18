@@ -6,9 +6,16 @@ import { Select } from "antd";
 import { useDispatch } from "react-redux";
 import categorySlice from "../../store/category";
 import type { AppDispatch } from "../../store";
+import type { Country } from "../../types/Country";
 
 export default function CountrySelect() {
-    const countries = useFetchCountries();
+    const baseCountries = useFetchCountries();
+    const nullCountry : Country = {
+        id : 0,
+        name : "All countries"
+    }
+    const countries = [nullCountry,...baseCountries];
+
     const dispatch = useDispatch<AppDispatch>();
 
     const currentCountryId = useSelector(
@@ -17,6 +24,10 @@ export default function CountrySelect() {
 
     const handleCountryChange = (value: string) => {
         const id = Number(value);
+        if (id == 0) {
+            dispatch(categorySlice.actions.setCountry(null));
+            return;
+        }
         dispatch(categorySlice.actions.setCountry(id));
     };
 
@@ -25,9 +36,9 @@ export default function CountrySelect() {
             style={{ width: 150 }}
             options={mapCountriesToOptions(countries)}
             value={
-                currentCountryId !== undefined
+                currentCountryId !== null
                     ? String(currentCountryId)
-                    : undefined
+                    : "All countries"
             }
             onChange={handleCountryChange}
             placeholder="Select country"

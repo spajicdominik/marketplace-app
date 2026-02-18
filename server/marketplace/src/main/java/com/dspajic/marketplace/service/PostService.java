@@ -1,5 +1,7 @@
 package com.dspajic.marketplace.service;
 
+import com.dspajic.marketplace.dto.favourite.FavouriteDto;
+import com.dspajic.marketplace.dto.filter.PriceRangeDto;
 import com.dspajic.marketplace.dto.newpost.NewPostDto;
 import com.dspajic.marketplace.entities.Post;
 
@@ -39,4 +41,14 @@ public interface PostService {
             Boolean sortDateDesc,
             Boolean sortDateAsc
     );
+
+    PriceRangeDto getPriceRange();
+
+    Integer addFavourite(FavouriteDto favouriteDto);
+
+    void deleteFavourite(FavouriteDto favouriteDto);
+
+    Boolean isFavourited(FavouriteDto favouriteDto);
+
+    List<Post> favouritePosts(Integer user_id);
 }

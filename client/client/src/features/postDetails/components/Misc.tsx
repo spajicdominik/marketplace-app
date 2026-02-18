@@ -15,10 +15,6 @@ export default function Misc({postDetails} : {postDetails : PostDetails | undefi
                     <FaShareAlt/>
                     <p className="ml-1">Share post</p>
                 </div>
-                <div className="favourite flex items-center cursor-pointer mx-4">
-                    <FaHeart />
-                    <p className="ml-1">Save</p>
-                </div>
             </div>
         </div>
     )

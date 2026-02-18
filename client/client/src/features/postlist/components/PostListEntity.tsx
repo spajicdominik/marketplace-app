@@ -3,6 +3,7 @@ import type { Post } from "./Post";
 import { Button } from "antd";
 import { NavLink } from "react-router-dom";
 import { Card } from "antd";
+import FormatDate from "../../../hooks/userDetails/formatDate";
 
 const { Meta } = Card;
 
@@ -15,6 +16,8 @@ const PostListEntity: React.FC<PostListEntityProps> = ({ post }) => {
 
   const imageUrl = useFetchMainImage(id);
   const navigationLink = `/post/${id}`;
+
+  const formatedDate = FormatDate(createdAt);
 
   return (
     <div className="p-2">
@@ -31,6 +34,7 @@ const PostListEntity: React.FC<PostListEntityProps> = ({ post }) => {
         }
       >
         <Meta title={title} description={price + currency} />
+        <p className="font-light text-sm my-3">Posted: {formatedDate}</p>
         <NavLink to={navigationLink}>
           <Button>Info</Button>
         </NavLink>

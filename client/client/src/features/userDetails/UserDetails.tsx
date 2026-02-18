@@ -11,7 +11,7 @@ export default function UserDetails({postId} : {postId : number}) {
 
     return (
         <div className="w-fit h-fit bg-white text-black shadow-2xl m-4">
-            <UserPreview userDetails={userDetails}/>
+            <UserPreview userDetails={userDetails} postId = {postId}/>
             <div className='flex items-center p-4'>
                 <IoLocationOutline />
                 <div>

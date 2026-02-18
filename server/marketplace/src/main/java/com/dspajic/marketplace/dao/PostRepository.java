@@ -1,5 +1,7 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.favourite.FavouriteDto;
+import com.dspajic.marketplace.dto.filter.PriceRangeDto;
 import com.dspajic.marketplace.entities.Post;
 
 import java.util.List;
@@ -35,4 +37,11 @@ public interface PostRepository {
     List<Post> getRecentPosts();
 
     List<Post> getPostsByUser(Integer userId);
+
+    PriceRangeDto getPriceRange();
+
+    Integer addFavourite(FavouriteDto favouriteDto);
+    void removeFavourite(FavouriteDto favouriteDto);
+    Boolean isFavourited(FavouriteDto favouriteDto);
+    List<Post> favouritePosts(Integer user_id);
 }

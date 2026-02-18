@@ -1,6 +1,8 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.PostRepository;
+import com.dspajic.marketplace.dto.favourite.FavouriteDto;
+import com.dspajic.marketplace.dto.filter.PriceRangeDto;
 import com.dspajic.marketplace.dto.newpost.NewPostDto;
 import com.dspajic.marketplace.entities.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +102,31 @@ public class PostServiceImpl implements PostService{
                 sortDateDesc,
                 sortDateAsc
         );
+    }
+
+    @Override
+    public PriceRangeDto getPriceRange() {
+        return repository.getPriceRange();
+    }
+
+    @Override
+    public Integer addFavourite(FavouriteDto favouriteDto) {
+        return repository.addFavourite(favouriteDto);
+    }
+
+    @Override
+    public void deleteFavourite(FavouriteDto favouriteDto) {
+        repository.removeFavourite(favouriteDto);
+    }
+
+    @Override
+    public Boolean isFavourited(FavouriteDto favouriteDto) {
+        return repository.isFavourited(favouriteDto);
+    }
+
+    @Override
+    public List<Post> favouritePosts(Integer user_id) {
+        return repository.favouritePosts(user_id);
     }
 
 

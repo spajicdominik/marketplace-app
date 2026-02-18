@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import categorySlice from "../../store/category";
 import type { AppDispatch } from "../../store";
 import useFetchCounties from "../../hooks/newPost/location/useFetchCounties";
+import type { County } from "../../types/County";
 
 export default function CountySelect() {
     const currentCountryId = useSelector(
@@ -16,24 +17,33 @@ export default function CountySelect() {
         (state: RootState) => state.category.countyId,
     );
 
-    const counties = useFetchCounties(currentCountryId);
+    const baseCounties = useFetchCounties(currentCountryId);
     const dispatch = useDispatch<AppDispatch>();
 
-    console.log(currentCountryId)
+    const nullCounty : County = {
+        id : 0,
+        name: "All counties"
+    }
+    const counties = [nullCounty, ...baseCounties];
 
     const handleCountyChange = (value: string) => {
         const id = Number(value);
+        if (id == 0) {
+            dispatch(categorySlice.actions.setCounty(null));
+            return;
+        }
         dispatch(categorySlice.actions.setCounty(id));
     };
+
 
     return (
         <Select
             style={{ width: 150 }}
             options={mapCountiesToOptions(counties)}
             value={
-                currentCountyId !== undefined
+                currentCountyId !== null
                     ? String(currentCountyId)
-                    : undefined
+                    : "All counties"
             }
             onChange={handleCountyChange}
             placeholder="Select county"

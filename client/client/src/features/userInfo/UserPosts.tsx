@@ -2,7 +2,7 @@ import useFetchUserPosts from "../../hooks/userDetails/useFetchUserPosts";
 import type { UserDetails } from "../../types/UserDetails";
 import PostList from "../postlist/PostList";
 
-export default function UserPosts({userId, userDetails} : {userId : number, userDetails : UserDetails | undefined}) {
+export default function UserPosts({userId, userDetails} : {userId : number | undefined, userDetails : UserDetails | undefined}) {
     const posts = useFetchUserPosts(userId);
 
     return (
