@@ -23,7 +23,7 @@ const PostListEntity: React.FC<PostListEntityProps> = ({ post }) => {
     <div className="p-2">
       <Card
         hoverable
-        style={{ width: 300 }}
+        style={{ width: 430 }}
         cover={
           <img
             draggable={false}

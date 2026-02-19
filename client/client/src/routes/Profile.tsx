@@ -10,7 +10,7 @@ export default function Profile() {
     const userDetails = useFetchUserDetails(userId);
 
     return (
-        <div className="flex justify-center gap-10">
+        <div className="flex flex-col justify-center gap-10 p-5">
             <UserInfo userDetails={userDetails}/>
             <div>
                 <UserPosts userId={userId} userDetails={userDetails}></UserPosts>
