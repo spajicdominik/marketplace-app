@@ -4,15 +4,17 @@ import {
   DownOutlined,
   LogoutOutlined,
   SettingOutlined,
-  UserOutlined
+  UserOutlined,
+  InboxOutlined
 } from "@ant-design/icons";
-import { Dropdown, Space, Avatar } from "antd";
+import { Dropdown, Space, Avatar, Badge } from "antd";
 import type { MenuProps } from "antd";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../../store";
 import { logout } from "../../../store/authSlice";
 import { useNavigate } from "react-router-dom";
+
 
 const items: MenuProps["items"] = [
   {
@@ -66,15 +68,29 @@ export default function AuthBar() {
           </motion.p>
         </>
       ) : (
-        <Dropdown menu={{ items, onClick: handleMenuClick }} trigger={["click"]}>
-          <a onClick={(e) => e.preventDefault()}>
-            <Avatar size={30} icon={<UserOutlined />} />
-            <Space>
-              {user?.sub}
-              <DownOutlined style={{ cursor: "pointer" }} />
-            </Space>
-          </a>
-        </Dropdown>
+        <div className="flex">
+          <div className="bg-gray-300 w-fit h-fit rounded-2xl mr-5 cursor-pointer">
+            <NavLink to="/chat">
+            <Badge count={0} showZero>
+              <Avatar shape="square" size={30}>
+                <InboxOutlined>
+                </InboxOutlined>
+              </Avatar>
+            </Badge>
+            </NavLink>
+          </div>
+
+          <Dropdown menu={{ items, onClick: handleMenuClick }} trigger={["click"]}>
+            <a onClick={(e) => e.preventDefault()}>
+              <Avatar size={30} icon={<UserOutlined />} />
+              <Space>
+                {user?.sub}
+                <DownOutlined style={{ cursor: "pointer" }} />
+              </Space>
+            </a>
+          </Dropdown>
+        </div>
+
       )}
     </div>
   );

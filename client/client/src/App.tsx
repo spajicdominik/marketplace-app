@@ -10,6 +10,7 @@ import Profile from "./routes/Profile";
 import Main from "./routes/Main";
 import PostDetailsPage from "./routes/PostDetailsPage";
 import UserDetailsPage from './routes/UserDetailsPage';
+import TestSocket from './routes/TestSocket';
 
 function App() {
  const router = createBrowserRouter([
@@ -29,7 +30,8 @@ function App() {
         { path: '/upload-success', element: <UploadSuccess/>},
         { path: '/profile', element: <Profile/>},
         { path: '/post/:postId', element: <PostDetailsPage/>},
-        { path: '/users/:userId', element: <UserDetailsPage/>}
+        { path: '/users/:userId', element: <UserDetailsPage/>},
+        { path: 'chat', element: <TestSocket/>}
       ]
     }
 ])

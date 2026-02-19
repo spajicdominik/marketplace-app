@@ -14,6 +14,7 @@
     "@heroui/styles": "^3.0.0-beta.5",
     "@react-login-page/page3": "^1.0.6",
     "@reduxjs/toolkit": "^2.11.2",
+    "@stomp/stompjs": "^7.3.0",
     "@tailwindcss/vite": "^4.1.18",
     "antd": "^6.2.2",
     "axios": "^1.13.5",
@@ -27,6 +28,8 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.13.0",
     "react-toastify": "^11.0.5",
+    "react-use-websocket": "^4.13.0",
+    "sockjs-client": "^1.6.1",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
@@ -34,6 +37,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
+    "@types/sockjs-client": "^1.5.4",
     "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
