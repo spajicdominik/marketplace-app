@@ -179,9 +179,9 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
         style={{ display: "none" }}
         src={previewImage}
         preview={{
-          visible: previewOpen,
+          open: previewOpen,
           src: previewImage,
-          onVisibleChange: (vis) => setPreviewOpen(vis),
+          onOpenChange: (vis) => setPreviewOpen(vis),
         }}
       />
     </>

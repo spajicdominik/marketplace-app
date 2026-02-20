@@ -45,6 +45,7 @@ public class PostDetailsServiceImpl implements PostDetailsService {
         return postService.addPost(mapPostFromDto(newPostDto, locationId));
     }
 
+
     public Post mapPostFromDto(NewPostDto newPostDto, Long locationId) {
         Post post = new Post();
         post.setTitle(newPostDto.getTitle());
@@ -64,5 +65,23 @@ public class PostDetailsServiceImpl implements PostDetailsService {
         location.setAddressLine1(newPostDto.getAddress_line1());
         location.setCityId(newPostDto.getCity_id());
         return location;
+    }
+
+    @Override
+    public Integer editPostDetails(NewPostDto editedPost, Integer post_id) {
+        Post originalPost = postService.getPostById(post_id);
+        Long location_id = originalPost.getLocationId();
+
+        Location newLocation = new Location();
+        newLocation.setCityId(editedPost.getCity_id());
+        newLocation.setAddressLine1(editedPost.getAddress_line1());
+        newLocation.setAddressLine2(editedPost.getAddress_line2());
+        newLocation.setPostalCode(editedPost.getPostal_code());
+        newLocation.setId(location_id);
+        locationService.updateLocation(newLocation);
+
+        Post newPost = mapPostFromDto(editedPost, location_id);
+        newPost.setId(post_id);
+        return postService.updatePost(newPost);
     }
 }

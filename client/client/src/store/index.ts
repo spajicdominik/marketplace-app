@@ -3,13 +3,15 @@ import categorySlice from "./category";
 import authSlice from "./authSlice";
 import newPostSlice from "./newPostSlice";
 import sidebarSlice from "./sidebarSlice";
+import editPostSlice from "./editPostSlice";
 
 const store = configureStore({
     reducer : { 
         category: categorySlice.reducer,
         auth: authSlice.reducer,
         newpost: newPostSlice.reducer,
-        sidebar: sidebarSlice.reducer
+        sidebar: sidebarSlice.reducer,
+        editpost: editPostSlice.reducer
     }
 });
 

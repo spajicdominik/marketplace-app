@@ -62,6 +62,9 @@ public class PostController {
         return postDetailsService.get(id);
     }
 
+    @PutMapping("/postDetails/{post_id}")
+    public Integer editPostDetailsById(@RequestBody NewPostDto editedPost, @PathVariable Integer post_id) { return postDetailsService.editPostDetails(editedPost, post_id); }
+
     @GetMapping("/posts/recently-added")
     public List<Post> getRecentPosts() {
         return service.getRecentPosts();

@@ -199,6 +199,9 @@ public class UsersRepositoryImpl implements UsersRepository{
                 WHERE u.user_id = ?;
                 """;
         List<UserDisplayDto> users = jdbcTemplate.query(sql, userDisplayDtoRowMapper, userId);
+        if (users.isEmpty()) {
+            return null;
+        }
         return users.getFirst();
     }
 

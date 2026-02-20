@@ -11,6 +11,7 @@ import Main from "./routes/Main";
 import PostDetailsPage from "./routes/PostDetailsPage";
 import UserDetailsPage from './routes/UserDetailsPage';
 import TestSocket from './routes/TestSocket';
+import EditPost from './routes/EditPost';
 
 function App() {
  const router = createBrowserRouter([
@@ -31,7 +32,8 @@ function App() {
         { path: '/profile', element: <Profile/>},
         { path: '/post/:postId', element: <PostDetailsPage/>},
         { path: '/users/:userId', element: <UserDetailsPage/>},
-        { path: 'chat', element: <TestSocket/>}
+        { path: 'chat', element: <TestSocket/>},
+        { path: "/edit-post", element: <EditPost/>}
       ]
     }
 ])

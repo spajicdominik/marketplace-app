@@ -164,11 +164,11 @@ export default function TopNavMegaMenu({
         onMouseEnter={clearCloseTimer}
         onMouseLeave={scheduleClose}
       >
+        <div className="pt-4">
         <Dropdown
           open={open}
-          dropdownRender={() => overlay}
+          popupRender={() => overlay}
           placement="bottomLeft"
-          overlayStyle={{ paddingTop: 10 }}
           getPopupContainer={() => wrapperRef.current ?? document.body}
         >
           <div className="flex w-full justify-between">
@@ -190,6 +190,7 @@ export default function TopNavMegaMenu({
             ))}
           </div>
         </Dropdown>
+        </div>
       </div>
     </div>
   );

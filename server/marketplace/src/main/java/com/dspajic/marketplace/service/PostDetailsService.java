@@ -6,4 +6,5 @@ import com.dspajic.marketplace.entities.PostDetails;
 public interface PostDetailsService {
     PostDetails get(Integer id);
     Integer addNewPost(NewPostDto newPostDto);
+    Integer editPostDetails(NewPostDto editedPost, Integer post_id);
 }
