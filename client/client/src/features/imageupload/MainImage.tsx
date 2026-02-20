@@ -20,7 +20,6 @@ const MainImage = forwardRef<MainImageHandle, {}>((_props, ref) => {
         formData.append("file", file as FileType);
       });
       setUploading(true);
-      // You can use any AJAX library you like
       try {
         const response = await axios.post("http://localhost:8080/api/uploads/images", formData);
         const payload = response.data;

@@ -2,6 +2,7 @@ package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dto.sidebar.CategoryMenuDto;
 import com.dspajic.marketplace.dto.sidebar.SidebarMenuDto;
+import com.dspajic.marketplace.dto.userdisplay.CategoryDisplayDto;
 import com.dspajic.marketplace.entities.Category;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface CategoryService {
     List<CategoryMenuDto> getCategoryMenu();
 
     List<SidebarMenuDto> getSidebarMenuByCategory(Integer id);
+
+    CategoryDisplayDto getFullCategoriesByProduct(Integer product_id);
 }

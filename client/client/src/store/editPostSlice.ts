@@ -18,8 +18,8 @@ export type EditPostState = {
     addressLine1?: string;
     addressLine2?: string;
     postalCode?: string;
-    sendNewPost?: NewPostType;
-    sendPostPictures? : boolean;
+    editPost?: NewPostType;
+    editPostPictures? : boolean;
     currentPostId?: number;
 }
 
@@ -40,8 +40,8 @@ const initialState: EditPostState = {
     addressLine1: undefined,
     addressLine2: undefined,
     postalCode: undefined,
-    sendNewPost: undefined,
-    sendPostPictures: false,
+    editPost: undefined,
+    editPostPictures: false,
     currentPostId: undefined
 };
 
@@ -49,6 +49,9 @@ const editPostSlice = createSlice({
     name: "editPost",
     initialState: initialState,
     reducers: {
+        setState(state, action: PayloadAction<EditPostState | undefined>){
+            return {...action.payload};
+        },
         setPostId(state, action: PayloadAction<number | undefined>) {
             state.currentPostId = action.payload
         },
@@ -56,10 +59,10 @@ const editPostSlice = createSlice({
             return initialState;
         },
         setPostPictures(state, action: PayloadAction<boolean | undefined>) {
-            state.sendPostPictures = action.payload
+            state.editPostPictures = action.payload
         },
         setNewPost(state, action: PayloadAction<NewPostType | undefined>) {
-            state.sendNewPost = action.payload
+            state.editPost = action.payload
         },
         setTitle(state, action: PayloadAction<string | undefined>) {
             state.title = action.payload

@@ -4,10 +4,12 @@ import { IoLocationOutline } from "react-icons/io5";
 import useFetchPostDetails from '../../hooks/postDetails/useFetchPostDetails';
 import useFetchLocationDto from '../../hooks/userDetails/useFetchLocation';
 
+
 export default function UserDetails({postId} : {postId : number}) {
     const postDetails = useFetchPostDetails(postId);
     const userDetails = useFetchUserDetails(postDetails?.userId);
     const location = useFetchLocationDto(postDetails?.location.cityId);
+
 
     return (
         <div className="w-fit h-fit bg-white text-black shadow-2xl m-4">

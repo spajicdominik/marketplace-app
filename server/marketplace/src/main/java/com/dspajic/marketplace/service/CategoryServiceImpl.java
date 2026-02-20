@@ -4,6 +4,7 @@ import com.dspajic.marketplace.dao.CategoryRepository;
 import com.dspajic.marketplace.dao.SubcategoryRepository;
 import com.dspajic.marketplace.dto.sidebar.CategoryMenuDto;
 import com.dspajic.marketplace.dto.sidebar.SidebarMenuDto;
+import com.dspajic.marketplace.dto.userdisplay.CategoryDisplayDto;
 import com.dspajic.marketplace.entities.Category;
 import com.dspajic.marketplace.entities.Subcategory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,10 @@ public class CategoryServiceImpl implements CategoryService{
             }
         }
         return sidebarMenuDtos;
+    }
+
+    @Override
+    public CategoryDisplayDto getFullCategoriesByProduct(Integer product_id) {
+        return categoryRepository.getFullCategoriesByProduct(product_id);
     }
 }

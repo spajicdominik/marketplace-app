@@ -19,7 +19,7 @@ export interface Product {
 export interface Location {
   id: number;
   addressLine1: string;
-  addressLine2: string | null; 
+  addressLine2: string; 
   cityId: number;
   postalCode: string;
 }

@@ -10,7 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class LocationDisplayDto {
+    private Integer cityId;
     private String cityName;
+
+    private Integer countyId;
     private String countyName;
+
+    private Integer countryId;
     private String countryName;
 }

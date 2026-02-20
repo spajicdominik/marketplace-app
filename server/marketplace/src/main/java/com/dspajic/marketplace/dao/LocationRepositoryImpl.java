@@ -128,8 +128,11 @@ public class LocationRepositoryImpl implements LocationRepository{
     public LocationDisplayDto getLocationByCity(Integer cityId) {
         String sql = """
                 SELECT
+                    c.city_id as cityId,
                     c.name  AS cityName,
+                    co.county_id as countyId,
                     co.name AS countyName,
+                    cn.country_id AS countryId,
                     cn.name AS countryName
                 FROM city c
                 JOIN county co   ON c.county_id = co.county_id

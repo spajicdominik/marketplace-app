@@ -34,6 +34,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import type { PostImage } from "../types/PostImage";
 import usePostImage from "../hooks/newPost/images/useMainImage";
+import editPostSlice from "../store/editPostSlice";
 
 export type Option = {
   value: string;
@@ -51,45 +52,46 @@ export default function EditPost() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const currentPostId = useSelector(
-    (state: RootState) => state.newpost.currentPostId,
+    (state: RootState) => state.editpost.currentPostId,
   );
   const currentCategoryId = useSelector(
-    (state: RootState) => state.newpost.categoryId,
+    (state: RootState) => state.editpost.categoryId,
   );
   const currentSubcategoryId = useSelector(
-    (state: RootState) => state.newpost.subcategoryId,
+    (state: RootState) => state.editpost.subcategoryId,
   );
   const currentProductTypeId = useSelector(
-    (state: RootState) => state.newpost.productTypeId,
+    (state: RootState) => state.editpost.productTypeId,
   );
   const currentBrandId = useSelector(
-    (state: RootState) => state.newpost.brandId,
+    (state: RootState) => state.editpost.brandId,
   );
   const currentProductId = useSelector(
-    (state: RootState) => state.newpost.productId,
+    (state: RootState) => state.editpost.productId,
   );
   const currentCountryId = useSelector(
-    (state: RootState) => state.newpost.countryId,
+    (state: RootState) => state.editpost.countryId,
   );
   const currentCountyId = useSelector(
-    (state: RootState) => state.newpost.countyId,
+    (state: RootState) => state.editpost.countyId,
   );
-  const currentCityId = useSelector((state: RootState) => state.newpost.cityId);
+  const currentCityId = useSelector((state: RootState) => state.editpost.cityId);
   const currentAddress1 = useSelector(
-    (state: RootState) => state.newpost.addressLine1,
+    (state: RootState) => state.editpost.addressLine1,
   );
   const currentAddress2 = useSelector(
-    (state: RootState) => state.newpost.addressLine2,
+    (state: RootState) => state.editpost.addressLine2,
   );
   const postalCode = useSelector(
-    (state: RootState) => state.newpost.postalCode,
+    (state: RootState) => state.editpost.postalCode,
   );
-  const title = useSelector((state: RootState) => state.newpost.title);
+  const title = useSelector((state: RootState) => state.editpost.title);
   const description = useSelector(
-    (state: RootState) => state.newpost.description,
+    (state: RootState) => state.editpost.description,
   );
-  const price = useSelector((state: RootState) => state.newpost.price);
-  const currency = useSelector((state: RootState) => state.newpost.currency);
+  
+  const price = useSelector((state: RootState) => state.editpost.price);
+  const currency = useSelector((state: RootState) => state.editpost.currency);
   const user_id = useSelector((state: RootState) => state.auth.user?.user_id);
 
   const categories = useFetchCategories();
@@ -103,64 +105,64 @@ export default function EditPost() {
 
   const handleCategoryChange = (value: string) => {
     const id = Number(value);
-    dispatch(newPostSlice.actions.setCategoryId(id));
+    dispatch(editPostSlice.actions.setCategoryId(id));
   };
 
   const handleSubcategoryChange = (value: string) => {
     const id = Number(value);
-    dispatch(newPostSlice.actions.setSubcategoryId(id));
+    dispatch(editPostSlice.actions.setSubcategoryId(id));
   };
 
   const handleProductTypeChange = (value: string) => {
     const id = Number(value);
-    dispatch(newPostSlice.actions.setProductTypeId(id));
+    dispatch(editPostSlice.actions.setProductTypeId(id));
   };
   const handleBrandChange = (value: string) => {
     const id = Number(value);
-    dispatch(newPostSlice.actions.setBrandId(id));
+    dispatch(editPostSlice.actions.setBrandId(id));
   };
   const handeProductChange = (value: string) => {
     const id = Number(value);
-    dispatch(newPostSlice.actions.setProductId(id));
+    dispatch(editPostSlice.actions.setProductId(id));
   };
   const handleCountryChange = (value: string) => {
     const id = Number(value);
-    dispatch(newPostSlice.actions.setCountryId(id));
+    dispatch(editPostSlice.actions.setCountryId(id));
   };
   const handleCountyChange = (value: string) => {
     const id = Number(value);
-    dispatch(newPostSlice.actions.setCountyId(id));
+    dispatch(editPostSlice.actions.setCountyId(id));
   };
   const handleCityChange = (value: string) => {
     const id = Number(value);
-    dispatch(newPostSlice.actions.setCityId(id));
+    dispatch(editPostSlice.actions.setCityId(id));
   };
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(newPostSlice.actions.setTitle(e.target.value));
+    dispatch(editPostSlice.actions.setTitle(e.target.value));
   };
 
   const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    dispatch(newPostSlice.actions.setDescription(e.target.value));
+    dispatch(editPostSlice.actions.setDescription(e.target.value));
   };
 
   const handlePriceChange: InputNumberProps["onChange"] = (value) => {
-    dispatch(newPostSlice.actions.setPrice(value ? String(value) : ""));
+    dispatch(editPostSlice.actions.setPrice(value ? String(value) : ""));
   };
 
   const handleCurrencyChange = (value: string) => {
-    dispatch(newPostSlice.actions.setCurrency(value));
+    dispatch(editPostSlice.actions.setCurrency(value));
   };
 
   const handleAddress1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(newPostSlice.actions.setAddressLine1(e.target.value));
+    dispatch(editPostSlice.actions.setAddressLine1(e.target.value));
   };
   const handleAddress2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(newPostSlice.actions.setAddressLine2(e.target.value));
+    dispatch(editPostSlice.actions.setAddressLine2(e.target.value));
   };
   const handlePostalChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(newPostSlice.actions.setPostalCode(e.target.value));
+    dispatch(editPostSlice.actions.setPostalCode(e.target.value));
   };
 
   const mainImageRef = useRef<MainImageHandle>(null);
@@ -194,7 +196,7 @@ export default function EditPost() {
     return true;
   };
 
-  const handlePost = async () => {
+  const editPost = async () => {
     const payload: NewPostType = {
       title,
       description,
@@ -252,12 +254,12 @@ export default function EditPost() {
       <h1 className="text-3xl font-bold pl-5">Edit post</h1>
       <div className="p-5">
         <h1 className="m-3">Title</h1>
-        <Input placeholder="Title" onChange={handleTitleChange}></Input>
+        <Input placeholder="Title" onChange={handleTitleChange} defaultValue={title}></Input>
         <h1>Description</h1>
-        <TextArea rows={4} onChange={handleDescriptionChange} />
+        <TextArea rows={4} onChange={handleDescriptionChange} defaultValue={description}/>
         <div className="flex pt-5">
           <h1>Price</h1>
-          <InputNumber min={1} max={1000000} onChange={handlePriceChange} />
+          <InputNumber min={1} max={1000000} onChange={handlePriceChange} defaultValue={price}/>
           <h1>Currency</h1>
           <Select
             defaultValue="EUR"
@@ -415,6 +417,7 @@ export default function EditPost() {
           <Input
             placeholder="Address Line 1"
             onChange={handleAddress1Change}
+            defaultValue={currentAddress1}
           ></Input>
         </div>
         <div>
@@ -422,6 +425,7 @@ export default function EditPost() {
           <Input
             placeholder="Address Line 2"
             onChange={handleAddress2Change}
+            defaultValue={currentAddress2}
           ></Input>
         </div>
         <div>
@@ -429,6 +433,7 @@ export default function EditPost() {
           <Input
             placeholder="Postal Code"
             onChange={handlePostalChange}
+            defaultValue={postalCode}
           ></Input>
         </div>
       </div>
@@ -443,8 +448,8 @@ export default function EditPost() {
         <Uploader ref={uploaderRef}></Uploader>
       </div>
       <div className="p-5">
-        <Button type="primary" onClick={handlePost}>
-          POST
+        <Button color="cyan" variant="solid" onClick={editPost}>
+          Edit
         </Button>
       </div>
     </div>

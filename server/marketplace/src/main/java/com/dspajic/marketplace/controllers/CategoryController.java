@@ -2,6 +2,7 @@ package com.dspajic.marketplace.controllers;
 
 import com.dspajic.marketplace.dto.sidebar.CategoryMenuDto;
 import com.dspajic.marketplace.dto.sidebar.SidebarMenuDto;
+import com.dspajic.marketplace.dto.userdisplay.CategoryDisplayDto;
 import com.dspajic.marketplace.entities.Category;
 import com.dspajic.marketplace.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
@@ -50,4 +51,7 @@ public class CategoryController {
     public List<SidebarMenuDto> getSidebarMenuByCategory(@PathVariable Integer id) {
         return categoryService.getSidebarMenuByCategory(id);
     }
+
+    @GetMapping("/category/get-full-categories/product/{product_id}")
+    public CategoryDisplayDto getFullCategoriesByProduct(@PathVariable Integer product_id) { return categoryService.getFullCategoriesByProduct(product_id); };
 }
