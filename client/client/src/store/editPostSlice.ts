@@ -49,6 +49,9 @@ const editPostSlice = createSlice({
     name: "editPost",
     initialState: initialState,
     reducers: {
+        resetEditPost(state, action: PayloadAction<EditPostState | undefined>){
+            return initialState;
+        },
         setState(state, action: PayloadAction<EditPostState | undefined>){
             return {...action.payload};
         },

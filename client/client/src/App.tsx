@@ -33,7 +33,7 @@ function App() {
         { path: '/post/:postId', element: <PostDetailsPage/>},
         { path: '/users/:userId', element: <UserDetailsPage/>},
         { path: 'chat', element: <TestSocket/>},
-        { path: "/edit-post", element: <EditPost/>}
+        { path: "/edit-post/:postId", element: <EditPost/>}
       ]
     }
 ])

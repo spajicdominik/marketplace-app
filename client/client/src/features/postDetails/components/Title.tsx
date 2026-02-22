@@ -8,6 +8,7 @@ export default function Title({ postDetails }: { postDetails: PostDetails | unde
     const title = postDetails?.title;
     const price = postDetails?.price;
     const currency = postDetails?.currency;
+    const postId = postDetails?.id;
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -26,7 +27,7 @@ export default function Title({ postDetails }: { postDetails: PostDetails | unde
                 </div>
                 {postDetails?.userId == currentUserId
                     ?
-                    <Button size="large" type="primary" onClick={() => { navigate("/edit-post") }}>EDIT</Button>
+                    <Button size="large" type="primary" onClick={() => { navigate(`/edit-post/${postId}`) }}>EDIT</Button>
                     :
                     null
                 }

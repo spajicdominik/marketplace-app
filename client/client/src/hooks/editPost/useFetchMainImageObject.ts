@@ -1,9 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { Image } from "../../features/imageupload/EditMainImage";
+
+export type PostImage = {
+  id : number,
+  url : string,
+  postId : number,
+  isMain : boolean
+}
 
 export default function useFetchMainImageObject(post_id: number | undefined) {
-  const [image, setImage] = useState<Image>();
+  const [image, setImage] = useState<PostImage>();
 
   useEffect(() => {
     const fetchMainImage = async () => {

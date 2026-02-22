@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import type { PostDetailsImages } from "../../features/postDetails/components/ImageDisplay/Images";
 import axios from "axios";
 
-export default function useFetchPostImages( postId : number ) {
+export default function useFetchPostImages( postId : number | undefined ) {
     const [postDetailsImages, setPostDetailsImages] = useState<PostDetailsImages[]>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        if (!postId) return;
         const fetchPostImages = async () => {
             try {
                 const response = await axios.get(

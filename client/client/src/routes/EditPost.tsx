@@ -25,7 +25,7 @@ import useFetchCities from "../hooks/newPost/location/useFetchCities";
 import Uploader, {
   type UploaderHandle,
 } from "../features/imageupload/Uploader";
-import MainImage from "../features/imageupload/MainImage";
+import EditMainImage from "../features/imageupload/EditMainImage";
 import type { NewPostType } from "../types/NewPost";
 import useNewPost from "../hooks/newPost/useNewPost";
 import { useRef } from "react";
@@ -35,6 +35,13 @@ import { toast, ToastContainer } from "react-toastify";
 import type { PostImage } from "../types/PostImage";
 import usePostImage from "../hooks/newPost/images/useMainImage";
 import editPostSlice from "../store/editPostSlice";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import useFetchPostDetails from "../hooks/postDetails/useFetchPostDetails";
+import useFetchFullCategories from "../hooks/editPost/useFetchFullCategories";
+import useFetchLocationDto from "../hooks/userDetails/useFetchLocation";
+import type { EditPostState } from "../store/editPostSlice";
+import EditUploader from "../features/imageupload/EditUploader";
 
 export type Option = {
   value: string;
@@ -51,9 +58,52 @@ const onChange: InputNumberProps["onChange"] = (value) => {
 export default function EditPost() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const currentPostId = useSelector(
-    (state: RootState) => state.editpost.currentPostId,
+
+  const params = useParams();
+  const postId = Number(params.postId);
+
+  const postDetails = useFetchPostDetails(postId);
+
+  const fullCategories = useFetchFullCategories(postDetails?.product.id);
+  const fullLocation = useFetchLocationDto(postDetails?.location.cityId);
+
+  const currentUserId = useSelector(
+    (state: RootState) => state.auth.user?.user_id,
   );
+
+  const currentPost: EditPostState = {
+    title: postDetails?.title,
+    description: postDetails?.description,
+    price: postDetails?.price.toString(),
+    currency: postDetails?.currency,
+    user_id: currentUserId,
+    categoryId: fullCategories?.categoryId,
+    subcategoryId: fullCategories?.subcategoryId,
+    productTypeId: fullCategories?.subcategoryItemId,
+    brandId: fullCategories?.brandId,
+    productId: fullCategories?.productId,
+    countryId: fullLocation?.countryId,
+    countyId: fullLocation?.countyId,
+    cityId: fullLocation?.cityId,
+    addressLine1: postDetails?.location.addressLine1,
+    addressLine2: postDetails?.location.addressLine2,
+    postalCode: postDetails?.location.postalCode,
+    currentPostId: postDetails?.id,
+    editPost: undefined,
+    editPostPictures: false,
+  };
+
+  useEffect(() => {
+    dispatch(editPostSlice.actions.resetEditPost());
+  }, [dispatch, postId]);
+
+  useEffect(() => {
+    if (!postDetails || !fullCategories || !fullLocation) return;
+
+    dispatch(editPostSlice.actions.setState(currentPost));
+    
+  }, [dispatch, postDetails, fullCategories, fullLocation, postId]);
+
   const currentCategoryId = useSelector(
     (state: RootState) => state.editpost.categoryId,
   );
@@ -75,7 +125,9 @@ export default function EditPost() {
   const currentCountyId = useSelector(
     (state: RootState) => state.editpost.countyId,
   );
-  const currentCityId = useSelector((state: RootState) => state.editpost.cityId);
+  const currentCityId = useSelector(
+    (state: RootState) => state.editpost.cityId,
+  );
   const currentAddress1 = useSelector(
     (state: RootState) => state.editpost.addressLine1,
   );
@@ -89,7 +141,7 @@ export default function EditPost() {
   const description = useSelector(
     (state: RootState) => state.editpost.description,
   );
-  
+
   const price = useSelector((state: RootState) => state.editpost.price);
   const currency = useSelector((state: RootState) => state.editpost.currency);
   const user_id = useSelector((state: RootState) => state.auth.user?.user_id);
@@ -216,26 +268,32 @@ export default function EditPost() {
         dispatch(newPostSlice.actions.setPostId(postId));
 
         const imageBody = await mainImageRef.current?.upload();
-        const imageUrl = Array.isArray(imageBody) ? imageBody?.[0]?.url : undefined;
+        const imageUrl = Array.isArray(imageBody)
+          ? imageBody?.[0]?.url
+          : undefined;
 
-        const mainImage : PostImage = {
-          url : imageUrl,
-          postId : postId,
-          isMain : true
-        }
+        const mainImage: PostImage = {
+          url: imageUrl,
+          postId: postId,
+          isMain: true,
+        };
         usePostImage(mainImage);
-        
+
         uploaderRef.current?.upload();
-        
+
         dispatch(newPostSlice.actions.resetNewPost());
         console.log("Created post:", postId);
-        console.log("Main image: ", Array.isArray(imageUrl) ? imageUrl?.[0]?.url : undefined);
+        console.log(
+          "Main image: ",
+          Array.isArray(imageUrl) ? imageUrl?.[0]?.url : undefined,
+        );
         navigate("/upload-success");
       }
     } catch (e) {}
   };
 
   const currentUser = useSelector((state: RootState) => state.auth.user);
+
 
   return (
     <div className="text-black bg-white p-4 ">
@@ -254,12 +312,25 @@ export default function EditPost() {
       <h1 className="text-3xl font-bold pl-5">Edit post</h1>
       <div className="p-5">
         <h1 className="m-3">Title</h1>
-        <Input placeholder="Title" onChange={handleTitleChange} defaultValue={title}></Input>
+        <Input
+          placeholder="Title"
+          onChange={handleTitleChange}
+          value={title}
+        ></Input>
         <h1>Description</h1>
-        <TextArea rows={4} onChange={handleDescriptionChange} defaultValue={description}/>
+        <TextArea
+          rows={4}
+          onChange={handleDescriptionChange}
+          value={description}
+        />
         <div className="flex pt-5">
           <h1>Price</h1>
-          <InputNumber min={1} max={1000000} onChange={handlePriceChange} defaultValue={price}/>
+          <InputNumber
+            min={1}
+            max={1000000}
+            onChange={handlePriceChange}
+            value={price}
+          />
           <h1>Currency</h1>
           <Select
             defaultValue="EUR"
@@ -439,13 +510,13 @@ export default function EditPost() {
       </div>
 
       <div>
-        <h1>Upload main image</h1>
-        <MainImage ref={mainImageRef}></MainImage>
+        <h1>Edit main image</h1>
+        <EditMainImage ref={mainImageRef}></EditMainImage>
       </div>
 
       <div>
-        <h1>Upload post images</h1>
-        <Uploader ref={uploaderRef}></Uploader>
+        <h1>Edit post images</h1>
+        <EditUploader ref={uploaderRef}></EditUploader>
       </div>
       <div className="p-5">
         <Button color="cyan" variant="solid" onClick={editPost}>

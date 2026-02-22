@@ -27,6 +27,7 @@ export default function UserPreview({ userDetails, postId }: { userDetails: User
     }
 
     useEffect(() => {
+        if (!postId || !userId) return;
         axios.get(`http://localhost:8080/api/posts/is-favourite?post_id=${postId}&user_id=${userId}`).then(res => setIsFavorited(res.data));
     }, []);
 
