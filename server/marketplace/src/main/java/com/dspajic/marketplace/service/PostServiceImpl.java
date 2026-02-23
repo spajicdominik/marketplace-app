@@ -129,5 +129,10 @@ public class PostServiceImpl implements PostService{
         return repository.favouritePosts(user_id);
     }
 
+    @Override
+    public void deletePostById(Integer postId) {
+
+    }
+
 
 }

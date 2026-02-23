@@ -54,4 +54,10 @@ public class PostImagesController {
         return service.getAllPostImagesByPost(post_id);
     }
 
+    @DeleteMapping("/postImages/post-main/{post_id}")
+    public void deleteMainImage(@PathVariable Integer post_id) {
+         service.deleteMainImage(post_id, true);
+    }
+
+
 }

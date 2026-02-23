@@ -416,4 +416,5 @@ public class PostRepositoryImpl implements PostRepository{
                 """;
         return jdbcTemplate.query(sql, rowMapper, user_id);
     }
+
 }

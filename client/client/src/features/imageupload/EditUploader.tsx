@@ -16,6 +16,7 @@ import useFetchPostImages from "../../hooks/postDetails/useFetchPostImages";
 import type { PostDetailsImages } from "../postDetails/components/ImageDisplay/Images";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import useFetchNonMainImages from "../../hooks/newPost/images/useFetchNonMainImages";
 
 const { Dragger } = Upload;
 
@@ -42,8 +43,8 @@ const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
   const [previewImage, setPreviewImage] = useState<string>("");
   const [previewTitle, setPreviewTitle] = useState<string>("");
 
-  const postImages = useFetchPostImages(currentPostId);
-
+  const postImages = useFetchNonMainImages(currentPostId);
+  
 
   console.log("Current post id (all images): ", currentPostId);
   console.log("Current post images: ", postImages);
@@ -115,11 +116,6 @@ const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
   };
 
   const handleUpload = async () => {
-    if (fileList.length === 0) {
-      message.error("Please select at least one image.");
-      return;
-    }
-
     try {
       setUploading(true);
 
@@ -152,70 +148,40 @@ const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
        }
 
        const payload = res.data
+       const responseArray = Array.isArray(payload) ? payload : [payload];
 
-      }
-
-      // IMPORTANT: append the **raw file** from originFileObj
-      // Make sure the field name matches your Spring @RequestParam("file") or ("files")
-      fileList.forEach((file) => {
-        const raw = file.originFileObj as RcFile | undefined;
-        if (raw) {
-        //   formData.append("file", raw); // <-- if your controller expects @RequestParam("file") List<MultipartFile>
-          // If your backend expects "files[]", use: formData.append("files[]", raw);
-        }
-      });
-
-      const res = await fetch("http://localhost:8080/api/uploads/images", {
-        method: "POST",
-        // body: formData,
-        // headers: { Authorization: `Bearer ${token}` }, // if you need JWT auth
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || `HTTP ${res.status}`);
-      }
-
-      // Expect server to return an array of uploaded file meta:
-      // e.g. [{ filename, url, originalName, size }, ...]
-      const payload = await res.json();
-
-      // Map server response back into fileList, setting .url so AntD keeps a durable preview
-      // If your API returns a single object when one file is uploaded, normalize to an array
-      const responseArray = Array.isArray(payload) ? payload : [payload];
-
-      for (var response of responseArray) {
+       for (var response of responseArray) {
         const imageUrl = response?.url;
         const image: PostImage = {
           url: imageUrl,
           postId: currentPostId,
           isMain: false,
+          status: true
         };
         usePostImage(image);
       }
 
-      // Try to match by name; adjust if your backend returns an id or you need a different correlate
       const nextList = fileList.map((file, idx) => {
         const resp = responseArray[idx] || {};
         return {
           ...file,
           status: "done",
-          // After upload, use permanent server URL for thumbnail + preview
-          url: resp.url, // so clicking preview opens server URL
+          url: resp.url, 
           thumbUrl: file.thumbUrl || resp.url,
-          response: resp, // keep server payload
+          response: resp,
         } as UploadFile;
       });
-
       setFileList(nextList);
-      message.success("Images uploaded successfully.");
-    } catch (err: any) {
-      console.error(err);
-      message.error(err.message || "Upload failed.");
-    } finally {
-      setUploading(false);
-      setFileList([]);
-    }
+      message.success("Images edited successfully.");
+      }
+    } 
+    catch (err: any) {
+          console.error(err);
+          message.error(err.message || "Edit failed.");
+        } finally {
+          setUploading(false);
+          setFileList([]);
+        }
   };
 
   useImperativeHandle(ref, () => ({

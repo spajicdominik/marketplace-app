@@ -135,4 +135,7 @@ public class PostController {
     public List<Post> getAllFavourites(@PathVariable Integer user_id) {
         return service.favouritePosts(user_id);
     }
+
+    @DeleteMapping("/posts/delete-post/{post_id}")
+    public void deletePostById(@PathVariable Integer post_id) { service.deletePostById(post_id);}
 }

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../store";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -42,23 +43,49 @@ const EditMainImage = forwardRef<MainImageHandle, {}>((_props, ref) => {
 
   const [uploading, setUploading] = useState(false);
 
+  const isEmpty = () => {
+    if (fileList.length == 0) {
+      toast.error("Main image cannot be null");
+      return true;
+    }
+    return false;
+  }
+
+  const hasMainImageChanged = () => {
+    const file = fileList[0];
+
+    if (!file) return false;
+
+    return !!file.originFileObj;
+  };
+
   const handleUpload = async (): Promise<unknown> => {
+    if (isEmpty()) {
+      return null;
+    }
+
+    if (!hasMainImageChanged()) {
+      console.log("Main image did NOT change, skip upload");
+      return null;
+    }
+
+    console.log("Main image CHANGED, starting uploading");
+
     const formData = new FormData();
     fileList.forEach((file) => {
-      formData.append("file", file as FileType);
+      formData.append("file", file.originFileObj as File);
     });
-    setUploading(true);
+    for (const f of fileList){
+      console.log("File from formData: ", f);
+    }
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/uploads/images",
-        formData,
-      );
+      const response = await axios.post("http://localhost:8080/api/uploads/images", formData);
       const payload = response.data;
       setFileList([]);
-      message.success("upload successfully.");
+      message.success("main image updated successfully.");
       return payload;
     } catch (error) {
-      message.error("upload failed");
+      message.error("main image update failed");
       throw error;
     } finally {
       setUploading(false);

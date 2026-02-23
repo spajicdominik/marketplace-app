@@ -125,5 +125,19 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
         return jdbcTemplate.query(sql, rowMapper, postId);
     }
 
+    @Override
+    public void deleteMainImage(Integer postId, Boolean isMain) {
+        String sql = """
+                DELETE
+                FROM
+                post_image t
+                WHERE
+                t.post_id = ?
+                AND
+                t.is_main = ?;
+                """;
+        jdbcTemplate.update(sql, postId, isMain);
+    }
+
 
 }

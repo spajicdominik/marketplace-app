@@ -47,4 +47,10 @@ public class PostImagesServiceImpl implements PostImagesService{
     public List<PostImages> getAllPostImagesByPost(Integer postId) {
         return repository.getAllImagesByPost(postId);
     }
+
+    @Override
+    public void deleteMainImage(Integer postId, Boolean isMain) {
+        repository.deleteMainImage(postId, isMain);
+    }
+
 }

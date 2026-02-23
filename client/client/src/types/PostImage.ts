@@ -1,5 +1,6 @@
 export interface PostImage {
     url : string,
     postId : number | undefined,
-    isMain : boolean
+    isMain : boolean,
+    status : boolean
 }

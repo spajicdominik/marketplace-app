@@ -51,4 +51,6 @@ public interface PostService {
     Boolean isFavourited(FavouriteDto favouriteDto);
 
     List<Post> favouritePosts(Integer user_id);
+
+    void deletePostById(Integer postId);
 }

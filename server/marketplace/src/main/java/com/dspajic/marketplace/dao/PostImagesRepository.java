@@ -14,4 +14,6 @@ public interface PostImagesRepository {
     List<PostImages> getImagesByPost(Integer post_id, Boolean isMain);
 
     List<PostImages> getAllImagesByPost(Integer postId);
+
+    void deleteMainImage(Integer postId, Boolean isMain);
 }

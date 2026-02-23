@@ -44,4 +44,5 @@ public interface PostRepository {
     void removeFavourite(FavouriteDto favouriteDto);
     Boolean isFavourited(FavouriteDto favouriteDto);
     List<Post> favouritePosts(Integer user_id);
+
 }

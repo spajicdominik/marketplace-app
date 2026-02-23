@@ -1,4 +1,4 @@
-import { Input, Button } from "antd";
+import { Input, Button, Modal } from "antd";
 import type { InputNumberProps } from "antd";
 import { InputNumber } from "antd";
 import type { HTMLAriaDataAttributes } from "antd/es/_util/aria-data-attrs";
@@ -42,6 +42,9 @@ import useFetchFullCategories from "../hooks/editPost/useFetchFullCategories";
 import useFetchLocationDto from "../hooks/userDetails/useFetchLocation";
 import type { EditPostState } from "../store/editPostSlice";
 import EditUploader from "../features/imageupload/EditUploader";
+import useEditPost from "../hooks/editPost/useEditPost";
+import axios from "axios";
+import { useState } from "react";
 
 export type Option = {
   value: string;
@@ -101,7 +104,7 @@ export default function EditPost() {
     if (!postDetails || !fullCategories || !fullLocation) return;
 
     dispatch(editPostSlice.actions.setState(currentPost));
-    
+
   }, [dispatch, postDetails, fullCategories, fullLocation, postId]);
 
   const currentCategoryId = useSelector(
@@ -264,36 +267,63 @@ export default function EditPost() {
 
     try {
       if (validate()) {
-        const postId = await useNewPost(payload);
-        dispatch(newPostSlice.actions.setPostId(postId));
+        const edited = await useEditPost(payload, postId);
 
         const imageBody = await mainImageRef.current?.upload();
-        const imageUrl = Array.isArray(imageBody)
-          ? imageBody?.[0]?.url
-          : undefined;
+        if (imageBody != null) {
+          await axios.delete(`http://localhost:8080/api/postImages/post-main/${postId}`);
+          const imageUrl = Array.isArray(imageBody)
+            ? imageBody?.[0]?.url
+            : undefined;
 
-        const mainImage: PostImage = {
-          url: imageUrl,
-          postId: postId,
-          isMain: true,
-        };
-        usePostImage(mainImage);
+          const mainImage: PostImage = {
+            url: imageUrl,
+            postId: postId,
+            isMain: true,
+            status: true
+          };
+          usePostImage(mainImage);
+          console.log(
+            "Main image: ",
+            Array.isArray(imageUrl) ? imageUrl?.[0]?.url : undefined,
+          );
+        }
 
         uploaderRef.current?.upload();
 
-        dispatch(newPostSlice.actions.resetNewPost());
-        console.log("Created post:", postId);
-        console.log(
-          "Main image: ",
-          Array.isArray(imageUrl) ? imageUrl?.[0]?.url : undefined,
-        );
+        dispatch(editPostSlice.actions.resetEditPost());
+        console.log("Edited post:", postId);
+
         navigate("/upload-success");
       }
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const currentUser = useSelector((state: RootState) => state.auth.user);
 
+  const deletePost = () => {
+
+  };
+
+  const cancelEdit = () => {
+    dispatch(editPostSlice.actions.resetEditPost());
+    navigate(`/post/${postId}`);
+  }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    deletePost();
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="text-black bg-white p-4 ">
@@ -518,10 +548,28 @@ export default function EditPost() {
         <h1>Edit post images</h1>
         <EditUploader ref={uploaderRef}></EditUploader>
       </div>
-      <div className="p-5">
-        <Button color="cyan" variant="solid" onClick={editPost}>
-          Edit
+      <div className="p-5 flex justify-between">
+        <div className="flex">
+          <Button type="primary" variant="solid" onClick={editPost}>
+            Edit Post
+          </Button>
+
+          <Button onClick={cancelEdit}>Cancel</Button>
+        </div>
+
+        <Button danger variant="solid" onClick={showModal}>
+          Delete Post
         </Button>
+
+        <Modal
+          title="Are you sure you want do delete this post?"
+          closable={{ 'aria-label': 'Custom Close Button' }}
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>Deleting a post is permanent and can't be undone.</p>
+        </Modal>
       </div>
     </div>
   );

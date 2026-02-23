@@ -15,16 +15,17 @@ import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 @Service
-public class UploadServiceImpl implements UploadService{
+public class UploadServiceImpl implements UploadService {
     @Value("${file.upload-dir}")
     private String uploadDir;
+    private final static String BASE_URL = "http://localhost:8080/uploads/";
 
     @Override
     public ResponseEntity<?> uploadImage(List<MultipartFile> files) {
-        if (files == null || files.isEmpty()){
+        if (files == null || files.isEmpty()) {
             return ResponseEntity.badRequest().body("No files provided");
         }
-        try{
+        try {
             Path root = Paths.get(uploadDir);
             List<UploadDto> out = new ArrayList<>();
 
@@ -33,7 +34,7 @@ public class UploadServiceImpl implements UploadService{
                     continue;
                 }
                 String contentType = file.getContentType();
-                if (contentType == null || !contentType.toLowerCase().startsWith("image/")){
+                if (contentType == null || !contentType.toLowerCase().startsWith("image/")) {
                     continue;
                 }
 
@@ -50,13 +51,12 @@ public class UploadServiceImpl implements UploadService{
                 Path target = root.resolve(storedName);
                 Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
 
-                String baseUrl = "http://localhost:8080/uploads/" + storedName;
+                String baseUrl = BASE_URL + storedName;
                 out.add(new UploadDto(storedName, baseUrl));
             }
             return ResponseEntity.ok(out);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             return ResponseEntity.internalServerError().body(Map.of("error", "Error uploading image(s)"));
         }
     }
-    }
+}

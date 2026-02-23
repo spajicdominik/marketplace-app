@@ -119,7 +119,8 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
         const image : PostImage = {
           url : imageUrl,
           postId: currentPostId,
-          isMain: false
+          isMain: false,
+          status: true
         }
         usePostImage(image);
       }
