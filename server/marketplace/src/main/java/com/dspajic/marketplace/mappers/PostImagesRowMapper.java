@@ -14,6 +14,7 @@ public class PostImagesRowMapper implements RowMapper<PostImages> {
         e.setUrl(rs.getString("image_url"));
         e.setPostId(rs.getInt("post_id"));
         e.setIsMain(rs.getBoolean("is_main"));
+        e.setIsActive(rs.getBoolean("status"));
         return e;
     }
 }

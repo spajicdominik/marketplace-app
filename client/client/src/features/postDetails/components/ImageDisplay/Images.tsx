@@ -16,7 +16,8 @@ export interface PostDetailsImages {
     id: string,
     url: string,
     postId: string,
-    isMain: string
+    isMain: string,
+    isActive: string
 }
 
 export default function Images({postId} : {postId : number}) {

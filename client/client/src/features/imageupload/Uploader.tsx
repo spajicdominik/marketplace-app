@@ -19,7 +19,7 @@ function getBase64(file: Blob): Promise<string> {
 }
 
 export type UploaderHandle = {
-  upload: () => void;
+  upload: (postId : number) => void;
 };
 
 const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
@@ -74,7 +74,7 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
     setPreviewTitle(file.name || src.substring(src.lastIndexOf("/") + 1));
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (postId : number) => {
     if (fileList.length === 0) {
       message.error("Please select at least one image.");
       return;
@@ -94,6 +94,7 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
           // If your backend expects "files[]", use: formData.append("files[]", raw);
         }
       });
+      formData.append("postId", String(postId));
 
       const res = await fetch("http://localhost:8080/api/uploads/images", {
         method: "POST",
@@ -120,7 +121,7 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
           url : imageUrl,
           postId: currentPostId,
           isMain: false,
-          status: true
+          isActive: true        
         }
         usePostImage(image);
       }

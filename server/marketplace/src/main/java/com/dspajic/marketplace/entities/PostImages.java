@@ -27,6 +27,9 @@ public class PostImages {
     @Column(name="is_main")
     private Boolean isMain;
 
+    @Column(name = "status")
+    private Boolean isActive;
+
     public PostImages() {
     }
 

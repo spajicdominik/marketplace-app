@@ -7,18 +7,20 @@ import axios from "axios";
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 export type MainImageHandle = {
-  upload: () => Promise<unknown>;
+  upload: (postId : number) => Promise<unknown>;
 };
 
 const MainImage = forwardRef<MainImageHandle, {}>((_props, ref) => {
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [uploading, setUploading] = useState(false);
 
-    const handleUpload = async (): Promise<unknown> => {
+    const handleUpload = async (postId: number): Promise<unknown> => {
       const formData = new FormData();
       fileList.forEach((file) => {
         formData.append("file", file as FileType);
       });
+      formData.append("postId", String(postId));
+      
       setUploading(true);
       try {
         const response = await axios.post("http://localhost:8080/api/uploads/images", formData);

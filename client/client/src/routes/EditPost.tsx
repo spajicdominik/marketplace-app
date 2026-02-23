@@ -280,7 +280,7 @@ export default function EditPost() {
             url: imageUrl,
             postId: postId,
             isMain: true,
-            status: true
+            isActive: true
           };
           usePostImage(mainImage);
           console.log(

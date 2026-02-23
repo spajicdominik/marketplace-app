@@ -5,7 +5,8 @@ export type PostImage = {
   id : number,
   url : string,
   postId : number,
-  isMain : boolean
+  isMain : boolean,
+  isActive : boolean
 }
 
 export default function useFetchMainImageObject(post_id: number | undefined) {

@@ -156,7 +156,7 @@ const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
           url: imageUrl,
           postId: currentPostId,
           isMain: false,
-          status: true
+          isActive: true
         };
         usePostImage(image);
       }

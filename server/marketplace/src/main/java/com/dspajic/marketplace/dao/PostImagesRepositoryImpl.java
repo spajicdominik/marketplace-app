@@ -24,7 +24,8 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
                 post_image_id,
                 post_id,
                 image_url,
-                is_main
+                is_main,
+                status
                 FROM
                 post_image
                 """;
@@ -38,7 +39,8 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
                 post_image_id,
                 post_id,
                 image_url,
-                is_main
+                is_main,
+                status
                 FROM
                 post_image
                 WHERE
@@ -76,7 +78,8 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
                 SET
                 post_id = ?,
                 image_url = ?,
-                is_main = ?
+                is_main = ?,
+                status = ?
                 WHERE
                 post_image_id = ?
                 """;
@@ -84,7 +87,8 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
                 sql,
                 entity.getPostId(),
                 entity.getUrl(),
-                entity.getIsMain()
+                entity.getIsMain(),
+                entity.getIsActive()
         );
     }
 

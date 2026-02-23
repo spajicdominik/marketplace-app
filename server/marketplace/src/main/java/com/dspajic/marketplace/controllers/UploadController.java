@@ -18,6 +18,9 @@ public class UploadController {
     UploadService uploadService;
 
     @PostMapping("/images")
-    public ResponseEntity<?> uploadImage(@RequestParam("file") List<MultipartFile> files) { return uploadService.uploadImage(files);}
+    public ResponseEntity<?> uploadImage(
+            @RequestParam("postId") String postId,
+            @RequestParam("file") List<MultipartFile> files
+    ) { return uploadService.uploadImage(files, postId);}
 
 }

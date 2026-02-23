@@ -213,17 +213,18 @@ export default function NewPost() {
         const postId = await useNewPost(payload);
         dispatch(newPostSlice.actions.setPostId(postId));
 
-        const imageBody = await mainImageRef.current?.upload();
+        const imageBody = await mainImageRef.current?.upload(postId);
         const imageUrl = Array.isArray(imageBody) ? imageBody?.[0]?.url : undefined;
 
         const mainImage : PostImage = {
           url : imageUrl,
           postId : postId,
-          isMain : true
+          isMain : true,
+          isActive: true
         }
         usePostImage(mainImage);
         
-        uploaderRef.current?.upload();
+        uploaderRef.current?.upload(postId);
         
         dispatch(newPostSlice.actions.resetNewPost());
         console.log("Created post:", postId);

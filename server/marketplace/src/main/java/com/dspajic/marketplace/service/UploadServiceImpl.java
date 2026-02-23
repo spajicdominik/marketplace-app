@@ -19,14 +19,24 @@ public class UploadServiceImpl implements UploadService {
     @Value("${file.upload-dir}")
     private String uploadDir;
     private final static String BASE_URL = "http://localhost:8080/uploads/";
+    private static final String ACTIVE = "active";
+    private static final String ARCHIVE = "archive";
 
     @Override
-    public ResponseEntity<?> uploadImage(List<MultipartFile> files) {
+    public ResponseEntity<?> uploadImage(List<MultipartFile> files, String postId) {
+        if (postId == null) {
+            return ResponseEntity.badRequest().body("Post ID is required");
+        }
         if (files == null || files.isEmpty()) {
             return ResponseEntity.badRequest().body("No files provided");
         }
         try {
-            Path root = Paths.get(uploadDir);
+            Path root = Paths.get(uploadDir).resolve("posts").resolve(postId);
+            Path activeDir = root.resolve(ACTIVE);
+            Path archiveDir = root.resolve(ARCHIVE);
+            Files.createDirectories(activeDir);
+            Files.createDirectories(archiveDir);
+
             List<UploadDto> out = new ArrayList<>();
 
             for (MultipartFile file : files) {
@@ -48,10 +58,10 @@ public class UploadServiceImpl implements UploadService {
                 }
 
                 String storedName = UUID.randomUUID().toString() + ext;
-                Path target = root.resolve(storedName);
+                Path target = activeDir.resolve(storedName);
                 Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
 
-                String baseUrl = BASE_URL + storedName;
+                String baseUrl = BASE_URL + "posts/" + postId + "/" + ACTIVE + "/" + storedName;
                 out.add(new UploadDto(storedName, baseUrl));
             }
             return ResponseEntity.ok(out);
