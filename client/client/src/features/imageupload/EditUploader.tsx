@@ -3,6 +3,7 @@ import React, {
   useImperativeHandle,
   useState,
   useEffect,
+  useRef,
 } from "react";
 import { Button, Image, Upload, message } from "antd";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
@@ -14,6 +15,7 @@ import usePostImage from "../../hooks/newPost/images/useMainImage";
 import useFetchPostImages from "../../hooks/postDetails/useFetchPostImages";
 import type { PostDetailsImages } from "../postDetails/components/ImageDisplay/Images";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const { Dragger } = Upload;
 
@@ -41,7 +43,7 @@ const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
   const [previewTitle, setPreviewTitle] = useState<string>("");
 
   const postImages = useFetchPostImages(currentPostId);
-  
+
 
   console.log("Current post id (all images): ", currentPostId);
   console.log("Current post images: ", postImages);
@@ -61,13 +63,15 @@ const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
     return originalImages;
   };
 
+  const originalImagesRef = useRef<UploadFile[]>([]);
+
   useEffect(() => {
     if (!postImages || !currentPostId) return;
     const images = getOriginalImages(postImages);
     setFileList(images);
-  }, [postImages, currentPostId]);
+    originalImagesRef.current = images;
 
-  
+  }, [postImages, currentPostId]);
 
   const onRemove: UploadProps["onRemove"] = (file) => {
     setFileList((prev) => prev.filter((f) => f.uid !== file.uid));
@@ -119,21 +123,51 @@ const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
     try {
       setUploading(true);
 
-      const formData = new FormData();
+      const original = originalImagesRef.current;
+      const currentExisting = fileList.filter((f) => !f.originFileObj);
+
+      const removed = original.filter(
+        (o) => !currentExisting.some((c) => c.uid == o.uid)
+      );
+
+      const added = fileList.filter((f) => !!f.originFileObj);
+
+      for (const img of removed) {
+        await axios.delete(`http://localhost:8080/api/postImages/${img.uid}`,);
+      }
+
+      if (added.length > 0){
+        const formData = new FormData();
+        added.forEach((file) => {
+            const raw = file.originFileObj as RcFile | undefined;
+            if (raw) {
+                formData.append("file", raw);
+            }
+        });
+
+        const res = await axios.post("http://localhost:8080/api/uploads/images", formData);
+
+       if(res.status != 200) {
+        throw new Error(res.statusText || `HTTP ${res.statusText}`);
+       }
+
+       const payload = res.data
+
+      }
 
       // IMPORTANT: append the **raw file** from originFileObj
       // Make sure the field name matches your Spring @RequestParam("file") or ("files")
       fileList.forEach((file) => {
         const raw = file.originFileObj as RcFile | undefined;
         if (raw) {
-          formData.append("file", raw); // <-- if your controller expects @RequestParam("file") List<MultipartFile>
+        //   formData.append("file", raw); // <-- if your controller expects @RequestParam("file") List<MultipartFile>
           // If your backend expects "files[]", use: formData.append("files[]", raw);
         }
       });
 
       const res = await fetch("http://localhost:8080/api/uploads/images", {
         method: "POST",
-        body: formData,
+        // body: formData,
         // headers: { Authorization: `Bearer ${token}` }, // if you need JWT auth
       });
 
