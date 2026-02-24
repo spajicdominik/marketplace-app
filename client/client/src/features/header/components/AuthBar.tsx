@@ -69,17 +69,6 @@ export default function AuthBar() {
         </>
       ) : (
         <div className="flex">
-          <div className="bg-gray-300 w-fit h-fit rounded-2xl mr-5 cursor-pointer">
-            <NavLink to="/chat">
-            <Badge count={0} showZero>
-              <Avatar shape="square" size={30}>
-                <InboxOutlined>
-                </InboxOutlined>
-              </Avatar>
-            </Badge>
-            </NavLink>
-          </div>
-
           <Dropdown menu={{ items, onClick: handleMenuClick }} trigger={["click"]}>
             <a onClick={(e) => e.preventDefault()}>
               <Avatar size={30} icon={<UserOutlined />} />

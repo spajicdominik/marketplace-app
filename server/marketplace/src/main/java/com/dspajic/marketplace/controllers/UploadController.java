@@ -22,5 +22,4 @@ public class UploadController {
             @RequestParam("postId") String postId,
             @RequestParam("file") List<MultipartFile> files
     ) { return uploadService.uploadImage(files, postId);}
-
 }

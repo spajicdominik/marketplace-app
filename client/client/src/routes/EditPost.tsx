@@ -29,7 +29,7 @@ import EditMainImage from "../features/imageupload/EditMainImage";
 import type { NewPostType } from "../types/NewPost";
 import useNewPost from "../hooks/newPost/useNewPost";
 import { useRef } from "react";
-import type { MainImageHandle } from "../features/imageupload/MainImage";
+import type { EditImageHandle } from "../features/imageupload/EditMainImage";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import type { PostImage } from "../types/PostImage";
@@ -45,6 +45,7 @@ import EditUploader from "../features/imageupload/EditUploader";
 import useEditPost from "../hooks/editPost/useEditPost";
 import axios from "axios";
 import { useState } from "react";
+import type { EditUploaderHandle } from "../features/imageupload/EditUploader";
 
 export type Option = {
   value: string;
@@ -220,8 +221,8 @@ export default function EditPost() {
     dispatch(editPostSlice.actions.setPostalCode(e.target.value));
   };
 
-  const mainImageRef = useRef<MainImageHandle>(null);
-  const uploaderRef = useRef<UploaderHandle>(null);
+  const editImageRef = useRef<EditImageHandle>(null);
+  const editUploaderRef = useRef<EditUploaderHandle>(null);
 
   const validate = () => {
     if (!title?.trim()) {
@@ -269,9 +270,9 @@ export default function EditPost() {
       if (validate()) {
         const edited = await useEditPost(payload, postId);
 
-        const imageBody = await mainImageRef.current?.upload();
+        const imageBody = await editImageRef.current?.upload();
         if (imageBody != null) {
-          await axios.delete(`http://localhost:8080/api/postImages/post-main/${postId}`);
+          await axios.delete(`http://localhost:8080/api/postImages/main-image?post_id=${postId}`);
           const imageUrl = Array.isArray(imageBody)
             ? imageBody?.[0]?.url
             : undefined;
@@ -289,7 +290,7 @@ export default function EditPost() {
           );
         }
 
-        uploaderRef.current?.upload();
+        editUploaderRef.current?.upload();
 
         dispatch(editPostSlice.actions.resetEditPost());
         console.log("Edited post:", postId);
@@ -301,8 +302,15 @@ export default function EditPost() {
 
   const currentUser = useSelector((state: RootState) => state.auth.user);
 
-  const deletePost = () => {
-
+  const deletePost = async () => {
+    try {
+      await axios.delete(`http://localhost:8080/api/posts/${postId}`);
+      navigate("/deletion-success");
+      toast.success(`Succesifuly deleted post with id: ${postId}`);
+    }
+    catch (e) {
+      console.error("Error : ", e);
+    }
   };
 
   const cancelEdit = () => {
@@ -541,12 +549,12 @@ export default function EditPost() {
 
       <div>
         <h1>Edit main image</h1>
-        <EditMainImage ref={mainImageRef}></EditMainImage>
+        <EditMainImage ref={editImageRef}></EditMainImage>
       </div>
 
       <div>
         <h1>Edit post images</h1>
-        <EditUploader ref={uploaderRef}></EditUploader>
+        <EditUploader ref={editUploaderRef}></EditUploader>
       </div>
       <div className="p-5 flex justify-between">
         <div className="flex">

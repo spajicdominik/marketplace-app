@@ -112,7 +112,10 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
                 WHERE
                 t.post_id = ?
                 AND
-                t.is_main = ?;
+                t.is_main = ?
+                AND
+                t.status = true;
+                ;
                 """;
         return jdbcTemplate.query(sql, rowMapper, post_id, isMain);
     }
@@ -124,23 +127,39 @@ public class PostImagesRepositoryImpl implements PostImagesRepository{
                 FROM
                 post_image t
                 where
-                t.post_id = ?;
+                t.post_id = ?
+                AND
+                t.status = true;
                 """;
         return jdbcTemplate.query(sql, rowMapper, postId);
     }
 
     @Override
-    public void deleteMainImage(Integer postId, Boolean isMain) {
+    public void deleteImage(Integer post_image_id) {
         String sql = """
-                DELETE
-                FROM
-                post_image t
+                UPDATE
+                post_image
+                SET
+                status = false
                 WHERE
-                t.post_id = ?
-                AND
-                t.is_main = ?;
+                post_image_id = ?
                 """;
-        jdbcTemplate.update(sql, postId, isMain);
+        jdbcTemplate.update(sql, post_image_id);
+    }
+
+    @Override
+    public void deleteMainImage(Integer postId) {
+        String sql = """
+                UPDATE
+                post_image
+                SET
+                status = false
+                WHERE
+                post_id = ?
+                AND
+                is_main = true;
+                """;
+        jdbcTemplate.update(sql, postId);
     }
 
 

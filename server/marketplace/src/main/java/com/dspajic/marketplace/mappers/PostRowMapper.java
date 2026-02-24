@@ -21,6 +21,7 @@ public class PostRowMapper implements RowMapper<Post> {
         e.setLocationId(rs.getLong("location_id"));
         e.setCreatedAt(rs.getObject("created_at", LocalDateTime.class));
         e.setUpdatedAt(rs.getObject("updated_at", LocalDateTime.class));
+        e.setStatus(rs.getBoolean("status"));
         return e;
     }
 }

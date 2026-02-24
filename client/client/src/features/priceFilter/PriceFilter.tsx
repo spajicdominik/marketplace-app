@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../../store';
 import categorySlice from '../../store/category';
+import { Button } from 'antd';
 
 function IntegerStep({ minPrice, maxPrice, onChange, inputValue }: { minPrice: number | undefined, maxPrice: number | undefined, onChange: any, inputValue: number | undefined }) {
     return (
@@ -54,12 +55,10 @@ export default function PriceFilter() {
 
     const onChangeMinPrice: InputNumberProps['onChange'] = (newValue) => {
         setMinPriceValue(newValue as number);
-        dispatch(categorySlice.actions.setMinPrice(newValue as number));
     };
 
     const onChangeMaxPrice: InputNumberProps['onChange'] = (newValue) => {
         setMaxPriceValue(newValue as number);
-        dispatch(categorySlice.actions.setMaxPrice(newValue as number));
     };
 
     return (
@@ -68,6 +67,16 @@ export default function PriceFilter() {
             <IntegerStep minPrice={minPrice} maxPrice={maxPrice} onChange={onChangeMinPrice} inputValue={minPriceValue} />
             <h1 className='text-l font-light '>To</h1>
             <IntegerStep minPrice={minPrice} maxPrice={maxPrice} onChange={onChangeMaxPrice} inputValue={maxPriceValue} />
+
+            <Button
+                type="primary"
+                onClick={() => {
+                    dispatch(categorySlice.actions.setMinPrice(minPriceValue));
+                    dispatch(categorySlice.actions.setMaxPrice(maxPriceValue));
+                }}>
+                Apply price filter
+            </Button>
+
         </div>
     )
 

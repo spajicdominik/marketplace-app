@@ -69,4 +69,37 @@ public class UploadServiceImpl implements UploadService {
             return ResponseEntity.internalServerError().body(Map.of("error", "Error uploading image(s)"));
         }
     }
+
+    @Override
+    public ResponseEntity<?> archiveImage(Integer postId, String imageUrl) {
+        try {
+            if (imageUrl == null || imageUrl.isBlank()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Image URL is required"));
+            }
+
+            String relativePath = imageUrl.replace(BASE_URL, "");
+            String[] segments = relativePath.split("/");
+            String storedName = segments[3];
+
+            Path root = Paths.get(uploadDir).resolve("posts").resolve(String.valueOf(postId));
+            Path activeDir = root.resolve(ACTIVE);
+            Path archiveDir = root.resolve(ARCHIVE);
+            Files.createDirectories(archiveDir);
+
+            Path source = activeDir.resolve(storedName);
+            Path target = archiveDir.resolve(storedName);
+
+            if (!Files.exists(source)) {
+                return ResponseEntity.notFound().build();
+            }
+
+            Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+
+            String archivedUrl = BASE_URL + "posts/" + postId + "/" + ARCHIVE + "/" + storedName;
+            return ResponseEntity.ok(new UploadDto(storedName, archivedUrl));
+
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().body(Map.of("error", "Archive move failed"));
+        }
+    }
 }

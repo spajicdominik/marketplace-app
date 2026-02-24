@@ -45,11 +45,13 @@ public class Post {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "status")
+    private Boolean status;
 
     public Post() {
     }
 
-    public Post(Integer id, String title, String description, BigDecimal price, String currency, Integer userId, Integer productId, Long locationId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Post(Integer id, String title, String description, BigDecimal price, String currency, Integer userId, Integer productId, Long locationId, LocalDateTime createdAt, LocalDateTime updatedAt, Boolean status) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -60,6 +62,24 @@ public class Post {
         this.locationId = locationId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", currency='" + currency + '\'' +
+                ", userId=" + userId +
+                ", productId=" + productId +
+                ", locationId=" + locationId +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", status=" + status +
+                '}';
     }
 
     public Integer getId() {
@@ -142,19 +162,12 @@ public class Post {
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", currency='" + currency + '\'' +
-                ", userId=" + userId +
-                ", productId=" + productId +
-                ", locationId=" + locationId +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }
+

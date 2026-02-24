@@ -12,11 +12,11 @@ import { toast, ToastContainer } from "react-toastify";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
-export type MainImageHandle = {
+export type EditImageHandle = {
   upload: () => Promise<unknown>;
 };
 
-const EditMainImage = forwardRef<MainImageHandle, {}>((_props, ref) => {
+const EditMainImage = forwardRef<EditImageHandle, {}>((_props, ref) => {
   const params = useParams();
   const postId = Number(params.postId);
 
@@ -75,6 +75,7 @@ const EditMainImage = forwardRef<MainImageHandle, {}>((_props, ref) => {
     fileList.forEach((file) => {
       formData.append("file", file.originFileObj as File);
     });
+    formData.append("postId", String(postId));
     for (const f of fileList){
       console.log("File from formData: ", f);
     }

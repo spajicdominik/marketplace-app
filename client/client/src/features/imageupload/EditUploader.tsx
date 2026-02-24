@@ -29,11 +29,11 @@ function getBase64(file: Blob): Promise<string> {
   });
 }
 
-export type UploaderHandle = {
+export type EditUploaderHandle = {
   upload: () => void;
 };
 
-const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
+const EditUploader = forwardRef<EditUploaderHandle, {}>((props, ref) => {
   const params = useParams();
   const currentPostId = Number(params.postId);
 
@@ -129,7 +129,7 @@ const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
       const added = fileList.filter((f) => !!f.originFileObj);
 
       for (const img of removed) {
-        await axios.delete(`http://localhost:8080/api/postImages/${img.uid}`,);
+        await axios.delete(`http://localhost:8080/api/postImages/post-main?post_image_id=${img.uid}`,);
       }
 
       if (added.length > 0){
@@ -140,6 +140,7 @@ const EditUploader = forwardRef<UploaderHandle, {}>((props, ref) => {
                 formData.append("file", raw);
             }
         });
+        formData.append("postId", String(currentPostId));
 
         const res = await axios.post("http://localhost:8080/api/uploads/images", formData);
 

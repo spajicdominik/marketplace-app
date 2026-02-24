@@ -45,7 +45,6 @@ export default function SideMenu({token} : {token : string | null}) {
         <h1 className='text-black text-xl font-bold px-4'>FILTER BY</h1>
         <LocationFilter/>
         <PriceFilter/>
-        <Button>Submit filter</Button>
       </Drawer>
     </div>
   );

@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -44,9 +45,12 @@ public class PostRepositoryImpl implements PostRepository{
                 product_id,
                 location_id,
                 created_at,
-                updated_at
+                updated_at,
+                status
                 FROM
                 post
+                WHERE
+                status = true;
                 """;
         return jdbcTemplate.query(sql, rowMapper);
     }
@@ -64,11 +68,14 @@ public class PostRepositoryImpl implements PostRepository{
                 product_id,
                 location_id,
                 created_at,
-                updated_at
+                updated_at,
+                status
                 FROM
                 post
                 WHERE
                 post_id = ?
+                AND
+                status = true;
                 """;
         return jdbcTemplate.queryForObject(sql, rowMapper, id);
     }
@@ -121,7 +128,6 @@ public class PostRepositoryImpl implements PostRepository{
                 user_id = ?,
                 product_id = ?,
                 location_id = ?,
-                created_at = ?,
                 updated_at = ?
                 WHERE
                 post_id = ?
@@ -135,8 +141,7 @@ public class PostRepositoryImpl implements PostRepository{
                         entity.getUserId(),
                         entity.getProductId(),
                         entity.getLocationId(),
-                        entity.getCreatedAt(),
-                        entity.getUpdatedAt(),
+                        LocalDateTime.now(),
                         entity.getId()
         );
     }
@@ -144,8 +149,10 @@ public class PostRepositoryImpl implements PostRepository{
     @Override
     public void deletePost(Integer id) {
         String sql = """
-                DELETE FROM
+                UPDATE
                 post
+                SET
+                status = false
                 WHERE
                 post_id = ?
                 """;
@@ -182,7 +189,8 @@ public class PostRepositoryImpl implements PostRepository{
                 p.product_id,
                 p.location_id,
                 p.created_at,
-                p.updated_at
+                p.updated_at,
+                p.status
                     FROM post p
                     JOIN product pr ON pr.product_id = p.product_id
                     JOIN subcategory_item si ON si.subcategory_item_id = pr.subcategory_item_id
@@ -194,6 +202,7 @@ public class PostRepositoryImpl implements PostRepository{
                     JOIN country cr ON cr.country_id = co.country_id
                 
                 WHERE c.category_id = :category_id
+                AND p.status = true
                 """;
 
         if (subcategory_id != null) {
@@ -266,7 +275,8 @@ public class PostRepositoryImpl implements PostRepository{
                   ON sci.subcategory_id = sc.subcategory_id
                 JOIN category c
                   ON sc.category_id = c.category_id
-                WHERE c.category_id = ?;
+                WHERE c.category_id = ?
+                AND p.status = true;
                 """;
         return jdbcTemplate.query(sql, rowMapper, id);
     }
@@ -282,7 +292,8 @@ public class PostRepositoryImpl implements PostRepository{
                                   ON pr.subcategory_item_id = sci.subcategory_item_id
                                 JOIN subcategory sc
                                   ON sci.subcategory_id = sc.subcategory_id
-                                WHERE sc.subcategory_id  = ?;
+                                WHERE sc.subcategory_id  = ?
+                                AND p.status = true;
                 """;
         return jdbcTemplate.query(sql, rowMapper, id);
 
@@ -297,7 +308,8 @@ public class PostRepositoryImpl implements PostRepository{
                                   ON p.product_id  = pr.product_id\s
                                 JOIN subcategory_item sci
                                   ON pr.subcategory_item_id = sci.subcategory_item_id
-                                where sci.subcategory_item_id = ?;
+                                where sci.subcategory_item_id = ?
+                and p.status = true;
                 """;
         return jdbcTemplate.query(sql, rowMapper, id);
 
@@ -306,7 +318,7 @@ public class PostRepositoryImpl implements PostRepository{
     @Override
     public List<Post> getPostsByProduct(Integer id) {
         return jdbcTemplate.query(
-                "SELECT * FROM post WHERE product_id = ?",
+                "SELECT * FROM post WHERE product_id = ? and status = true;",
                 rowMapper,
                 id
         );
@@ -320,6 +332,7 @@ public class PostRepositoryImpl implements PostRepository{
                 p.*
                 FROM
                 post p
+                WHERE p.status = true
                 ORDER BY
                 p.created_at DESC, p.post_id DESC
                 LIMIT 4;
@@ -340,9 +353,11 @@ public class PostRepositoryImpl implements PostRepository{
                     p.product_id,
                     p.location_id,
                     p.created_at,
-                    p.updated_at
+                    p.updated_at,
+                    p.status
                 FROM post p
                 WHERE p.user_id = ?
+                and p.status = true
                 ORDER BY p.created_at DESC;
                 """;
         return jdbcTemplate.query(sql, rowMapper, userId);
@@ -354,7 +369,9 @@ public class PostRepositoryImpl implements PostRepository{
                 SELECT
                 MIN(price) AS min_price,
                 MAX(price) AS max_price
-                FROM post;
+                FROM post
+                where status = true;
+                ;
                 """;
         return jdbcTemplate.query(sql, priceRangeMapper).getFirst();
     }
@@ -412,6 +429,7 @@ public class PostRepositoryImpl implements PostRepository{
                 FROM user_favorite_post ufp
                 JOIN post p ON p.post_id = ufp.post_id
                 WHERE ufp.user_id = ?
+                and p.status = true
                 ORDER BY ufp.created_at DESC
                 """;
         return jdbcTemplate.query(sql, rowMapper, user_id);

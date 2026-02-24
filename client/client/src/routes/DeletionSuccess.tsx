@@ -1,0 +1,23 @@
+import { TiTickOutline } from "react-icons/ti";
+import { MdOutlineEmail } from "react-icons/md";
+import { Button } from "antd";
+import { NavLink } from "react-router-dom";
+import { MdDeleteOutline } from "react-icons/md";
+
+export default function DeletionSuccess() {
+    return (
+        <div className="bg-white text-black flex flex-col items-center p-20">
+            <div className="flex">
+                <h1 className="text-4xl p-5">You have successifully deleted a post!</h1>
+                <div className="p-5">
+                    <MdDeleteOutline size={40}></MdDeleteOutline>
+                </div>
+            </div>
+            <div className="p-3">
+                <Button>
+                    <NavLink to="/">Go to main page</NavLink>
+                </Button>
+            </div>
+        </div>
+    )
+}

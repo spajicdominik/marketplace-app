@@ -12,6 +12,7 @@ import PostDetailsPage from "./routes/PostDetailsPage";
 import UserDetailsPage from './routes/UserDetailsPage';
 import TestSocket from './routes/TestSocket';
 import EditPost from './routes/EditPost';
+import DeletionSuccess from './routes/DeletionSuccess';
 
 function App() {
  const router = createBrowserRouter([
@@ -32,8 +33,8 @@ function App() {
         { path: '/profile', element: <Profile/>},
         { path: '/post/:postId', element: <PostDetailsPage/>},
         { path: '/users/:userId', element: <UserDetailsPage/>},
-        { path: 'chat', element: <TestSocket/>},
-        { path: "/edit-post/:postId", element: <EditPost/>}
+        { path: "/edit-post/:postId", element: <EditPost/>},
+        { path: "deletion-success", element: <DeletionSuccess/>}
       ]
     }
 ])

@@ -13,6 +13,9 @@ public class PostImagesServiceImpl implements PostImagesService{
     @Autowired
     PostImagesRepository repository;
 
+    @Autowired
+    UploadService uploadService;
+
     @Override
     public List<PostImages> getAllPostImages() {
         return repository.getAllPostImagess();
@@ -49,8 +52,17 @@ public class PostImagesServiceImpl implements PostImagesService{
     }
 
     @Override
-    public void deleteMainImage(Integer postId, Boolean isMain) {
-        repository.deleteMainImage(postId, isMain);
+    public void deleteImage(Integer post_image_id) {
+        PostImages image = getPostImagesById(post_image_id);
+        uploadService.archiveImage(image.getPostId(), image.getUrl());
+        repository.deleteImage(post_image_id);
+    }
+
+    @Override
+    public void deleteMainImage(Integer postId) {
+        String mainImageUrl = getImagesByPost(postId, true).getFirst().getUrl();
+        uploadService.archiveImage(postId, mainImageUrl);
+        repository.deleteMainImage(postId);
     }
 
 }

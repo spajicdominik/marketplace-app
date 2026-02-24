@@ -14,5 +14,7 @@ public interface PostImagesService {
 
     List<PostImages> getAllPostImagesByPost(Integer postId);
 
-    void deleteMainImage(Integer postId, Boolean isMain);
+    void deleteImage(Integer post_image_id);
+
+    void deleteMainImage(Integer postId);
 }

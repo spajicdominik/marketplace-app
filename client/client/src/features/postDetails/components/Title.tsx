@@ -32,7 +32,6 @@ export default function Title({ postDetails }: { postDetails: PostDetails | unde
                     null
                 }
             </div>
-            <Button>Contact seller</Button>
         </div>
     )
 }

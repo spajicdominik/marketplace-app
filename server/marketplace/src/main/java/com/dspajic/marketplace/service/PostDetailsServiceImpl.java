@@ -42,7 +42,6 @@ public class PostDetailsServiceImpl implements PostDetailsService {
     @Override
     public Integer addNewPost(NewPostDto newPostDto) {
         Long locationId = locationService.addLocation(mapLocationFromDto(newPostDto));
-        //logika za kreiranje odgovarajuceg foldera ako ne postoji i spremanje nove odnosno deaktiviranje stare slike
         return postService.addPost(mapPostFromDto(newPostDto, locationId));
     }
 
