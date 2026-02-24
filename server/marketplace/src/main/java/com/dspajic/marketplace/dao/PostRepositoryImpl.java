@@ -7,6 +7,9 @@ import com.dspajic.marketplace.mappers.FavouriteMapper;
 import com.dspajic.marketplace.mappers.PostRowMapper;
 import com.dspajic.marketplace.mappers.PriceRangeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository{
@@ -160,7 +164,7 @@ public class PostRepositoryImpl implements PostRepository{
     }
 
     @Override
-    public List<Post> filterPosts(
+    public Page<Post> filterPosts(
             Integer category_id,
             Integer subcategory_id,
             Integer subcategory_item_id,
@@ -173,11 +177,40 @@ public class PostRepositoryImpl implements PostRepository{
             Boolean sortPriceDesc,
             Boolean sortPriceAsc,
             Boolean sortDateDesc,
-            Boolean sortDateAsc
+            Boolean sortDateAsc,
+            Pageable pageable
     )
     {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("category_id", category_id);
+        String count_sql = """
+                SELECT COUNT(*) FROM (
+                                                    SELECT
+                                                    p.post_id,
+                                                    p.title,
+                                                    p.description,
+                                                    p.price,
+                                                    p.currency,
+                                                    p.user_id,
+                                                    p.product_id,
+                                                    p.location_id,
+                                                    p.created_at,
+                                                    p.updated_at,
+                                                    p.status
+                                                        FROM post p
+                                                        JOIN product pr ON pr.product_id = p.product_id
+                                                        JOIN subcategory_item si ON si.subcategory_item_id = pr.subcategory_item_id
+                                                        JOIN subcategory s ON s.subcategory_id = si.subcategory_id
+                                                        JOIN category c ON c.category_id = s.category_id
+                                                        JOIN location l ON l.location_id = p.location_id
+                                                        JOIN city ci ON ci.city_id = l.city_id
+                                                        JOIN county co ON co.county_id = ci.county_id
+                                                        JOIN country cr ON cr.country_id = co.country_id
+                
+                                                    WHERE c.category_id = :category_id
+                                                    AND p.status = 1) as t;
+                """;
+
         String sql = """
                 SELECT
                 p.post_id,
@@ -202,7 +235,7 @@ public class PostRepositoryImpl implements PostRepository{
                     JOIN country cr ON cr.country_id = co.country_id
                 
                 WHERE c.category_id = :category_id
-                AND p.status = true
+                AND p.status = 1
                 """;
 
         if (subcategory_id != null) {
@@ -258,8 +291,20 @@ public class PostRepositoryImpl implements PostRepository{
 
         sql += orderBy;
 
-        return namedJdbc.query(sql, params, rowMapper);
-    }
+
+        int limit = pageable.getPageSize();
+        int offset = (int) pageable.getOffset();
+        params.addValue("limit", limit);
+        params.addValue("offset", offset);
+
+        sql += " LIMIT :limit OFFSET :offset";
+
+
+        Integer totalCount = namedJdbc.queryForObject(count_sql, params, Integer.class);
+
+        return new PageImpl<>(namedJdbc.query(sql, params, rowMapper), pageable, totalCount == null ? 0 : totalCount);
+
+}
 
 
     @Override

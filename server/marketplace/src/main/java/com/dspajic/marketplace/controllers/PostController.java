@@ -8,6 +8,9 @@ import com.dspajic.marketplace.entities.PostDetails;
 import com.dspajic.marketplace.service.PostDetailsService;
 import com.dspajic.marketplace.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,8 +77,8 @@ public class PostController {
     public List<Post> getPostsByUser(@PathVariable Integer user_id) { return service.getPostsByUser(user_id); }
 
     @GetMapping("/posts-filter")
-    public List<Post> getFilteredPosts(
-            @RequestParam(required = false) Integer category_id,
+    public Page<Post> getFilteredPosts(
+            @RequestParam Integer category_id,
             @RequestParam(required = false) Integer subcategory_id,
             @RequestParam(required = false) Integer subcategory_item_id,
             @RequestParam(required = false) Integer product_id,
@@ -87,8 +90,9 @@ public class PostController {
             @RequestParam(required = false) Boolean sortPriceDesc,
             @RequestParam(required = false) Boolean sortPriceAsc,
             @RequestParam(required = false) Boolean sortDateDesc,
-            @RequestParam(required = false) Boolean sortDateAsc
-    ) {
+            @RequestParam(required = false) Boolean sortDateAsc,
+            @PageableDefault Pageable pageable
+            ) {
         return service.filterPosts(
                 category_id,
                 subcategory_id,
@@ -102,7 +106,8 @@ public class PostController {
                 sortPriceDesc,
                 sortPriceAsc,
                 sortDateDesc,
-                sortDateAsc
+                sortDateAsc,
+                pageable
         );
     }
 

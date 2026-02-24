@@ -6,6 +6,8 @@ import com.dspajic.marketplace.dto.filter.PriceRangeDto;
 import com.dspajic.marketplace.dto.newpost.NewPostDto;
 import com.dspajic.marketplace.entities.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,7 +74,7 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> filterPosts(
+    public Page<Post> filterPosts(
             Integer category_id,
             Integer subcategory_id,
             Integer subcategory_item_id,
@@ -85,7 +87,8 @@ public class PostServiceImpl implements PostService{
             Boolean sortPriceDesc,
             Boolean sortPriceAsc,
             Boolean sortDateDesc,
-            Boolean sortDateAsc)
+            Boolean sortDateAsc,
+            Pageable pageable)
     {
         return repository.filterPosts(
                 category_id,
@@ -100,7 +103,8 @@ public class PostServiceImpl implements PostService{
                 sortPriceDesc,
                 sortPriceAsc,
                 sortDateDesc,
-                sortDateAsc
+                sortDateAsc,
+                pageable
         );
     }
 

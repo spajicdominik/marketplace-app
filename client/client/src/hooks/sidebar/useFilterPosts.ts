@@ -22,6 +22,7 @@ export default function useFilterPosts(
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+
     useEffect(() => {
         let url = `http://localhost:8080/api/posts-filter?category_id=${categoryId}`
 
