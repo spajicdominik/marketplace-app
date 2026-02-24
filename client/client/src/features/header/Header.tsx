@@ -4,11 +4,17 @@ import TopNavMegaMenu from "./components/TopNavMegaMenu";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store";
+import DropdownMenu from "./components/DropDownMenu";
 
-type CategoryMenuItem = {
+type SubcategorySplitDto = {
+    left : { id: number; name: string; categoryId: number }[];
+    right : { id: number; name: string; categoryId: number }[];
+}
+
+export type CategoryMenuItem = {
   id: number;
   name: string;
-  subcategories: { id: number; name: string; categoryId: number }[];
+  subcategories: SubcategorySplitDto;
 };
 
 export default function Header() {
@@ -26,7 +32,7 @@ export default function Header() {
         <div className="">
             <AuthBar></AuthBar>
             <SearchSection></SearchSection>
-            <TopNavMegaMenu categories={categories}></TopNavMegaMenu>
+            <DropdownMenu categories={categories}></DropdownMenu>
         </div>
     );
 }

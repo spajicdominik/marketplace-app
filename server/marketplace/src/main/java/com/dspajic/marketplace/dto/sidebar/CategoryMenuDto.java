@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.dto.sidebar;
 
+import com.dspajic.marketplace.dto.navbar.SubcategorySplitDto;
 import com.dspajic.marketplace.entities.Subcategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,5 +14,5 @@ import java.util.List;
 public class CategoryMenuDto {
     private Integer id;
     private String name;
-    private List<Subcategory> subcategories;
+    private SubcategorySplitDto subcategories;
 }

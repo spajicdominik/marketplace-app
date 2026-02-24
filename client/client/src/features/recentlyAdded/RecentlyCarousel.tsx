@@ -6,8 +6,8 @@ export default function RecentlyCarousel() {
 
     return (
         <div>
-            <div className="text-black text-3xl font-bold p-3 w-fit m-4 bg-white rounded-xl">
-                <h1>Recently added</h1>
+            <div className="text-black text-3xl font-bold p-3 w-fit m-4">
+                <h1 className="">Recently added</h1>
             </div>
             <div className="flex mb-5">
                 {items.map(post => (

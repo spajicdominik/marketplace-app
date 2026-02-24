@@ -99,14 +99,20 @@ public class SubcategoryRepositoryImpl implements SubcategoryRepository{
     @Override
     public List<Subcategory> getSubcategoryByCategory(Integer categoryId) {
         String sql = """
-            SELECT
-            s.subcategory_id,
-            s.name,
-            s.category_id
-            FROM
-            subcategory s
-            WHERE
-            s.category_id = ?
+                SELECT
+                sc.subcategory_id,
+                sc.name,
+                sc.category_id
+            FROM subcategory sc
+            LEFT JOIN subcategory_item si
+                ON si.subcategory_id = sc.subcategory_id
+            LEFT JOIN product pr
+                ON pr.subcategory_item_id = si.subcategory_item_id
+            LEFT JOIN post p
+                ON p.product_id = pr.product_id
+            WHERE sc.category_id = ?
+            GROUP BY sc.subcategory_id, sc.name
+            ORDER BY COUNT(p.post_id)  DESC;
             """;
         return jdbcTemplate.query(sql, rowMapper, categoryId);
     }

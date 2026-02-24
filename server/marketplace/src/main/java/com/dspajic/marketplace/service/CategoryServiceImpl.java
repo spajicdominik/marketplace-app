@@ -2,6 +2,7 @@ package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.CategoryRepository;
 import com.dspajic.marketplace.dao.SubcategoryRepository;
+import com.dspajic.marketplace.dto.navbar.SubcategorySplitDto;
 import com.dspajic.marketplace.dto.sidebar.CategoryMenuDto;
 import com.dspajic.marketplace.dto.sidebar.SidebarMenuDto;
 import com.dspajic.marketplace.dto.userdisplay.CategoryDisplayDto;
@@ -58,7 +59,21 @@ public class CategoryServiceImpl implements CategoryService{
             CategoryMenuDto categoryMenuDto = new CategoryMenuDto();
             categoryMenuDto.setId(c.getId());
             categoryMenuDto.setName(c.getName());
-            categoryMenuDto.setSubcategories(subcategoryRepository.getSubcategoryByCategory(c.getId()));
+            List<Subcategory> subcategories = subcategoryRepository.getSubcategoryByCategory(c.getId());
+
+            int mid = (int) Math.ceil(subcategories.size() / 2.0);
+
+            List<Subcategory> left = subcategories.subList(0, mid);
+            List<Subcategory> right = subcategories.subList(mid, subcategories.size());
+
+            categoryMenuDto.setSubcategories(
+                    SubcategorySplitDto
+                            .builder()
+                            .left(left)
+                            .right(right)
+                            .build()
+            );
+
             categoryMenuDtoList.add(categoryMenuDto);
         }
         return categoryMenuDtoList;

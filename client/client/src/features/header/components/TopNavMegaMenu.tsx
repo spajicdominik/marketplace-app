@@ -55,7 +55,6 @@ function MegaPanel({
                 className="text-gray-700 hover:text-gray-900 cursor-pointer"
               >
                 <NavLink to="/products">{x.name}</NavLink>
-                
               </li>
             ))}
           </ul>
