@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.44, for macos15 (arm64)
+-- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
 --
 -- Host: localhost    Database: marketplace-api
 -- ------------------------------------------------------
--- Server version	9.5.0
+-- Server version	8.0.44
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,42 +14,35 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
-SET @@SESSION.SQL_LOG_BIN= 0;
 
 --
--- GTID state at the beginning of the backup 
+-- Table structure for table `user_favorite_post`
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'e0ef7cfe-f07b-11f0-9ee5-de01690d05f1:1-599';
-
---
--- Table structure for table `subcategory_item`
---
-
-DROP TABLE IF EXISTS `subcategory_item`;
+DROP TABLE IF EXISTS `user_favorite_post`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `subcategory_item` (
-  `subcategory_item_id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(120) NOT NULL,
-  `subcategory_id` bigint NOT NULL,
-  PRIMARY KEY (`subcategory_item_id`),
-  KEY `ix_item_subcategory` (`subcategory_id`),
-  CONSTRAINT `fk_item_subcategory` FOREIGN KEY (`subcategory_id`) REFERENCES `subcategory` (`subcategory_id`) ON DELETE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `user_favorite_post` (
+  `user_id` bigint NOT NULL,
+  `post_id` bigint NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`,`post_id`),
+  KEY `idx_fav_post` (`post_id`),
+  KEY `idx_fav_user_created` (`user_id`,`created_at` DESC),
+  CONSTRAINT `fk_fav_post` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
+  CONSTRAINT `fk_fav_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `subcategory_item`
+-- Dumping data for table `user_favorite_post`
 --
 
-LOCK TABLES `subcategory_item` WRITE;
-/*!40000 ALTER TABLE `subcategory_item` DISABLE KEYS */;
-INSERT INTO `subcategory_item` VALUES (1,'4K TV',1),(2,'OLED TV',1),(3,'Android Phone',2),(4,'iOS Phone',2),(5,'Bluetooth Speakers',3),(6,'Espresso Machine',4),(7,'Game Console',5);
-/*!40000 ALTER TABLE `subcategory_item` ENABLE KEYS */;
+LOCK TABLES `user_favorite_post` WRITE;
+/*!40000 ALTER TABLE `user_favorite_post` DISABLE KEYS */;
+INSERT INTO `user_favorite_post` VALUES (9,34,'2026-02-25 11:42:25'),(9,38,'2026-02-25 10:03:10'),(9,61,'2026-02-25 10:03:07'),(9,35,'2026-02-25 10:02:58'),(9,49,'2026-02-20 07:11:42'),(9,39,'2026-02-19 07:20:52'),(9,37,'2026-02-19 07:18:41'),(9,36,'2026-02-18 12:46:19');
+/*!40000 ALTER TABLE `user_favorite_post` ENABLE KEYS */;
 UNLOCK TABLES;
-SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -60,4 +53,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-16 23:16:13
+-- Dump completed on 2026-02-25 14:56:23
