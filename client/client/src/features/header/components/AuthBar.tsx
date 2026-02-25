@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../../store";
 import { logout } from "../../../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import { RiAdminLine } from "react-icons/ri";
 
 
 const items: MenuProps["items"] = [
@@ -54,6 +55,17 @@ export default function AuthBar() {
     // if (key === '2') navigate('/settings');
   };
 
+  const userRoles = useSelector(
+    (state: RootState) => state.auth.user?.roles,
+  );
+
+  const isAdmin = () => {
+    if (userRoles?.includes("ROLE_ADMIN")) {
+      return true;
+    }
+    else false;
+  }
+
 
   return (
     <div className="bg-black text-white flex justify-end items-center p-3">
@@ -67,7 +79,12 @@ export default function AuthBar() {
             <NavLink to={"/auth?mode=register"}>Register</NavLink>
           </motion.p>
         </>
-      ) : (
+      ) : (<>
+
+      {(isAdmin()) ? (<div className="text-white flex items-center">
+        <h1 className="text-md">ADMIN</h1>
+        <RiAdminLine />
+      </div>) : null}
         <div className="flex">
           <Dropdown menu={{ items, onClick: handleMenuClick }} trigger={["click"]}>
             <a onClick={(e) => e.preventDefault()}>
@@ -79,7 +96,7 @@ export default function AuthBar() {
             </a>
           </Dropdown>
         </div>
-
+      </>
       )}
     </div>
   );
