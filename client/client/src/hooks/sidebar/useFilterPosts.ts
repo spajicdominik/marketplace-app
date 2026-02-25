@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Post } from "../../features/postlist/components/Post";
 import axios from "axios";
+import type { Page } from "../../types/PaginatedPost";
 
 export default function useFilterPosts(
     categoryId : number, 
@@ -19,12 +20,15 @@ export default function useFilterPosts(
 ) 
 {
     const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(4);
+    const [totalElements, setTotalElements] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
 
     useEffect(() => {
-        let url = `http://localhost:8080/api/posts-filter?category_id=${categoryId}`
+        let url = `http://localhost:8080/api/posts-filter?category_id=${categoryId}&page=${page}&size=${size}`
 
         if (subcategoryId != null) {
             url += `&subcategory_id=${subcategoryId}`;
@@ -66,8 +70,10 @@ export default function useFilterPosts(
         const fetchFilteredPosts = async () => {
             try {
                 const response = await axios.get(url);
-                const data : Post[] = response.data;
-                setFilteredPosts(data);
+                const data : Page<Post> = response.data;
+                console.log("Data content: ", data.content);
+                setFilteredPosts(data.content);
+                setTotalElements(data.totalElements);
             } catch (error) {
                 setError("Error fetching filtered posts");
                 console.error("Error fetching filtered posts", error);
@@ -76,6 +82,6 @@ export default function useFilterPosts(
             }
         };
         fetchFilteredPosts();
-    }, [categoryId, subcategoryId, subcategoryItemId, productId, countryId, countyId, city_id, min_price, max_price, sortPriceAsc, sortDateAsc, sortDateDesc, sortPriceDesc]);
-    return filteredPosts
+    }, [categoryId, subcategoryId, subcategoryItemId, productId, countryId, countyId, city_id, min_price, max_price, sortPriceAsc, sortDateAsc, sortDateDesc, sortPriceDesc, page, size]);
+    return {filteredPosts, page, totalElements, setPage, size, setSize};
 }

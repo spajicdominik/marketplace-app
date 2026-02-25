@@ -39,13 +39,13 @@ public interface PostRepository {
 
     List<Post> getRecentPosts();
 
-    List<Post> getPostsByUser(Integer userId);
+    Page<Post> getPostsByUser(Integer userId, Pageable pageable);
 
     PriceRangeDto getPriceRange();
 
     Integer addFavourite(FavouriteDto favouriteDto);
     void removeFavourite(FavouriteDto favouriteDto);
     Boolean isFavourited(FavouriteDto favouriteDto);
-    List<Post> favouritePosts(Integer user_id);
+    Page<Post> favouritePosts(Integer user_id, Pageable pageable);
 
 }

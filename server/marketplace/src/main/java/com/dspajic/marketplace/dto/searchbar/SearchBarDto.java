@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 public class SearchBarDto {
     private List<OptionDto> categories;
-    private List<OptionDto> subcategories;
-    private List<OptionDto> productTypes;
-    private List<OptionDto> products;
+    private List<SubcategoryOptionDto> subcategories;
+    private List<ProductTypeOptionDto> productTypes;
+    private List<ProductOptionDto> products;
 }

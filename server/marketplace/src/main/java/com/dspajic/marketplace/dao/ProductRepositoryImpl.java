@@ -3,6 +3,7 @@ package com.dspajic.marketplace.dao;
 import com.dspajic.marketplace.dto.newpost.ProductDto;
 import com.dspajic.marketplace.dto.sidebar.ProductMenuDto;
 import com.dspajic.marketplace.entities.Product;
+import com.dspajic.marketplace.mappers.ProductListDtoMapper;
 import com.dspajic.marketplace.mappers.dto.ProductMenuDtoMapper;
 import com.dspajic.marketplace.mappers.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;

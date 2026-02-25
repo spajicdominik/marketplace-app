@@ -9,4 +9,5 @@ export interface Post {
   locationId: number;
   createdAt: string; 
   updatedAt: string;
+  status: boolean;
 }

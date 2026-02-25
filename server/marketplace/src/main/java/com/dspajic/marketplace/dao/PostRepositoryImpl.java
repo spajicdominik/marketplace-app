@@ -386,7 +386,28 @@ public class PostRepositoryImpl implements PostRepository{
     }
 
     @Override
-    public List<Post> getPostsByUser(Integer userId) {
+    public Page<Post> getPostsByUser(Integer userId, Pageable pageable) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("user_id", userId);
+
+        String count_sql = """
+                SELECT COUNT(*) FROM (SELECT
+                                    p.post_id,
+                                    p.title,
+                                    p.description,
+                                    p.price,
+                                    p.currency,
+                                    p.user_id,
+                                    p.product_id,
+                                    p.location_id,
+                                    p.created_at,
+                                    p.updated_at,
+                                    p.status
+                                FROM post p
+                                WHERE p.user_id = :user_id
+                                and p.status = 1
+                                ORDER BY p.created_at DESC) as t
+                """;
         String sql = """
                 SELECT
                     p.post_id,
@@ -401,11 +422,22 @@ public class PostRepositoryImpl implements PostRepository{
                     p.updated_at,
                     p.status
                 FROM post p
-                WHERE p.user_id = ?
-                and p.status = true
-                ORDER BY p.created_at DESC;
+                WHERE p.user_id = :user_id
+                and p.status = 1
+                ORDER BY p.created_at DESC
                 """;
-        return jdbcTemplate.query(sql, rowMapper, userId);
+
+        int limit = pageable.getPageSize();
+        int offset = (int) pageable.getOffset();
+        params.addValue("limit", limit);
+        params.addValue("offset", offset);
+
+        sql += " LIMIT :limit OFFSET :offset";
+
+
+        Integer totalCount = namedJdbc.queryForObject(count_sql, params, Integer.class);
+
+        return new PageImpl<>(namedJdbc.query(sql, params, rowMapper), pageable, totalCount == null ? 0 : totalCount);
     }
 
     @Override
@@ -468,16 +500,39 @@ public class PostRepositoryImpl implements PostRepository{
     }
 
     @Override
-    public List<Post> favouritePosts(Integer user_id) {
+    public Page<Post> favouritePosts(Integer user_id, Pageable pageable) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("user_id", user_id);
+
+        String count_sql = """
+                SELECT COUNT(*) FROM (SELECT p.*
+                                FROM user_favorite_post ufp
+                                JOIN post p ON p.post_id = ufp.post_id
+                                WHERE ufp.user_id = :user_id
+                                and p.status = true
+                                ORDER BY ufp.created_at DESC) as t
+                """;
+
         String sql = """
                 SELECT p.*
                 FROM user_favorite_post ufp
                 JOIN post p ON p.post_id = ufp.post_id
-                WHERE ufp.user_id = ?
+                WHERE ufp.user_id = :user_id
                 and p.status = true
                 ORDER BY ufp.created_at DESC
                 """;
-        return jdbcTemplate.query(sql, rowMapper, user_id);
+
+        int limit = pageable.getPageSize();
+        int offset = (int) pageable.getOffset();
+        params.addValue("limit", limit);
+        params.addValue("offset", offset);
+
+        sql += " LIMIT :limit OFFSET :offset";
+
+
+        Integer totalCount = namedJdbc.queryForObject(count_sql, params, Integer.class);
+
+        return new PageImpl<>(namedJdbc.query(sql, params, rowMapper), pageable, totalCount == null ? 0 : totalCount);
     }
 
 }

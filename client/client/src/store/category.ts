@@ -20,6 +20,9 @@ const categorySlice = createSlice({
     name: 'category',
     initialState: initialCategoryState,
     reducers: {
+        reset(state, action){
+            return initialCategoryState;
+        },
         setCategory(state, action) {
             state.categoryId = action.payload;
             state.subcategoryId = null;

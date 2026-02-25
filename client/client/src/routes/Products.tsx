@@ -5,6 +5,8 @@ import useFilterPosts from "../hooks/sidebar/useFilterPosts";
 import FilterMenu from "../features/filterMenu/FilterMenu";
 import NoPosts from "../features/postlist/NoPosts";
 import RecentlyCarousel from "../features/recentlyAdded/RecentlyCarousel";
+import { Pagination } from 'antd';
+import { useEffect } from "react";
 
 export default function Products() {
     const categoryId = useSelector((state: RootState) => state.category.categoryId);
@@ -23,10 +25,10 @@ export default function Products() {
 
     const token = useSelector((state: RootState) => state.auth.accessToken);
 
-    const posts = useFilterPosts(
-        categoryId, 
-        subcategoryId, 
-        subcategoryItemId, 
+    const { filteredPosts, page, totalElements, setPage, size, setSize } = useFilterPosts(
+        categoryId,
+        subcategoryId,
+        subcategoryItemId,
         productId,
         countryId,
         countyId,
@@ -39,24 +41,47 @@ export default function Products() {
         sortDateAsc
     );
 
-    
-    if (posts.length > 0) {
+    useEffect(() => {
+        setPage(0);
+    }, [size]);
+
+
+    if (filteredPosts.length > 0) {
         return (
-        <div className="mx-8 mb-10">
-            <FilterMenu token={token} />
-            <PostList posts={posts}></PostList>
-        </div>
-    )
+            <div className="mx-8 mb-10">
+                <FilterMenu token={token} />
+                <PostList posts={filteredPosts}></PostList>
+
+                <div className="flex justify-center mt-6">
+                    <Pagination
+                        showSizeChanger
+                        current={page + 1}
+                        total={totalElements}
+                        pageSize={size}
+                        pageSizeOptions={["4", "8", "12", "16", "20"]}
+                        onChange={(p, pageSize) => {
+                            setPage(p - 1);
+
+                            if (pageSize !== size) {
+                                setSize(pageSize);
+                            }
+
+                        }}
+                    />
+                </div>
+
+            </div>
+        )
     }
     else {
-        return(
+        return (
             <div className="mx-8 mb-10">
-            <FilterMenu token={token} />
-            <NoPosts></NoPosts>
-            <RecentlyCarousel/>
-        </div> 
+                <FilterMenu token={token} />
+                <NoPosts></NoPosts>
+                <RecentlyCarousel />
+            </div>
         )
-    
+
     }
-    
+
 }

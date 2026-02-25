@@ -11,8 +11,10 @@ export default function Misc({ postDetails }: { postDetails: PostDetails | undef
     const postId = postDetails?.id;
 
 
-    const postTitle = postDetails!.title;
+    const postTitle = postDetails?.title;
     const postUrl = window.location.href;
+
+    if(!postTitle) return null;
 
     return (
         <div className="bg-white text-black  flex justify-between">

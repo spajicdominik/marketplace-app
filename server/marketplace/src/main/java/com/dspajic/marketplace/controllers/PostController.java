@@ -74,7 +74,10 @@ public class PostController {
     }
 
     @GetMapping("/posts/user/{user_id}")
-    public List<Post> getPostsByUser(@PathVariable Integer user_id) { return service.getPostsByUser(user_id); }
+    public Page<Post> getPostsByUser(
+            @PathVariable Integer user_id,
+            @PageableDefault Pageable pageable
+    ) { return service.getPostsByUser(user_id, pageable); }
 
     @GetMapping("/posts-filter")
     public Page<Post> getFilteredPosts(
@@ -137,8 +140,11 @@ public class PostController {
     }
 
     @GetMapping("/posts/favourites/{user_id}")
-    public List<Post> getAllFavourites(@PathVariable Integer user_id) {
-        return service.favouritePosts(user_id);
+    public Page<Post> getAllFavourites(
+            @PathVariable Integer user_id,
+            @PageableDefault Pageable pageable
+    ) {
+        return service.favouritePosts(user_id, pageable);
     }
 
     @DeleteMapping("/posts/delete-post/{post_id}")

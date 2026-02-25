@@ -54,8 +54,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> getPostsByUser(Integer userId) {
-        return repository.getPostsByUser(userId);
+    public Page<Post> getPostsByUser(Integer userId, Pageable pageable) {
+        return repository.getPostsByUser(userId, pageable);
     }
 
     @Override
@@ -129,8 +129,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> favouritePosts(Integer user_id) {
-        return repository.favouritePosts(user_id);
+    public Page<Post> favouritePosts(Integer user_id, Pageable pageable) {
+        return repository.favouritePosts(user_id, pageable);
     }
 
     @Override

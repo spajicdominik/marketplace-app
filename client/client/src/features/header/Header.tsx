@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../store";
 import DropdownMenu from "./components/DropDownMenu";
 
-type SubcategorySplitDto = {
+export type SubcategorySplitDto = {
     left : { id: number; name: string; categoryId: number }[];
     right : { id: number; name: string; categoryId: number }[];
 }

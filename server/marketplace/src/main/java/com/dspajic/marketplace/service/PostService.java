@@ -20,7 +20,7 @@ public interface PostService {
 
     List<Post> getRecentPosts();
 
-    List<Post> getPostsByUser(Integer userId);
+    Page<Post> getPostsByUser(Integer userId, Pageable pageable);
 
     List<Post> getPostsByProduct(Integer productId);
 
@@ -53,7 +53,7 @@ public interface PostService {
 
     Boolean isFavourited(FavouriteDto favouriteDto);
 
-    List<Post> favouritePosts(Integer user_id);
+    Page<Post> favouritePosts(Integer user_id, Pageable pageable);
 
     void deletePostById(Integer postId);
 }

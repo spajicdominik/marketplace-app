@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import type { Post } from "../../features/postlist/components/Post";
 import axios from "axios";
+import type { Page } from "../../types/PaginatedPost";
 
 export default function useFetchUserPosts(userId : number | undefined) {
     const [userPosts, setUserPosts] = useState<Post[]>([]);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(4);
+    const [totalElements, setTotalElements] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -11,10 +15,11 @@ export default function useFetchUserPosts(userId : number | undefined) {
         const fetchUserPosts = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:8080/api/posts/user/${userId}`
+                    `http://localhost:8080/api/posts/user/${userId}?page=${page}&size=${size}`
                 );
-                const data : Post[] = response.data;
-                setUserPosts(data);
+                const data : Page<Post> = response.data;
+                setUserPosts(data.content);
+                setTotalElements(data.totalElements);
             } catch (error) {
                 setError("Error fetching user posts");
                 console.error("Error fetching user posts", error);
@@ -23,6 +28,6 @@ export default function useFetchUserPosts(userId : number | undefined) {
             }
         };
         fetchUserPosts();
-    }, [userId]);
-    return userPosts;
+    }, [userId, page, size]);
+    return {userPosts, page, totalElements, setPage, size, setSize};
 }
