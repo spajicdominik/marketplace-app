@@ -205,4 +205,16 @@ public class UsersRepositoryImpl implements UsersRepository{
         return users.getFirst();
     }
 
+    @Override
+    public Integer addUserAuthority(String username) {
+        String sql = """
+                insert into
+                authorities
+                (username, authority)
+                values
+                (?, ?);
+                """;
+        return jdbcTemplate.update(sql, username, "ROLE_USER");
+    }
+
 }

@@ -24,4 +24,5 @@ public interface UsersService {
     String validateVerificationToken(String token);
 
     UserDisplayDto getUserInfo(Integer userId);
+    Integer addUserAuthority(String username);
 }

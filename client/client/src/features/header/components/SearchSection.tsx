@@ -9,12 +9,15 @@ import type { SearchBarDto } from "../../../types/SearchBarDto";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../../store";
 import { categoryActions } from "../../../store/category";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchSection() {
   const [options, setOptions] = useState<AutoCompleteProps["options"]>([]);
 
   const [searchData, setSearchData] = useState<SearchBarDto>();
   const dispatch = useDispatch<AppDispatch>();
+
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -42,6 +45,7 @@ export default function SearchSection() {
             label: (
               <div onClick={() => {
                 dispatch(categoryActions.setCategory(c.id));
+                navigate('/products');
               }}>
                 {c.name}
               </div>
@@ -59,6 +63,7 @@ export default function SearchSection() {
               <div onClick={() => {
                 dispatch(categoryActions.setCategory(c.categoryId));
                 dispatch(categoryActions.setSubcategory(c.id));
+                navigate('/products');
               }}>
                 {c.name}
               </div>
@@ -76,6 +81,7 @@ export default function SearchSection() {
                 dispatch(categoryActions.setCategory(c.categoryId));
                 dispatch(categoryActions.setSubcategory(c.subcategoryId));
                 dispatch(categoryActions.setSubcategoryItem(c.id));
+                navigate('/products');
               }}>
                 {c.name}
               </div>
@@ -93,6 +99,7 @@ export default function SearchSection() {
                 dispatch(categoryActions.reset(""));
                 dispatch(categoryActions.setCategory(c.categoryId));
                 dispatch(categoryActions.setProduct(c.id));
+                navigate('/products');
               }}>
                 {c.name}
               </div>

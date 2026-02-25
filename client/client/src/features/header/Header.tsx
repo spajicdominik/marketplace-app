@@ -1,6 +1,5 @@
 import AuthBar from "./components/AuthBar";
 import SearchSection from "./components/SearchSection";
-import TopNavMegaMenu from "./components/TopNavMegaMenu";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store";

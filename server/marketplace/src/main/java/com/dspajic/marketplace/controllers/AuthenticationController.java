@@ -4,6 +4,7 @@ import com.dspajic.marketplace.config.JwtService;
 import com.dspajic.marketplace.dto.auth.AuthDto;
 import com.dspajic.marketplace.dto.auth.JwtResponseDto;
 import com.dspajic.marketplace.dto.auth.UserRegisterDto;
+import com.dspajic.marketplace.entities.Users;
 import com.dspajic.marketplace.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +56,8 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserRegisterDto userRegisterDto) {
-        userService.registerNewUser(userRegisterDto);
+        Users user = userService.registerNewUser(userRegisterDto);
+        userService.addUserAuthority(user.getUsername());
         return ResponseEntity.ok("User registered successifully! Check your email to confirm registration.");
     }
 }

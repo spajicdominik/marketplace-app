@@ -135,4 +135,9 @@ public class UsersServiceImpl implements UsersService{
         return repository.getUserInfo(userId);
     }
 
+    @Override
+    public Integer addUserAuthority(String username) {
+        return repository.addUserAuthority(username);
+    }
+
 }

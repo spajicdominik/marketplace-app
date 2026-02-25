@@ -15,6 +15,6 @@ public interface UsersRepository {
     List<String> findAuthoritiesByUsername(String username);
     Users getUserByEmail(String email);
     Integer enableUser(String email);
-
     UserDisplayDto getUserInfo(Integer userId);
+    Integer addUserAuthority(String username);
 }
