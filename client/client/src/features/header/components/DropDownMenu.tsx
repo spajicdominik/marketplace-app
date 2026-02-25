@@ -19,7 +19,7 @@ export default function DropdownMenu({ categories }: { categories: CategoryMenuI
           key={category.id}
           trigger={["hover"]}
           placement="bottom"
-          dropdownRender={() => (
+          popupRender={() => (
             <div className="bg-white shadow-xl rounded-lg p-6 w-130 flex gap-12">
 
               <div className="flex-1">

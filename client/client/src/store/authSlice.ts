@@ -44,8 +44,8 @@ function decodeUserFromToken(token: string): DecodedToken | null {
     }
 }
 
-export function isTokenExpired(token : string | null) : boolean {
-    if(!token) {
+export function isTokenExpired(token: string | null): boolean {
+    if (!token) {
         return true;
     }
     const decoded = decodeUserFromToken(token);
@@ -70,7 +70,7 @@ const initialState: AuthState = {
     user: initialUser,
 }
 
-export const login = createAsyncThunk<LoginResponse, { username: string; password: string }, {rejectValue: string}>(
+export const login = createAsyncThunk<LoginResponse, { username: string; password: string }, { rejectValue: string }>(
     'auth/login',
     async ({ username, password }, { rejectWithValue }) => {
         try {
@@ -102,6 +102,9 @@ export const login = createAsyncThunk<LoginResponse, { username: string; passwor
 export const logout = createAsyncThunk('auth/logout', async () => {
     await fetch('http://localhost:8080/auth/logout', {
         method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem("access_token")}`
+        },
         credentials: 'include',
     }).catch(() => { });
     localStorage.removeItem("access_token");

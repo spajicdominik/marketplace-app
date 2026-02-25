@@ -295,7 +295,7 @@ export default function EditPost() {
         dispatch(editPostSlice.actions.resetEditPost());
         console.log("Edited post:", postId);
 
-        navigate("/upload-success");
+        navigate("/edit-success");
       }
     } catch (e) { }
   };

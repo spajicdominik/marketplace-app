@@ -76,7 +76,6 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
 
   const handleUpload = async (postId : number) => {
     if (fileList.length === 0) {
-      message.error("Please select at least one image.");
       return;
     }
 
@@ -177,7 +176,7 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
     </div>
 
       {/* Optional AntD preview modal via <Image.PreviewGroup> */}
-      <Image
+      {previewImage ? (<Image
         style={{ display: "none" }}
         src={previewImage}
         preview={{
@@ -185,7 +184,7 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
           src: previewImage,
           onOpenChange: (vis) => setPreviewOpen(vis),
         }}
-      />
+      />) : null}
     </>
   );
 });

@@ -8,6 +8,9 @@ export default function useFetchUserDetails( userId : number | undefined ) {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        if (userId === undefined || userId === null) {
+            return;
+        }
         const fetchUserDetails = async () => {
             try {
                 const response = await axios.get(

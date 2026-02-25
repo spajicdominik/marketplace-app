@@ -4,11 +4,9 @@ import { Button, message, Upload, Image } from "antd";
 import type { GetProp, UploadFile, UploadProps } from "antd";
 import axios from "axios";
 import useFetchMainImageObject from "../../hooks/editPost/useFetchMainImageObject";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState, AppDispatch } from "../../store";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -36,10 +34,6 @@ const EditMainImage = forwardRef<EditImageHandle, {}>((_props, ref) => {
       },
     ]);
   }, [currentMainImage, postId]);
-
-  console.log("Post id:", postId);
-  console.log("Current main image: ", currentMainImage);
-  console.log("File list: ", fileList);
 
   const [uploading, setUploading] = useState(false);
 

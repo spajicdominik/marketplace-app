@@ -45,10 +45,6 @@ const EditUploader = forwardRef<EditUploaderHandle, {}>((props, ref) => {
 
   const postImages = useFetchNonMainImages(currentPostId);
   
-
-  console.log("Current post id (all images): ", currentPostId);
-  console.log("Current post images: ", postImages);
-
   const getOriginalImages = (allImages: PostDetailsImages[]): UploadFile[] => {
     const originalImages: UploadFile[] = [];
     for (const image of allImages) {
@@ -80,34 +76,28 @@ const EditUploader = forwardRef<EditUploaderHandle, {}>((props, ref) => {
   };
 
   const beforeUpload: UploadProps["beforeUpload"] = async (file) => {
-    // Accept only images (optional, also validate size)
     if (!file.type.startsWith("image/")) {
       message.error("You can only select image files.");
       return Upload.LIST_IGNORE;
     }
 
-    // Generate local preview (thumb) for this file
     const thumbUrl = await getBase64(file);
 
-    // Append into controlled list with a thumb
     setFileList((prev) => [
       ...prev,
       {
         uid: file.uid,
         name: file.name,
-        status: "done", // mark as done so thumbnail shows immediately
-        thumbUrl, // local preview shown in list
+        status: "done", 
+        thumbUrl, 
         originFileObj: file as RcFile,
       },
     ]);
 
-    // Prevent auto upload
     return false;
   };
 
-  // Optional: open large preview on click
   const onPreview: UploadProps["onPreview"] = async (file) => {
-    // Prefer the remote url; fallback to local thumb
     const src = file.url || file.thumbUrl;
     if (!src) return;
     setPreviewImage(src);
@@ -200,8 +190,6 @@ const EditUploader = forwardRef<EditUploaderHandle, {}>((props, ref) => {
           onRemove={onRemove}
           onPreview={onPreview}
           accept="image/*"
-          // No `action` because we’re doing manual uploads
-          // If you set `action`, AntD will auto-upload (we disabled that).
         >
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
@@ -213,7 +201,6 @@ const EditUploader = forwardRef<EditUploaderHandle, {}>((props, ref) => {
         </Dragger>
       </div>
 
-      {/* Optional AntD preview modal via <Image.PreviewGroup> */}
       <Image
         style={{ display: "none" }}
         src={previewImage}

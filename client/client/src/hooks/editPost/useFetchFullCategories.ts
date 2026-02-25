@@ -9,6 +9,9 @@ export default function useFetchFullCategories(productId : number | undefined) {
 
     useEffect(() => {
         const fetchFullCategories = async () => {
+            if (productId == null || productId == undefined){
+                return;
+            }
             try {
                 const response = await axios.get(
                     `http://localhost:8080/api/category/get-full-categories/product/${productId}`

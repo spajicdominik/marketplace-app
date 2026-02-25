@@ -71,7 +71,6 @@ export default function useFilterPosts(
             try {
                 const response = await axios.get(url);
                 const data : Page<Post> = response.data;
-                console.log("Data content: ", data.content);
                 setFilteredPosts(data.content);
                 setTotalElements(data.totalElements);
             } catch (error) {

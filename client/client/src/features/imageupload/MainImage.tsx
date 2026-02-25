@@ -26,7 +26,6 @@ const MainImage = forwardRef<MainImageHandle, {}>((_props, ref) => {
         const response = await axios.post("http://localhost:8080/api/uploads/images", formData);
         const payload = response.data;
         setFileList([]);
-        message.success("upload successfully.");
         return payload;
       } catch (error) {
         message.error("upload failed");

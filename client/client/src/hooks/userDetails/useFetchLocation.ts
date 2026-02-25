@@ -8,6 +8,9 @@ export default function useFetchLocationDto( cityId : number | undefined ) {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        if (cityId === undefined || cityId === null) {
+            return;
+        }
         const fetchLocation = async () => {
             try {
                 const response = await axios.get(
