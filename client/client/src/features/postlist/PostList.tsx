@@ -8,7 +8,6 @@ interface PostListProps {
 
 const PostList: React.FC<PostListProps> = ({ posts }) => {
   return (
-    <div className="">
       <div className="grid grid-cols-4 gap-2 w-fit">
         {posts.map(post => (
           <PostListEntity
@@ -18,7 +17,6 @@ const PostList: React.FC<PostListProps> = ({ posts }) => {
         ))}
       </div>
 
-    </div>
   );
 };
 
