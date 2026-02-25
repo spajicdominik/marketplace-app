@@ -39,34 +39,28 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
   };
 
   const beforeUpload: UploadProps["beforeUpload"] = async (file) => {
-    // Accept only images (optional, also validate size)
     if (!file.type.startsWith("image/")) {
       message.error("You can only select image files.");
       return Upload.LIST_IGNORE;
     }
 
-    // Generate local preview (thumb) for this file
     const thumbUrl = await getBase64(file);
 
-    // Append into controlled list with a thumb
     setFileList((prev) => [
       ...prev,
       {
         uid: file.uid,
         name: file.name,
-        status: "done", // mark as done so thumbnail shows immediately
-        thumbUrl,       // local preview shown in list
+        status: "done", 
+        thumbUrl,      
         originFileObj: file as RcFile,
       },
     ]);
 
-    // Prevent auto upload
     return false;
   };
 
-  // Optional: open large preview on click
   const onPreview: UploadProps["onPreview"] = async (file) => {
-    // Prefer the remote url; fallback to local thumb
     const src = file.url || file.thumbUrl;
     if (!src) return;
     setPreviewImage(src);
@@ -84,13 +78,10 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
 
       const formData = new FormData();
 
-      // IMPORTANT: append the **raw file** from originFileObj
-      // Make sure the field name matches your Spring @RequestParam("file") or ("files")
       fileList.forEach((file) => {
         const raw = file.originFileObj as RcFile | undefined;
         if (raw) {
-          formData.append("file", raw); // <-- if your controller expects @RequestParam("file") List<MultipartFile>
-          // If your backend expects "files[]", use: formData.append("files[]", raw);
+          formData.append("file", raw); 
         }
       });
       formData.append("postId", String(postId));
@@ -98,7 +89,6 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
       const res = await fetch("http://localhost:8080/api/uploads/images", {
         method: "POST",
         body: formData,
-        // headers: { Authorization: `Bearer ${token}` }, // if you need JWT auth
       });
 
       if (!res.ok) {
@@ -106,12 +96,8 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
         throw new Error(text || `HTTP ${res.status}`);
       }
 
-      // Expect server to return an array of uploaded file meta:
-      // e.g. [{ filename, url, originalName, size }, ...]
       const payload = await res.json();
 
-      // Map server response back into fileList, setting .url so AntD keeps a durable preview
-      // If your API returns a single object when one file is uploaded, normalize to an array
       const responseArray = Array.isArray(payload) ? payload : [payload];
 
       for (var response of responseArray) {
@@ -125,16 +111,14 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
         usePostImage(image);
       }
 
-      // Try to match by name; adjust if your backend returns an id or you need a different correlate
       const nextList = fileList.map((file, idx) => {
         const resp = responseArray[idx] || {};
         return {
           ...file,
           status: "done",
-          // After upload, use permanent server URL for thumbnail + preview
-          url: resp.url,                   // so clicking preview opens server URL
+          url: resp.url,           
           thumbUrl: file.thumbUrl || resp.url,
-          response: resp,                  // keep server payload
+          response: resp,                  
         } as UploadFile;
       });
 
@@ -164,8 +148,6 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
         onRemove={onRemove}
         onPreview={onPreview}
         accept="image/*"
-        // No `action` because we’re doing manual uploads
-        // If you set `action`, AntD will auto-upload (we disabled that).
       >
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
@@ -175,7 +157,6 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
       </Dragger>
     </div>
 
-      {/* Optional AntD preview modal via <Image.PreviewGroup> */}
       {previewImage ? (<Image
         style={{ display: "none" }}
         src={previewImage}
