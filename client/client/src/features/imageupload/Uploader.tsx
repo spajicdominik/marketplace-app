@@ -19,7 +19,7 @@ function getBase64(file: Blob): Promise<string> {
 }
 
 export type UploaderHandle = {
-  upload: (postId : number) => void;
+  upload: (postId: number) => void;
 };
 
 const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
@@ -51,8 +51,8 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
       {
         uid: file.uid,
         name: file.name,
-        status: "done", 
-        thumbUrl,      
+        status: "done",
+        thumbUrl,
         originFileObj: file as RcFile,
       },
     ]);
@@ -68,7 +68,7 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
     setPreviewTitle(file.name || src.substring(src.lastIndexOf("/") + 1));
   };
 
-  const handleUpload = async (postId : number) => {
+  const handleUpload = async (postId: number) => {
     if (fileList.length === 0) {
       return;
     }
@@ -81,13 +81,18 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
       fileList.forEach((file) => {
         const raw = file.originFileObj as RcFile | undefined;
         if (raw) {
-          formData.append("file", raw); 
+          formData.append("file", raw);
         }
       });
       formData.append("postId", String(postId));
 
+      const token = localStorage.getItem("access_token");
+
       const res = await fetch("http://localhost:8080/api/uploads/images", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -102,11 +107,11 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
 
       for (var response of responseArray) {
         const imageUrl = response?.url;
-        const image : PostImage = {
-          url : imageUrl,
+        const image: PostImage = {
+          url: imageUrl,
           postId: currentPostId,
           isMain: false,
-          isActive: true        
+          isActive: true
         }
         usePostImage(image);
       }
@@ -116,9 +121,9 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
         return {
           ...file,
           status: "done",
-          url: resp.url,           
+          url: resp.url,
           thumbUrl: file.thumbUrl || resp.url,
-          response: resp,                  
+          response: resp,
         } as UploadFile;
       });
 
@@ -139,23 +144,23 @@ const Uploader = forwardRef<UploaderHandle, {}>((props, ref) => {
 
   return (
     <>
-    <div className="w-1/4">
+      <div className="w-1/4">
         <Dragger
-        multiple
-        listType="picture-card"
-        fileList={fileList}
-        beforeUpload={beforeUpload}
-        onRemove={onRemove}
-        onPreview={onPreview}
-        accept="image/*"
-      >
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">Click or drag images here</p>
-        <p className="ant-upload-hint">You can add multiple images and upload them later.</p>
-      </Dragger>
-    </div>
+          multiple
+          listType="picture-card"
+          fileList={fileList}
+          beforeUpload={beforeUpload}
+          onRemove={onRemove}
+          onPreview={onPreview}
+          accept="image/*"
+        >
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined />
+          </p>
+          <p className="ant-upload-text">Click or drag images here</p>
+          <p className="ant-upload-hint">You can add multiple images and upload them later.</p>
+        </Dragger>
+      </div>
 
       {previewImage ? (<Image
         style={{ display: "none" }}

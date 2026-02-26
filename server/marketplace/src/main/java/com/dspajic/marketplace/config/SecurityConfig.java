@@ -40,6 +40,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/newPost").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/postImages").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/uploads/images").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/api/category/**").permitAll()

@@ -23,7 +23,12 @@ const MainImage = forwardRef<MainImageHandle, {}>((_props, ref) => {
       
       setUploading(true);
       try {
-        const response = await axios.post("http://localhost:8080/api/uploads/images", formData);
+        const token = localStorage.getItem("access_token");
+        const response = await axios.post("http://localhost:8080/api/uploads/images", formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
         const payload = response.data;
         setFileList([]);
         return payload;
