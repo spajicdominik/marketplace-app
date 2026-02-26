@@ -16,6 +16,10 @@ export default function Title({ postDetails }: { postDetails: PostDetails | unde
         (state: RootState) => state.auth.user?.user_id
     );
 
+    const userRoles = useSelector(
+        (state: RootState) => state.auth.user?.roles
+    )
+
 
     return (
         <div className="text-black bg-white p-6 shadow-2xl">
@@ -25,7 +29,7 @@ export default function Title({ postDetails }: { postDetails: PostDetails | unde
                     <p className="price">Price</p>
                     <p className="price-prop font-bold mb-5">{price} {currency}</p>
                 </div>
-                {postDetails?.userId == currentUserId
+                {(postDetails?.userId == currentUserId || userRoles?.includes("ROLE_ADMIN"))
                     ?
                     <Button size="large" type="primary" onClick={() => { navigate(`/edit-post/${postId}`) }}>EDIT</Button>
                     :

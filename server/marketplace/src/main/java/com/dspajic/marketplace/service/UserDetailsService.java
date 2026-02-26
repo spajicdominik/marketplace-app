@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.service;
 
+import com.dspajic.marketplace.dto.edituser.EditUserDto;
 import com.dspajic.marketplace.entities.UserDetails;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface UserDetailsService {
     Integer updateUserDetails(UserDetails entity);
     void deleteUserDetails(Integer id);
     UserDetails getUserDetailsByEmail(String email);
+
+    Integer editUser(Integer userId, EditUserDto details);
 }

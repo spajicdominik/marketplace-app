@@ -7,11 +7,24 @@ import { MdOutlineEmail } from "react-icons/md";
 import { MdOutlineLocalPhone } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import useFetchLocationDto from "../../hooks/userDetails/useFetchLocation";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store";
+import {Button} from "antd";
+import { useNavigate } from "react-router-dom";
 
 export default function UserInfo({ userDetails }: { userDetails: UserDetails | undefined }) {
     const username = userDetails?.username;
     const dateCreated = FormatDate(userDetails?.createdAt)
     const location = useFetchLocationDto(userDetails?.cityId);
+    const navigate = useNavigate();
+
+    const userRoles = useSelector(
+        (state : RootState) => state.auth.user?.roles
+    )
+
+    const loggedInUser = useSelector(
+        (state: RootState) => state.auth.user?.user_id
+    )
 
     return (
         <div className="user-info bg-white text-black p-4 my-4 shadow-xl rounded-2xl h-fit w-fit">
@@ -46,6 +59,12 @@ export default function UserInfo({ userDetails }: { userDetails: UserDetails | u
                 </div>
             </div>
             </div>
+            {((loggedInUser == userDetails?.userId) || (userRoles?.includes("ROLE_ADMIN"))) 
+            ? 
+            <Button onClick={() => {navigate(`/edit-user/${userDetails?.userId}`)}}>Edit user details</Button>
+            :
+            null
+            }
         </div>
     )
 }

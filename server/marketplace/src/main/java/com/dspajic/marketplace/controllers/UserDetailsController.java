@@ -1,5 +1,6 @@
 package com.dspajic.marketplace.controllers;
 
+import com.dspajic.marketplace.dto.edituser.EditUserDto;
 import com.dspajic.marketplace.entities.UserDetails;
 import com.dspajic.marketplace.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +39,7 @@ public class UserDetailsController {
     public void deleteUserDetails(@PathVariable("id") Integer id) {
         service.deleteUserDetails(id);
     }
+
+    @PutMapping("/userDetails/edit/{user_id}")
+    public Integer editUser(@PathVariable Integer user_id, @RequestBody EditUserDto details) { return service.editUser(user_id, details);}
 }

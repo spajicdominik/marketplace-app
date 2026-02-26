@@ -4,6 +4,7 @@ import authSlice from "./authSlice";
 import newPostSlice from "./newPostSlice";
 import sidebarSlice from "./sidebarSlice";
 import editPostSlice from "./editPostSlice";
+import editUserSlice from "./editUserSlice";
 
 const store = configureStore({
     reducer : { 
@@ -11,7 +12,8 @@ const store = configureStore({
         auth: authSlice.reducer,
         newpost: newPostSlice.reducer,
         sidebar: sidebarSlice.reducer,
-        editpost: editPostSlice.reducer
+        editpost: editPostSlice.reducer,
+        edituser: editUserSlice.reducer
     }
 });
 

@@ -1,9 +1,12 @@
 package com.dspajic.marketplace.dao;
 
+import com.dspajic.marketplace.dto.edituser.EditUserDto;
 import com.dspajic.marketplace.entities.UserDetails;
 import com.dspajic.marketplace.mappers.UserDetailsRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +18,9 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
     JdbcTemplate jdbcTemplate;
 
     UserDetailsRowMapper rowMapper = new UserDetailsRowMapper();
+
+    @Autowired
+    NamedParameterJdbcTemplate namedJdbc;
 
     @Override
     public List<UserDetails> getAllUserDetailss() {
@@ -142,4 +148,33 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                 """;
         return jdbcTemplate.queryForObject(sql, rowMapper, email);
     }
+
+    @Override
+    public Integer editUser(Integer userId, EditUserDto details) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("first_name", details.getFirstName());
+        params.addValue("last_name", details.getLastName());
+        params.addValue("gender", details.getGender());
+        params.addValue("birth_date", details.getBirthDate());
+        params.addValue("phone_number", details.getPhoneNumber());
+        params.addValue("city_id", details.getCityId());
+        params.addValue("user_id", userId);
+
+        String sql = """
+                UPDATE user_details ud
+                JOIN users u ON u.user_details_id = ud.user_details_id
+                SET
+                    ud.first_name   = :first_name,
+                    ud.last_name    = :last_name,
+                    ud.gender       = :gender,
+                    ud.birth_date   = :birth_date,
+                    ud.phone_number = :phone_number,
+                    ud.city_id      = :city_id
+                WHERE u.user_id = :user_id;
+                """;
+
+        return namedJdbc.update(sql, params);
+    }
+
+
 }

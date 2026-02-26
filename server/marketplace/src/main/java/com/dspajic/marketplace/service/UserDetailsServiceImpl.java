@@ -1,6 +1,7 @@
 package com.dspajic.marketplace.service;
 
 import com.dspajic.marketplace.dao.UserDetailsRepository;
+import com.dspajic.marketplace.dto.edituser.EditUserDto;
 import com.dspajic.marketplace.entities.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     @Override
     public UserDetails getUserDetailsByEmail(String email) {
         return repository.getUserDetailsByEmail(email);
+    }
+
+    @Override
+    public Integer editUser(Integer userId, EditUserDto details) {
+        return repository.editUser(userId, details);
     }
 }
