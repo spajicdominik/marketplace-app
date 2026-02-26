@@ -23,11 +23,6 @@ const items: MenuProps["items"] = [
     label: "Profile",
   },
   {
-    key: "2",
-    label: "Settings",
-    icon: <SettingOutlined />,
-  },
-  {
     type: "divider",
   },
   {
@@ -52,7 +47,6 @@ export default function AuthBar() {
     if (key === '1') {
       navigate('/profile');
     }
-    // if (key === '2') navigate('/settings');
   };
 
   const userRoles = useSelector(
