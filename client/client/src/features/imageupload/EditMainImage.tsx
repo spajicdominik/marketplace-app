@@ -74,7 +74,13 @@ const EditMainImage = forwardRef<EditImageHandle, {}>((_props, ref) => {
       console.log("File from formData: ", f);
     }
     try {
-      const response = await axios.post("http://localhost:8080/api/uploads/images", formData);
+      const token = localStorage.getItem("access_token");
+
+      const response = await axios.post("http://localhost:8080/api/uploads/images", formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
       const payload = response.data;
       setFileList([]);
       message.success("main image updated successfully.");

@@ -26,14 +26,33 @@ export default function UserPreview({ userDetails, postId }: { userDetails: User
         post_id: postId
     }
 
+    const token = localStorage.getItem("access_token");
+
     useEffect(() => {
         if (!postId || !userId) return;
         axios.get(`http://localhost:8080/api/posts/is-favourite?post_id=${postId}&user_id=${userId}`).then(res => setIsFavorited(res.data));
     }, []);
 
     const toggleFavourite = () => {
+        if (!token) {
+            toast.error('Please log in to add to favourites!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return;
+        }
         if (!isFavorited) {
-            axios.post(`http://localhost:8080/api/posts/favourites`, favourite);
+            axios.post(`http://localhost:8080/api/posts/favourites`, favourite, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
 
             toast.success('Added to favourites!', {
                 position: "top-center",
@@ -49,7 +68,10 @@ export default function UserPreview({ userDetails, postId }: { userDetails: User
         }
         else {
             axios.delete(`http://localhost:8080/api/posts/favourites`, {
-                data: favourite
+                data: favourite,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
             });
             toast.error('Removed from favourites!', {
                 position: "top-center",

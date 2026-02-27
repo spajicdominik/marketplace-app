@@ -2,6 +2,7 @@ package com.dspajic.marketplace.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,19 +42,19 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api/newPost").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/postImages").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/postImages/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"/api/postImages/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/postImages/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/uploads/images").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/ws/**").permitAll()
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/api/category/**").permitAll()
-                        .requestMatchers("/api/users/**").permitAll()
-                        .requestMatchers("/api/subcategories/**").permitAll()
-                        .requestMatchers("/api/subcategoryItems/**").permitAll()
-                        .requestMatchers("/api/products/**").permitAll()
-                        .requestMatchers("/api/posts/**").permitAll()
-                        .requestMatchers("/api/brands/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/postDetails/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/postDetails/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/postImages/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/posts/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/posts/favourites").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/posts/favourites").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/userDetails/edit").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/uploads/**").permitAll()
-                        .requestMatchers("/api/uploads/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->

@@ -155,7 +155,7 @@ export default function EditUser() {
     };
 
     const editUser = async () => {
-        const payload : EditUserDto = {
+        const payload: EditUserDto = {
             firstName: currentFirstName!,
             lastName: currentLastName!,
             gender: currentGender!,
@@ -165,8 +165,14 @@ export default function EditUser() {
         };
 
         try {
-            if (validate()){
-                await axios.put(`http://localhost:8080/api/userDetails/edit/${userId}`, payload);
+            const token = localStorage.getItem("access_token");
+
+            if (validate()) {
+                await axios.put(`http://localhost:8080/api/userDetails/edit/${userId}`, payload, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
                 dispatch(editUserSlice.actions.resetEditUser());
                 console.log("Edited user:", userId);
                 navigate(`/users/${userId}`);

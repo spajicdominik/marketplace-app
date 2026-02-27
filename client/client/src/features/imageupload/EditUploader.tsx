@@ -44,7 +44,7 @@ const EditUploader = forwardRef<EditUploaderHandle, {}>((props, ref) => {
   const [previewTitle, setPreviewTitle] = useState<string>("");
 
   const postImages = useFetchNonMainImages(currentPostId);
-  
+
   const getOriginalImages = (allImages: PostDetailsImages[]): UploadFile[] => {
     const originalImages: UploadFile[] = [];
     for (const image of allImages) {
@@ -88,8 +88,8 @@ const EditUploader = forwardRef<EditUploaderHandle, {}>((props, ref) => {
       {
         uid: file.uid,
         name: file.name,
-        status: "done", 
-        thumbUrl, 
+        status: "done",
+        thumbUrl,
         originFileObj: file as RcFile,
       },
     ]);
@@ -109,6 +109,7 @@ const EditUploader = forwardRef<EditUploaderHandle, {}>((props, ref) => {
     try {
       setUploading(true);
 
+      const token = localStorage.getItem("access_token");
       const original = originalImagesRef.current;
       const currentExisting = fileList.filter((f) => !f.originFileObj);
 
@@ -119,60 +120,70 @@ const EditUploader = forwardRef<EditUploaderHandle, {}>((props, ref) => {
       const added = fileList.filter((f) => !!f.originFileObj);
 
       for (const img of removed) {
-        await axios.delete(`http://localhost:8080/api/postImages/post-main?post_image_id=${img.uid}`,);
+        await axios.delete(`http://localhost:8080/api/postImages/post-main?post_image_id=${img.uid}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
       }
 
-      if (added.length > 0){
+      if (added.length > 0) {
         const formData = new FormData();
         added.forEach((file) => {
-            const raw = file.originFileObj as RcFile | undefined;
-            if (raw) {
-                formData.append("file", raw);
-            }
+          const raw = file.originFileObj as RcFile | undefined;
+          if (raw) {
+            formData.append("file", raw);
+          }
         });
         formData.append("postId", String(currentPostId));
 
-        const res = await axios.post("http://localhost:8080/api/uploads/images", formData);
+        
 
-       if(res.status != 200) {
-        throw new Error(res.statusText || `HTTP ${res.statusText}`);
-       }
+        const res = await axios.post("http://localhost:8080/api/uploads/images", formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
 
-       const payload = res.data
-       const responseArray = Array.isArray(payload) ? payload : [payload];
-
-       for (var response of responseArray) {
-        const imageUrl = response?.url;
-        const image: PostImage = {
-          url: imageUrl,
-          postId: currentPostId,
-          isMain: false,
-          isActive: true
-        };
-        usePostImage(image);
-      }
-
-      const nextList = fileList.map((file, idx) => {
-        const resp = responseArray[idx] || {};
-        return {
-          ...file,
-          status: "done",
-          url: resp.url, 
-          thumbUrl: file.thumbUrl || resp.url,
-          response: resp,
-        } as UploadFile;
-      });
-      setFileList(nextList);
-      message.success("Images edited successfully.");
-      }
-    } 
-    catch (err: any) {
-          console.error(err);
-          message.error(err.message || "Edit failed.");
-        } finally {
-          setUploading(false);
-          setFileList([]);
+        if (res.status != 200) {
+          throw new Error(res.statusText || `HTTP ${res.statusText}`);
         }
+
+        const payload = res.data
+        const responseArray = Array.isArray(payload) ? payload : [payload];
+
+        for (var response of responseArray) {
+          const imageUrl = response?.url;
+          const image: PostImage = {
+            url: imageUrl,
+            postId: currentPostId,
+            isMain: false,
+            isActive: true
+          };
+          usePostImage(image);
+        }
+
+        const nextList = fileList.map((file, idx) => {
+          const resp = responseArray[idx] || {};
+          return {
+            ...file,
+            status: "done",
+            url: resp.url,
+            thumbUrl: file.thumbUrl || resp.url,
+            response: resp,
+          } as UploadFile;
+        });
+        setFileList(nextList);
+        message.success("Images edited successfully.");
+      }
+    }
+    catch (err: any) {
+      console.error(err);
+      message.error(err.message || "Edit failed.");
+    } finally {
+      setUploading(false);
+      setFileList([]);
+    }
   };
 
   useImperativeHandle(ref, () => ({

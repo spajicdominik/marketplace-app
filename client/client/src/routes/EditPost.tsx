@@ -272,7 +272,13 @@ export default function EditPost() {
 
         const imageBody = await editImageRef.current?.upload();
         if (imageBody != null) {
-          await axios.delete(`http://localhost:8080/api/postImages/main-image?post_id=${postId}`);
+          const token = localStorage.getItem("access_token");
+
+          await axios.delete(`http://localhost:8080/api/postImages/main-image?post_id=${postId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          });
           const imageUrl = Array.isArray(imageBody)
             ? imageBody?.[0]?.url
             : undefined;
@@ -304,7 +310,12 @@ export default function EditPost() {
 
   const deletePost = async () => {
     try {
-      await axios.delete(`http://localhost:8080/api/posts/${postId}`);
+      const token = localStorage.getItem("access_token");
+      await axios.delete(`http://localhost:8080/api/posts/${postId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
       navigate("/deletion-success");
       toast.success(`Succesifuly deleted post with id: ${postId}`);
     }
