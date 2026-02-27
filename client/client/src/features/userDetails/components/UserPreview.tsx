@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import { Bounce } from 'react-toastify';
 import { useSelector } from "react-redux";
 import type { RootState } from '../../../store';
+import useFetchUserImage from '../../../hooks/userDetails/useFetchUserImage';
 
 const { Meta } = Card;
 
@@ -20,6 +21,7 @@ export default function UserPreview({ userDetails, postId }: { userDetails: User
     const email = userDetails?.email;
     const userUrl = `/users/${userDetails?.userId}`
     const userId = useSelector((state: RootState) => state.auth.user?.user_id);
+    const userImage = useFetchUserImage(userDetails?.userId);
 
     const favourite: FavouritePost = {
         user_id: userId,
@@ -96,7 +98,8 @@ export default function UserPreview({ userDetails, postId }: { userDetails: User
                 <img
                     draggable={false}
                     alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    src={userImage?.image_url}
+                    className='h-75'
                 />
             }
             actions={[

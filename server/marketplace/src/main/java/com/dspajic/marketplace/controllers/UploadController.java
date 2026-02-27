@@ -22,4 +22,12 @@ public class UploadController {
             @RequestParam("postId") String postId,
             @RequestParam("file") List<MultipartFile> files
     ) { return uploadService.uploadImage(files, postId);}
+
+    @PostMapping("/profile")
+    public ResponseEntity<?> uploadProfileImage(
+            @RequestParam("userId") String userId,
+            @RequestParam("file") List<MultipartFile> profileImage
+    ) {
+        return uploadService.uploadProfileImage(profileImage, userId);
+    }
 }

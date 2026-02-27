@@ -6,6 +6,10 @@ import com.dspajic.marketplace.mappers.dto.UserDisplayDtoRowMapper;
 import com.dspajic.marketplace.mappers.UsersRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +26,9 @@ public class UsersRepositoryImpl implements UsersRepository{
     UserDisplayDtoRowMapper userDisplayDtoRowMapper = new UserDisplayDtoRowMapper();
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    NamedParameterJdbcTemplate namedJdbc;
 
     @Override
     public List<Users> getAllUserss() {
@@ -59,6 +66,15 @@ public class UsersRepositoryImpl implements UsersRepository{
 
     @Override
     public Integer addUsers(Users entity) {
+        String encodedPassword = passwordEncoder.encode(entity.getPassword());
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("username", entity.getUsername());
+        params.addValue("password", encodedPassword);
+        params.addValue("enabled", entity.getEnabled());
+        params.addValue("user_details_id", entity.getUserDetailsId());
+        params.addValue("created_at", entity.getCreatedAt());
+
         String sql = """
                 INSERT INTO
                 users
@@ -70,17 +86,17 @@ public class UsersRepositoryImpl implements UsersRepository{
                 created_at
                 )
                 VALUES
-                (?, ?, ?, ?, ?)
+                (:username, :password, :enabled, :user_details_id, :created_at)
                 """;
-        String encodedPassword = passwordEncoder.encode(entity.getPassword());
-        return jdbcTemplate.update(
-                sql,
-                entity.getUsername(),
-                        encodedPassword,
-                        entity.getEnabled(),
-                        entity.getUserDetailsId(),
-                        entity.getCreatedAt()
-        );
+        try {
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            namedJdbc.update(sql,params, keyHolder, new String[]{"user_id"});
+            return keyHolder.getKey() != null ? keyHolder.getKey().intValue() : null;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override

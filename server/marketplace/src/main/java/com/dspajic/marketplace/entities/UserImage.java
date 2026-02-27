@@ -1,4 +1,4 @@
-package com.dspajic.marketplace.entities.chat;
+package com.dspajic.marketplace.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,21 +15,24 @@ import java.time.LocalDateTime;
 @Builder
 
 @Entity
-@Table ( name = "chat_conversation")
-public class ChatConversation {
+@Table(name = "user_image")
+public class UserImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "conversation_id" )
-    private Integer id;
+    @Column(name = "user_image_id")
+    private Integer user_image_id;
 
-    @Column( name = "user1_id" )
-    private Integer user1_id;
+    @Column(name = "user_details_id")
+    private Integer user_details_id;
 
-    @Column( name = "user2_id" )
-    private Integer user2_id;
+    @Column(name = "image_url")
+    private String image_url;
+
+    @Column(name = "status")
+    private Boolean status;
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 }

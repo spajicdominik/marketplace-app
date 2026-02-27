@@ -84,7 +84,8 @@ public class UsersServiceImpl implements UsersService{
         UserDetails newUserDetails = userDetailsService.getUserDetailsByEmail(userDto.getEmail());
         user.setUserDetailsId(newUserDetails.getId());
 
-        addUsers(user);
+        Integer newUserId = addUsers(user);
+        user.setId(newUserId);
 
         UserVerification userVerification = new UserVerification();
         String token = UUID.randomUUID().toString();

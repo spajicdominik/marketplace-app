@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../store";
 import {Button} from "antd";
 import { useNavigate } from "react-router-dom";
+import useFetchUserImage from "../../hooks/userDetails/useFetchUserImage";
 
 export default function UserInfo({ userDetails }: { userDetails: UserDetails | undefined }) {
     const username = userDetails?.username;
@@ -26,10 +27,12 @@ export default function UserInfo({ userDetails }: { userDetails: UserDetails | u
         (state: RootState) => state.auth.user?.user_id
     )
 
+    const userImage = useFetchUserImage(userDetails?.userId);
+
     return (
         <div className="user-info bg-white text-black p-4 my-4 shadow-xl rounded-2xl h-fit w-fit">
             <div className="basic-info flex">
-                <Avatar shape="square" size={120} icon={<UserOutlined />} />
+                <Avatar shape="square" size={120} src={userImage?.image_url} />
                 <div className="p-4">
                     <h1>{username}</h1>
                     <p>Registered since: {dateCreated}</p>

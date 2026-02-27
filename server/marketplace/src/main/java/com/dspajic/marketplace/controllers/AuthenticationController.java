@@ -55,10 +55,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserRegisterDto userRegisterDto) {
+    public Integer registerUser(@RequestBody UserRegisterDto userRegisterDto) {
         Users user = userService.registerNewUser(userRegisterDto);
         userService.addUserAuthority(user.getUsername());
-        return ResponseEntity.ok("User registered successifully! Check your email to confirm registration.");
+        return user.getId();
     }
 }
 

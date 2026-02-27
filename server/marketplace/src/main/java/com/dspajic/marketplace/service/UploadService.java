@@ -9,4 +9,7 @@ import java.util.List;
 public interface UploadService {
     ResponseEntity<?> uploadImage(List<MultipartFile> files, String postId);
     ResponseEntity<?> archiveImage(Integer postId, String imageUrl);
+
+    ResponseEntity<?> uploadProfileImage(List<MultipartFile> profileImage, String userId);
+    ResponseEntity<?> archiveProfileImage(Integer userId, String imageUrl);
 }

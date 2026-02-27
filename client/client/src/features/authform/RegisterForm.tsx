@@ -12,6 +12,11 @@ import newPostSlice from "../../store/newPostSlice";
 import mapCountriesToOptions from "../../hooks/newPost/location/mapCountriesToOptions";
 import mapCountiesToOptions from "../../hooks/newPost/location/mapCountiesToOptions";
 import mapCitiesToOptions from "../../hooks/newPost/location/mapCitiesToOptions";
+import ProfileImage from "../imageupload/ProfileImage";
+import { useRef } from "react";
+import type { ProfileImageHandle } from "../imageupload/ProfileImage";
+import usePostProfileImage from "../../hooks/usePostProfileImage";
+import type { ProfileImg } from "../../types/ProfileImg";
 
 const { Option } = Select;
 
@@ -45,7 +50,9 @@ export default function RegisterForm() {
     dispatch(newPostSlice.actions.setCityId(id));
   };
 
-  const onFinish = (values: any) => {
+  const profileImageRef = useRef<ProfileImageHandle>(null);
+
+  const onFinish = async (values: any) => {
     const payload: RegisterUserDto = {
       email: values.email,
       username: values.username,
@@ -58,7 +65,22 @@ export default function RegisterForm() {
       cityId: Number(values.City)
     };
     console.log(payload);
-    sendRegisterForm(payload);
+
+    const user_id = await sendRegisterForm(payload);
+    console.log("user id: ", user_id);
+
+    const imageBody = await profileImageRef.current?.upload(user_id);
+    console.log("image body: ", imageBody);
+    const imageUrl = Array.isArray(imageBody) ? imageBody?.[0]?.url : undefined;
+    console.log("image url: ", imageUrl);
+
+    const profileImage: ProfileImg = {
+      image_url: imageUrl
+    }
+    console.log(profileImage);
+
+    usePostProfileImage(profileImage, user_id);
+
     dispatch(newPostSlice.actions.resetNewPost());
     navigate("/register-done");
   };
@@ -206,6 +228,10 @@ export default function RegisterForm() {
               placeholder="Select city"
             />
           </Form.Item>
+          <div>
+            <h1>Profile image upload</h1>
+            <ProfileImage></ProfileImage>
+          </div>
 
           <Form.Item>
             <Button type="primary" htmlType="submit" block>
