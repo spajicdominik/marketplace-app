@@ -81,5 +81,17 @@ public class UserImageRepositoryImpl implements UserImageRepository{
 
     @Override
     public void deleteUserImage(Integer userId) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("userId", userId);
+
+        String sql = """
+                UPDATE user_image ui
+                JOIN user_details ud ON ud.user_details_id = ui.user_details_id
+                JOIN users u ON u.user_details_id = ud.user_details_id
+                SET ui.status = false
+                WHERE u.user_id = :userId;
+                """;
+
+        namedJdbc.update(sql, params);
     }
 }

@@ -230,7 +230,7 @@ export default function RegisterForm() {
           </Form.Item>
           <div>
             <h1>Profile image upload</h1>
-            <ProfileImage></ProfileImage>
+            <ProfileImage ref={profileImageRef}></ProfileImage>
           </div>
 
           <Form.Item>

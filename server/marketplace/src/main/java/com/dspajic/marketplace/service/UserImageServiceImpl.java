@@ -10,6 +10,9 @@ public class UserImageServiceImpl implements UserImageService{
     @Autowired
     UserImageRepository repository;
 
+    @Autowired
+    UploadService uploadService;
+
     @Override
     public UserImage getUserImage(Integer userId) {
         return repository.getUserImage(userId);
@@ -18,5 +21,12 @@ public class UserImageServiceImpl implements UserImageService{
     @Override
     public Integer addUserImage(Integer userId, UserImage image) {
         return repository.addUserImage(image, userId);
+    }
+
+    @Override
+    public void deleteUserImage(Integer userId) {
+        String imageUrl = getUserImage(userId).getImage_url();
+        uploadService.archiveProfileImage(userId, imageUrl);
+        repository.deleteUserImage(userId);
     }
 }

@@ -3,7 +3,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Button, message, Upload } from "antd";
 import type { GetProp, UploadFile, UploadProps } from "antd";
 import axios from "axios";
-import {Image} from "antd";
+import { Image } from "antd";
 import type { UploadDto } from "../../types/UploadDto";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
@@ -19,14 +19,19 @@ const ProfileImage = forwardRef<ProfileImageHandle, {}>((_props, ref) => {
   const handleUpload = async (userId: number): Promise<UploadDto[]> => {
     const formData = new FormData();
     fileList.forEach((file) => {
-      formData.append("file", file as FileType);
+      const raw = file.originFileObj as File | undefined;
+      if (raw) formData.append("file", raw);
     });
     formData.append("userId", String(userId));
 
     setUploading(true);
     try {
-      const response = await axios.post("http://localhost:8080/api/uploads/profile", formData);
-      const payload : UploadDto[] = response.data;
+      const response = await axios.post(
+        "http://localhost:8080/api/uploads/profile",
+        formData,
+      );
+      const payload: UploadDto[] = response.data;
+      console.log(payload);
       setFileList([]);
       return payload;
     } catch (error) {
@@ -38,29 +43,28 @@ const ProfileImage = forwardRef<ProfileImageHandle, {}>((_props, ref) => {
   };
 
   const myProps: UploadProps = {
-      onRemove: (file) => {
-        const index = fileList.indexOf(file);
-        const newFileList = fileList.slice();
-        newFileList.splice(index, 1);
-        setFileList(newFileList);
-      },
-      beforeUpload: (file) => {
-        const previewUrl = URL.createObjectURL(file);
-  
-        setFileList([
-          {
-            uid: file.uid,
-            name: file.name,
-            status: "done",
-            thumbUrl: previewUrl,
-            originFileObj: file,
-          },
-        ]);
-        return false;
-      },
-      fileList,
-    };
-  
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      const previewUrl = URL.createObjectURL(file);
+
+      setFileList([
+        {
+          uid: file.uid,
+          name: file.name,
+          status: "done",
+          thumbUrl: previewUrl,
+          originFileObj: file,
+        },
+      ]);
+      return false;
+    },
+    fileList,
+  };
 
   useImperativeHandle(ref, () => ({
     upload: handleUpload,

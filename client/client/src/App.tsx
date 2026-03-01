@@ -10,11 +10,11 @@ import Profile from "./routes/Profile";
 import Main from "./routes/Main";
 import PostDetailsPage from "./routes/PostDetailsPage";
 import UserDetailsPage from './routes/UserDetailsPage';
-import TestSocket from './routes/TestSocket';
 import EditPost from './routes/EditPost';
 import DeletionSuccess from './routes/DeletionSuccess';
 import EditSuccess from './routes/EditSuccess';
 import EditUser from './routes/EditUser';
+import ImageTesting from './routes/ImageTesting';
 
 function App() {
  const router = createBrowserRouter([
@@ -38,7 +38,8 @@ function App() {
         { path: "/edit-post/:postId", element: <EditPost/>},
         { path: "/deletion-success", element: <DeletionSuccess/>},
         { path: "/edit-success", element: <EditSuccess/>},
-        { path: "/edit-user/:userId", element: <EditUser/>}
+        { path: "/edit-user/:userId", element: <EditUser/>},
+        { path: "/image-testing", element: <ImageTesting/> }
       ]
     }
 ])

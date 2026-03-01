@@ -6,4 +6,6 @@ public interface UserImageService {
     UserImage getUserImage(Integer userId);
 
     Integer addUserImage(Integer userId, UserImage image);
+
+    void deleteUserImage(Integer userId);
 }

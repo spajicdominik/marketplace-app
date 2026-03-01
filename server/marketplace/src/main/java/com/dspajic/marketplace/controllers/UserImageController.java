@@ -21,4 +21,9 @@ public class UserImageController {
     public Integer addUserImage(@PathVariable Integer user_id, @RequestBody UserImage image) {
         return service.addUserImage(user_id, image);
     }
+
+    @DeleteMapping("/user-image/{user_id}")
+    public void deleteUserImage(@PathVariable Integer user_id) {
+        service.deleteUserImage(user_id);
+    }
 }
