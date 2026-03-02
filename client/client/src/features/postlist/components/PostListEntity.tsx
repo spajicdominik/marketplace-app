@@ -14,7 +14,7 @@ interface PostListEntityProps {
 const PostListEntity: React.FC<PostListEntityProps> = ({ post }) => {
   const { id, title, description, price, currency, createdAt } = post;
 
-  const imageUrl = useFetchMainImage(id);
+  const {imageUrl, loading, error} = useFetchMainImage(id);
   const navigationLink = `/post/${id}`;
 
   const formatedDate = FormatDate(createdAt);
@@ -28,7 +28,7 @@ const PostListEntity: React.FC<PostListEntityProps> = ({ post }) => {
           <img
             draggable={false}
             alt="example"
-            src={imageUrl}
+            src={ loading ? "http://localhost:8080/uploads/misc/loading.webp" : imageUrl}
             className="h-90 object-scale-down bg-neutral-900"
           />
         }
