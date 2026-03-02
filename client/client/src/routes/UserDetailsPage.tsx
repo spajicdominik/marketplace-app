@@ -9,7 +9,7 @@ export default function UserDetailsPage() {
     const userDetails = useFetchUserDetails(userId);
 
     return (
-        <div className="flex justify-center gap-10">
+        <div className="flex flex-col justify-center gap-10 my-10 mx-5">
             <UserInfo userDetails={userDetails} />
             <UserPosts userId={userId} userDetails={userDetails}/>
         </div>

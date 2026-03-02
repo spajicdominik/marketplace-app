@@ -14,6 +14,6 @@ public interface ProductRepository {
     void deleteProduct(Integer id);
     List<ProductMenuDto> getProductsBySubcategoryId(Integer id);
 
-    List<ProductDto> getProductsByBrandId(Integer id);
+    List<ProductDto> getProductsByBrandId(Integer id, Integer subcategory_item_id);
 
 }

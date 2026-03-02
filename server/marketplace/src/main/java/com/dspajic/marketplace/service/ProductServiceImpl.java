@@ -40,8 +40,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<ProductDto> getProductsByBrandId(Integer id) {
-        return repository.getProductsByBrandId(id);
+    public List<ProductDto> getProductsByBrandId(Integer id, Integer subcategory_item_id) {
+        return repository.getProductsByBrandId(id, subcategory_item_id);
     }
 
 }

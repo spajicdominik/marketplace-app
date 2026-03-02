@@ -122,7 +122,7 @@ public class ProductRepositoryImpl implements ProductRepository{
     }
 
     @Override
-    public List<ProductDto> getProductsByBrandId(Integer id) {
+    public List<ProductDto> getProductsByBrandId(Integer id, Integer subcategory_item_id) {
         String sql = """
                 SELECT
                 product_id,
@@ -131,7 +131,9 @@ public class ProductRepositoryImpl implements ProductRepository{
                 product
                 WHERE
                 brand_id = ?
+                AND
+                subcategory_item_id = ?    
                 """;
-        return jdbcTemplate.query(sql, rowListDtoMapper, id);
+        return jdbcTemplate.query(sql, rowListDtoMapper, id, subcategory_item_id);
     }
 }

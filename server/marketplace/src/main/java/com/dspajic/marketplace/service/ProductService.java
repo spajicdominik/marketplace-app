@@ -12,6 +12,6 @@ public interface ProductService {
     Integer updateProduct(Product entity);
     void deleteProduct(Integer id);
 
-    List<ProductDto> getProductsByBrandId(Integer id);
+    List<ProductDto> getProductsByBrandId(Integer id, Integer subcategory_item_id);
 
 }

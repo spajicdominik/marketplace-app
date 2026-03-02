@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/brand/{id}")
-    public List<ProductDto> getProductByBrandId(@PathVariable("id") Integer id) {
-        return service.getProductsByBrandId(id);
+    public List<ProductDto> getProductByBrandId(@PathVariable("id") Integer id, @RequestParam Integer subcategory_item_id) {
+        return service.getProductsByBrandId(id, subcategory_item_id);
     }
 }

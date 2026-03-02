@@ -154,7 +154,7 @@ export default function EditPost() {
   const subcategories = useFetchSubcategories(currentCategoryId);
   const productTypes = useFetchProductTypes(currentSubcategoryId);
   const brands = useFetchBrands(currentProductTypeId);
-  const products = useFetchProducts(currentBrandId);
+  const products = useFetchProducts(currentBrandId, currentProductTypeId);
   const countries = useFetchCountries();
   const counties = useFetchCounties(currentCountryId);
   const cities = useFetchCities(currentCountyId);

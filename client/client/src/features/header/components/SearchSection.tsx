@@ -112,7 +112,7 @@ export default function SearchSection() {
   return (
     <div className="flex justify-between p-5 bg-white">
       <NavLink to={"/"}>
-        <motion.img src="/logo.svg" alt="" className="w-72 cursor-pointer" />
+        <motion.img src="/fina-logo.png" alt="" className="w-80 cursor-pointer mt-4 ml-4" />
       </NavLink>
       <AutoComplete options={options} onSearch={onSearch}>
         <div className="w-140">

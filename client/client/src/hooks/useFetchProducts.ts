@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { Product } from "../types/Product";
 
-export default function useFetchProducts(currentBrandId : Number | undefined ){
+export default function useFetchProducts(currentBrandId : Number | undefined , currentProductTypeId : Number | undefined){
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -12,7 +12,7 @@ export default function useFetchProducts(currentBrandId : Number | undefined ){
                     if (currentBrandId == undefined){
                         return [];
                     }
-                    const response = await fetch(`http://localhost:8080/api/products/brand/${currentBrandId}`);
+                    const response = await fetch(`http://localhost:8080/api/products/brand/${currentBrandId}?subcategory_item_id=${currentProductTypeId}`);
     
                     if (!response.ok) {
                         throw new Error(`HTTP error: ${response.status}`);

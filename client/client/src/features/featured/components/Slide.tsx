@@ -3,11 +3,17 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { categoryActions } from "../../../store/category";
 
-export default function Slide( {bgUrl, title, desc, button, link, category_id} : {bgUrl : string, title : string, desc : string, button : string, link : string, category_id : number}) {
+export default function Slide({ bgUrl, title, desc, button, link, category_id }: { bgUrl: string, title: string, desc: string, button: string, link: string, category_id: number }) {
   const dispatch = useDispatch();
 
   return (
-    <div style = {{ backgroundImage: `url(${bgUrl})` }} className="flex items-center justify-between px-12 py-16 min-h-130">
+    <div style={{
+      backgroundImage: `url(${bgUrl})`,
+      backgroundSize: 'cover',         
+      backgroundPosition: 'right 47%', 
+      backgroundRepeat: 'no-repeat'
+
+    }} className="flex items-center justify-between px-12 py-16 min-h-130">
       {/* Left content */}
       <div className="max-w-lg">
         <h2 className="text-4xl font-bold text-white">

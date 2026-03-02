@@ -106,7 +106,6 @@ export default function UserPreview({ userDetails, postId }: { userDetails: User
                 <div onClick={toggleFavourite}>
                     {isFavorited ? <HeartFilled style={{ color: "red" }} /> : <HeartOutlined />}
                 </div>,
-                <CommentOutlined key="contact-user" />,
                 <NavLink to={userUrl}>
                     <UserOutlined key="info-user" />
                 </NavLink>

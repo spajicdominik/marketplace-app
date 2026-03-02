@@ -21,7 +21,7 @@ export type CarouselItems = {
 
 const items: CarouselItems[] = [
   {
-    bgUrl : "https://picsum.photos/seed/24/1700/600/",
+    bgUrl : "http://localhost:8080/uploads/main-page/electronics.png",
     title : "Discover electronics!",
     desc : "Find your perfect electronic device.",
     button : "Start now!",
@@ -29,7 +29,7 @@ const items: CarouselItems[] = [
     category_id : 1
   },
   {
-    bgUrl : "https://picsum.photos/seed/36/1700/600/",
+    bgUrl : "http://localhost:8080/uploads/main-page/gaming.png",
     title : "Start gaming!",
     desc : "Choose from a wide variety of consoles.",
     button : "Start searching!",
@@ -37,7 +37,7 @@ const items: CarouselItems[] = [
     category_id : 3
   },
   {
-    bgUrl : "https://picsum.photos/seed/21/1700/600/",
+    bgUrl : "http://localhost:8080/uploads/main-page/home-appliances.png",
     title : "Everything for your home!",
     desc : "Get your home to another level with new home appliances",
     button : "Discover more!",
