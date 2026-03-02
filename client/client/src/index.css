@@ -20,11 +20,11 @@ body {
   margin: 0;
 }
 .app {
-  min-height: 100vh;           /* full viewport height */
+  min-height: 100vh;          
   display: flex;               
-  flex-direction: column;      /* header, main, footer in a column */
+  flex-direction: column;      
 }
 
 .app main {
-  flex: 1;                     /* takes remaining space, pushes footer down */
+  flex: 1;                   
 }
