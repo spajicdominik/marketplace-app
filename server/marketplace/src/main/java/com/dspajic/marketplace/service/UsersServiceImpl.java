@@ -77,7 +77,6 @@ public class UsersServiceImpl implements UsersService{
             throw new IllegalArgumentException("Username already exists!");
         }
 
-
         UserDetails userDetails = new UserDetails();
         userDetails.setEmail(userDto.getEmail());
         userDetails.setFirstName(userDto.getFirstName());

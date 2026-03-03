@@ -6,12 +6,14 @@ import com.dspajic.marketplace.dto.auth.JwtResponseDto;
 import com.dspajic.marketplace.dto.auth.UserRegisterDto;
 import com.dspajic.marketplace.entities.Users;
 import com.dspajic.marketplace.service.UsersService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -58,7 +60,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDto userRegisterDto) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegisterDto userRegisterDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors().getFirst().getDefaultMessage());
+        }
         try {
             Users user = userService.registerNewUser(userRegisterDto);
             userService.addUserAuthority(user.getUsername());
