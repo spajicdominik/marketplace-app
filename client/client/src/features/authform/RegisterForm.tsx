@@ -17,6 +17,7 @@ import { useRef } from "react";
 import type { ProfileImageHandle } from "../imageupload/ProfileImage";
 import usePostProfileImage from "../../hooks/usePostProfileImage";
 import type { ProfileImg } from "../../types/ProfileImg";
+import { toast, ToastContainer } from "react-toastify";
 
 const { Option } = Select;
 
@@ -66,6 +67,11 @@ export default function RegisterForm() {
     };
     console.log(payload);
 
+    if (!profileImageRef.current?.hasImage()) {
+      toast.error("Please upload a profile image!");
+      return;
+    }
+
     const user_id = await sendRegisterForm(payload);
     console.log("user id: ", user_id);
 
@@ -90,6 +96,18 @@ export default function RegisterForm() {
       <div className="form block bg-white w-1/2">
         <h1 className="p-5 text-5xl">Register</h1>
 
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <Form
           form={form_var}
           layout="vertical"

@@ -10,6 +10,7 @@ type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 export type ProfileImageHandle = {
   upload: (postId: number) => Promise<UploadDto[]>;
+  hasImage: () => boolean;
 };
 
 const ProfileImage = forwardRef<ProfileImageHandle, {}>((_props, ref) => {
@@ -68,6 +69,7 @@ const ProfileImage = forwardRef<ProfileImageHandle, {}>((_props, ref) => {
 
   useImperativeHandle(ref, () => ({
     upload: handleUpload,
+    hasImage: () => fileList.length > 0
   }));
 
   const previewSrc = fileList[0]?.url || fileList[0]?.thumbUrl;

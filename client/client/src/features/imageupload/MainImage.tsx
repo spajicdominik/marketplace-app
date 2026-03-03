@@ -8,6 +8,7 @@ type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 export type MainImageHandle = {
   upload: (postId : number) => Promise<unknown>;
+  hasImage: () => boolean;
 };
 
 const MainImage = forwardRef<MainImageHandle, {}>((_props, ref) => {
@@ -57,6 +58,7 @@ const MainImage = forwardRef<MainImageHandle, {}>((_props, ref) => {
 
     useImperativeHandle(ref, () => ({
       upload: handleUpload,
+      hasImage: () => fileList.length > 0
     }));
 
     return (

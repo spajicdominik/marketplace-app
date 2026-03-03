@@ -210,28 +210,32 @@ export default function NewPost() {
 
     try {
       if (validate()) {
+        if (!mainImageRef.current?.hasImage()) {
+          toast.error("Please upload a main image!");
+          return;
+        }
         const postId = await useNewPost(payload);
         dispatch(newPostSlice.actions.setPostId(postId));
 
         const imageBody = await mainImageRef.current?.upload(postId);
         const imageUrl = Array.isArray(imageBody) ? imageBody?.[0]?.url : undefined;
 
-        const mainImage : PostImage = {
-          url : imageUrl,
-          postId : postId,
-          isMain : true,
+        const mainImage: PostImage = {
+          url: imageUrl,
+          postId: postId,
+          isMain: true,
           isActive: true
         }
         usePostImage(mainImage);
-        
+
         uploaderRef.current?.upload(postId);
-        
+
         dispatch(newPostSlice.actions.resetNewPost());
         console.log("Created post:", postId);
         console.log("Main image: ", Array.isArray(imageUrl) ? imageUrl?.[0]?.url : undefined);
         navigate("/upload-success");
       }
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const currentUser = useSelector((state: RootState) => state.auth.user);
