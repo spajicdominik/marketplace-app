@@ -4,6 +4,7 @@ import com.dspajic.marketplace.dto.edituser.EditUserDto;
 import com.dspajic.marketplace.entities.UserDetails;
 import com.dspajic.marketplace.mappers.UserDetailsRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -146,7 +147,13 @@ public class UserDetailsRepositoryImpl implements UserDetailsRepository{
                 WHERE
                 email = ?
                 """;
-        return jdbcTemplate.queryForObject(sql, rowMapper, email);
+        try {
+            return jdbcTemplate.queryForObject(sql, rowMapper, email);
+        }
+        catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+
     }
 
     @Override

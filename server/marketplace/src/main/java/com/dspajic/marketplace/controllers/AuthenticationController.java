@@ -55,10 +55,15 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public Integer registerUser(@RequestBody UserRegisterDto userRegisterDto) {
-        Users user = userService.registerNewUser(userRegisterDto);
-        userService.addUserAuthority(user.getUsername());
-        return user.getId();
+    public ResponseEntity<?> registerUser(@RequestBody UserRegisterDto userRegisterDto) {
+        try {
+            Users user = userService.registerNewUser(userRegisterDto);
+            userService.addUserAuthority(user.getUsername());
+            return ResponseEntity.ok(user.getId());
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
 

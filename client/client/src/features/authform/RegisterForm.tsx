@@ -54,6 +54,7 @@ export default function RegisterForm() {
   const profileImageRef = useRef<ProfileImageHandle>(null);
 
   const onFinish = async (values: any) => {
+    try {
     const payload: RegisterUserDto = {
       email: values.email,
       username: values.username,
@@ -89,7 +90,11 @@ export default function RegisterForm() {
 
     dispatch(newPostSlice.actions.resetNewPost());
     navigate("/register-done");
-  };
+  }
+  catch (error : any) {
+    toast.error(error.message);
+  }
+};
 
   return (
     <div className="login-form flex text-black w-1/2">

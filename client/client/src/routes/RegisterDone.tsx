@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 export default function RegisterDone() {
     return (
-        <div className="bg-white text-black flex flex-col items-center p-20">
+        <div className="bg-white text-black flex flex-col items-center p-20 my-25">
             <div className="flex">
                 <h1 className="text-4xl p-5">You have successifully registered!</h1>
                 <div className="p-5">

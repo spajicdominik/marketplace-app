@@ -7,6 +7,7 @@ import com.dspajic.marketplace.entities.UserDetails;
 import com.dspajic.marketplace.entities.UserVerification;
 import com.dspajic.marketplace.entities.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -66,6 +67,17 @@ public class UsersServiceImpl implements UsersService{
 
     @Override
     public Users registerNewUser(UserRegisterDto userDto) {
+        UserDetails existingDetails = userDetailsService.getUserDetailsByEmail(userDto.getEmail());
+        if (existingDetails != null) {
+            throw new IllegalArgumentException("Email already exists!");
+        }
+
+        Users existingUser = repository.findByUsername(userDto.getUsername());
+        if (existingUser != null) {
+            throw new IllegalArgumentException("Username already exists!");
+        }
+
+
         UserDetails userDetails = new UserDetails();
         userDetails.setEmail(userDto.getEmail());
         userDetails.setFirstName(userDto.getFirstName());

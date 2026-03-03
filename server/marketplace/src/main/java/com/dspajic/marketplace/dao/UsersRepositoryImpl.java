@@ -5,6 +5,7 @@ import com.dspajic.marketplace.entities.Users;
 import com.dspajic.marketplace.mappers.dto.UserDisplayDtoRowMapper;
 import com.dspajic.marketplace.mappers.UsersRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -151,12 +152,17 @@ public class UsersRepositoryImpl implements UsersRepository{
                 WHERE
                 username = ?
                 """;
-        return jdbcTemplate
-                .queryForObject(
-                        sql,
-                        rowMapper,
-                        username
-                );
+        try {
+            return jdbcTemplate
+                    .queryForObject(
+                            sql,
+                            rowMapper,
+                            username
+                    );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+
     }
 
     @Override
