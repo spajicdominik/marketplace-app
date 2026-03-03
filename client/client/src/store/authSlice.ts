@@ -80,8 +80,8 @@ export const login = createAsyncThunk<LoginResponse, { username: string; passwor
                 body: JSON.stringify({ username, password }),
             });
             if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                return rejectWithValue(err.message || 'Invalid credentials');
+                const err = await res.text();
+                return rejectWithValue(err);
             }
 
             const data = await res.json().catch(() => ({}));

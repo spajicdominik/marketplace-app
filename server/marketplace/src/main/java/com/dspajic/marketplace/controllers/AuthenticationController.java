@@ -27,17 +27,20 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponseDto> authenticateAndGetToken(@RequestBody AuthDto authDto) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authDto.getUsername(), authDto.getPassword())
-        );
-        if (authentication.isAuthenticated()) {
+    public ResponseEntity<?> authenticateAndGetToken(@RequestBody AuthDto authDto) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authDto.getUsername(), authDto.getPassword())
+            );
+            Users user = userService.getUserByUsername(authDto.getUsername());
+            if (!user.getEnabled()) {
+                return ResponseEntity.status(403).body("Please verify your email before logging in.");
+            }
+
             String token = jwtService.generateToken(authDto.getUsername());
-            JwtResponseDto response = new JwtResponseDto(token);
-            return ResponseEntity.ok(response);
-        }
-        else {
-            throw new UsernameNotFoundException("Invalid user request!");
+            return ResponseEntity.ok(new JwtResponseDto(token));
+        } catch (org.springframework.security.authentication.BadCredentialsException e ) {
+            return ResponseEntity.badRequest().body("Invalid username or password.");
         }
     }
 
