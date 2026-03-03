@@ -11,7 +11,7 @@ export default function AuthenticationPage() {
 
     if (isQueryValid) {
         if (isLogin) {
-            return <div className="flex justify-center items-center bg-white my-20"><LoginForm></LoginForm></div>
+            return <div className="flex justify-center items-center bg-white my-25"><LoginForm></LoginForm></div>
         }
         else {
             return <div className="flex justify-center items-center bg-white my-20"><RegisterForm></RegisterForm></div>
