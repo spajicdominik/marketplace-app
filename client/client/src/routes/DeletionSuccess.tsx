@@ -6,7 +6,7 @@ import { MdDeleteOutline } from "react-icons/md";
 
 export default function DeletionSuccess() {
     return (
-        <div className="bg-white text-black flex flex-col items-center p-20">
+        <div className="bg-white text-black flex flex-col items-center p-20 my-30">
             <div className="flex">
                 <h1 className="text-4xl p-5">You have successifully deleted a post!</h1>
                 <div className="p-5">

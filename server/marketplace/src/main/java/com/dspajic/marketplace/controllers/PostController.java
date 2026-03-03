@@ -7,10 +7,13 @@ import com.dspajic.marketplace.entities.Post;
 import com.dspajic.marketplace.entities.PostDetails;
 import com.dspajic.marketplace.service.PostDetailsService;
 import com.dspajic.marketplace.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,7 +61,12 @@ public class PostController {
     }
 
     @PostMapping("/newPost")
-    public Integer addNewPost(@RequestBody NewPostDto newPostDto) { return postDetailsService.addNewPost(newPostDto);}
+    public ResponseEntity<?> addNewPost(@Valid @RequestBody NewPostDto newPostDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors().getFirst().getDefaultMessage());
+        }
+        return ResponseEntity.ok(postDetailsService.addNewPost(newPostDto));
+    }
 
     @GetMapping("/postDetails/{id}")
     public PostDetails getPostDetailsById(@PathVariable("id") Integer id) {

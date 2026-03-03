@@ -40,7 +40,6 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api/newPost").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/postImages/**").permitAll()
